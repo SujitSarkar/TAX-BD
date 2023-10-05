@@ -1,0 +1,50 @@
+name: tax_bd
+description: A new Flutter project.
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.5 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  provider: ^6.0.5
+  fluttertoast: ^8.2.2
+  intl: ^0.18.1
+  get_storage: ^2.1.1
+  uuid: ^4.1.0
+  firebase_auth: ^4.10.1
+  cloud_firestore: ^4.9.3
+  line_awesome_flutter: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/font/
+    - assets/image/
+  #   - images/a_dot_ham.jpeg
+
+  fonts:
+    - family: plusJakartaSans
+      fonts:
+        - asset: assets/font/PlusJakartaSans-Light.ttf
+          weight: 400
+        - asset: assets/font/PlusJakartaSans-Regular.ttf
+          weight: 500
+        - asset: assets/font/PlusJakartaSans-SemiBold.ttf
+          weight: 600
