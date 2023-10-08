@@ -65,6 +65,17 @@ class HomeScreen extends StatelessWidget {
                                   Navigator.pushNamed(
                                       context, AppRouter.incomeInfoScreen);
                                   break;
+                                case 2:
+                                  Navigator.pushNamed(
+                                      context, AppRouter.taxCalculationScreen);
+                                case 3:
+                                  Navigator.pushNamed(
+                                      context, AppRouter.rebateCalculationScreen);
+                                  break;
+                                case 5:
+                                  Navigator.pushNamed(
+                                      context, AppRouter.costInformationScreen);
+                                  break;
                               }
                             },
                             padding: const EdgeInsets.all(20),

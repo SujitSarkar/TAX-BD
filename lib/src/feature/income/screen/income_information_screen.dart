@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tax_bd/src/feature/income/widget/income_category_widget.dart';
+import 'package:tax_bd/src/router/app_router.dart';
 import 'package:tax_bd/src/shared/widget/normal_card.dart';
 import '../../../constant/dummy_data.dart';
 import '../../../constant/text_size.dart';
@@ -41,6 +42,16 @@ class IncomeInformationScreen extends StatelessWidget {
                                 isScrollControlled: true,
                                 builder: (context) =>
                                     const IncomeCategoryWidget());
+                          case 1:
+                            break;
+                          case 2:
+                            Navigator.pushNamed(
+                                context, AppRouter.agricultureIncomeScreen);
+                            break;
+                          case 3:
+                            Navigator.pushNamed(
+                                context, AppRouter.businessIncomeScreen);
+                            break;
                         }
                       },
                       padding: const EdgeInsets.all(20),
