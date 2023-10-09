@@ -9,6 +9,8 @@ import 'package:tax_bd/src/feature/home/provider/home_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/agricultural_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/business_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/financial_asset_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/rental_income_provider.dart';
+import 'package:tax_bd/src/feature/personal_info/provider/personal_info_provider.dart';
 import 'package:tax_bd/src/feature/rebate/provider/rebate_calculation_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/salary_income_provider.dart';
 import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => TaxCalculationProvider()),
         ChangeNotifierProvider(create: (context) => CostInformationProvider()),
         ChangeNotifierProvider(create: (context) => FinancialAssetIncomeProvider()),
+        ChangeNotifierProvider(create: (context) => RentalIncomeProvider()),
+        ChangeNotifierProvider(create: (context) => PersonalInfoProvider()),
       ],
       child: MaterialApp(
         navigatorKey: AppNavigatorKey.key,
