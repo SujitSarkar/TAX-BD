@@ -16,14 +16,15 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {
-                AuthRepository().logout();
+              onPressed: () async{
+                await AuthRepository().logout();
               },
               splashRadius: 24,
-              icon: const Icon(LineAwesomeIcons.alternate_sign_out))
+              tooltip: 'Logout',
+              icon: const Icon(LineAwesomeIcons.alternate_sign_out,color: Colors.red))
         ],
       ),
-      drawer: const Drawer(),
+      // drawer: const Drawer(),
       body: Column(
         children: [
           Center(
@@ -61,6 +62,9 @@ class HomeScreen extends StatelessWidget {
                         NormalCard(
                             onTap: () {
                               switch (index) {
+                                case 0:
+                                  Navigator.pushNamed(
+                                      context, AppRouter.personalInfoScreen);
                                 case 1:
                                   Navigator.pushNamed(
                                       context, AppRouter.incomeInfoScreen);

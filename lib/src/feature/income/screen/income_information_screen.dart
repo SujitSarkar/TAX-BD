@@ -43,6 +43,8 @@ class IncomeInformationScreen extends StatelessWidget {
                                 builder: (context) =>
                                     const IncomeCategoryWidget());
                           case 1:
+                            Navigator.pushNamed(
+                                context, AppRouter.rentalIncomeScreen);
                             break;
                           case 2:
                             Navigator.pushNamed(
@@ -51,6 +53,10 @@ class IncomeInformationScreen extends StatelessWidget {
                           case 3:
                             Navigator.pushNamed(
                                 context, AppRouter.businessIncomeScreen);
+                            break;
+                          case 4:
+                            Navigator.pushNamed(
+                                context, AppRouter.financialAssetIncomeScreen);
                             break;
                         }
                       },
