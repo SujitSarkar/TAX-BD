@@ -28,6 +28,26 @@ class DummyData {
         title: 'অংশীদারি ব্যবসার আয়'),
     HomeDataModel(icon: LineAwesomeIcons.globe, title: 'বৈদেশী আয়'),
     HomeDataModel(
-        icon: LineAwesomeIcons.users, title: 'স্বামী/স্ত্রী/সন্তানের আয়'),
+        icon: LineAwesomeIcons.users, title: 'স্বামী/স্ত্রী/সন্তানের আয়')
   ];
+
+  static const List<String> residentialStatusList = [
+    "Resident",
+    "Non-resident"
+  ];
+  static const List<String> classOfTaxpayersList = [
+    "Normal people",
+    "Firm",
+    "Hindu undivided family",
+    "Others",
+    "None"
+  ];
+  static const List<String> taxpayerPrivilegesList = [
+    "Graduated war wounded freedom fighter",
+    "Women",
+    "Third gender",
+    "Disabled person/person above 56 years of age of taxpayers",
+    "Parents or legal guardian of disabled person",
+    "None"
+  ]; //প্রতিবন্ধী ব্যক্তি
 }
