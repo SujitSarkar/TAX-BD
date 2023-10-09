@@ -14,7 +14,7 @@ class AppColor {
   static const Color appbarBgColor = Colors.white;
   static const Color cardColor = Colors.green;
 
-  static const Color textFieldHintColor = Color(0xff5E636A);
+  static const Color textFieldHintColor = Colors.grey;
   static const Color textFieldIconColor = Color(0xff9CA3AF);
   static const Color textFieldOutlineColor = Colors.grey;
 
