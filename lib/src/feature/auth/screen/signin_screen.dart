@@ -20,7 +20,7 @@ class SignInScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Form(
-          key: authProvider.signinFormKey,
+          key: authProvider.signInFormKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,7 +55,7 @@ class SignInScreen extends StatelessWidget {
               const SizedBox(height: 20),
               SolidButton(
                   onTap: () async {
-                    await authProvider.signinButtonOnTap();
+                    await authProvider.signInButtonOnTap();
                   },
                   child: authProvider.loading
                       ? const LoadingWidget(color: Colors.white)

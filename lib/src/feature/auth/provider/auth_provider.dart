@@ -11,7 +11,7 @@ import '../../../constant/app_toast.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool loading = false;
-  final GlobalKey<FormState> signinFormKey = GlobalKey();
+  final GlobalKey<FormState> signInFormKey = GlobalKey();
   final GlobalKey<FormState> otpFormKey = GlobalKey();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController otpController = TextEditingController();
@@ -38,8 +38,8 @@ class AuthProvider extends ChangeNotifier {
     otpController.clear();
   }
 
-  Future<void> signinButtonOnTap() async {
-    if (!signinFormKey.currentState!.validate()) {
+  Future<void> signInButtonOnTap() async {
+    if (!signInFormKey.currentState!.validate()) {
       return;
     }
     if (phoneValidator(phoneController.text) == false) {

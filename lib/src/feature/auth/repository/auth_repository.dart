@@ -7,7 +7,7 @@ import '../../../router/app_router.dart';
 import '../../../shared/local_storage.dart';
 
 class AuthRepository {
-  Future<bool> signin() async {
+  Future<bool> signIn() async {
     bool result = false;
 
     return result;
