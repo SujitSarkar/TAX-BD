@@ -33,16 +33,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
-        ChangeNotifierProvider(create: (context) => HomeProvider()),
-        ChangeNotifierProvider(create: (context) => SalaryIncomeProvider()),
-        ChangeNotifierProvider(create: (context) => AgriculturalIncomeProvider()),
-        ChangeNotifierProvider(create: (context) => BusinessIncomeProvider()),
-        ChangeNotifierProvider(create: (context) => RebateCalculationProvider()),
-        ChangeNotifierProvider(create: (context) => TaxCalculationProvider()),
-        ChangeNotifierProvider(create: (context) => CostInformationProvider()),
-        ChangeNotifierProvider(create: (context) => FinancialAssetIncomeProvider()),
-        ChangeNotifierProvider(create: (context) => RentalIncomeProvider()),
+        ChangeNotifierProvider(create: (context) => AuthProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => HomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => SalaryIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => AgriculturalIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => BusinessIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => RebateCalculationProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => TaxCalculationProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => CostInformationProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => FinancialAssetIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => RentalIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => PersonalInfoProvider()),
       ],
       child: MaterialApp(

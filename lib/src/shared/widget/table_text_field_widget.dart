@@ -13,6 +13,7 @@ class TableTextFormFieldWidget extends StatelessWidget {
       this.maxLine,
       this.minLine,
       this.maxLength,
+      this.readOnly=false,
       this.onChanged,
       this.onEditingComplete,
       this.contentPadding,
@@ -28,6 +29,7 @@ class TableTextFormFieldWidget extends StatelessWidget {
   final int? maxLine;
   final int? minLine;
   final int? maxLength;
+  final bool readOnly;
   final Function(String)? onChanged;
   final Function()? onEditingComplete;
   final FocusNode? focusNode;
@@ -53,6 +55,7 @@ class TableTextFormFieldWidget extends StatelessWidget {
       maxLines: maxLine ?? 1,
       minLines: minLine ?? 1,
       textAlign: textAlign!,
+      readOnly: readOnly,
       style: TextStyle(
           color: AppColor.textColor, fontWeight: FontWeight.w500, fontSize: 14),
       decoration: InputDecoration(

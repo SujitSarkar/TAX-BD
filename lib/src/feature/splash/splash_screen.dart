@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:tax_bd/src/feature/home/screen/home_screen.dart';
 import 'package:tax_bd/src/router/app_router.dart';
 import '../../constant/text_size.dart';
 
@@ -20,9 +21,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> onInit() async {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      await Future.delayed(const Duration(seconds: 1)).then((value) =>
+      await const HomeScreen().onInit().then((value) =>
           Navigator.pushNamedAndRemoveUntil(
               context, AppRouter.home, (route) => false));
+
     } else {
       await Future.delayed(const Duration(seconds: 2)).then((value) =>
           Navigator.pushNamedAndRemoveUntil(
