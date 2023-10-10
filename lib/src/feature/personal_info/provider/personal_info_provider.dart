@@ -1,14 +1,13 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/Material.dart';
 import 'package:tax_bd/src/constant/app_toast.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
-import 'package:tax_bd/src/feature/auth/repository/auth_repository.dart';
-import 'package:tax_bd/src/shared/local_storage.dart';
-import '../../../constant/local_storage_key.dart';
+import '../../../constant/db_child_path.dart';
+import '../../../shared/db_helper/firebase_db_helper.dart';
 
 class PersonalInfoProvider extends ChangeNotifier {
-  static final DatabaseReference _dbRef = FirebaseDatabase.instance.ref();
+  final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
+  bool functionLoading = false;
   final GlobalKey<FormState> personalInfoFormKey = GlobalKey();
   String? residentialStatusRadioValue = DummyData.residentialStatusList.first;
   String? classOfTaxpayersRadioValue = DummyData.classOfTaxpayersList.first;
@@ -51,29 +50,47 @@ class PersonalInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> submitDataButtonOnTap() async {
-    final String? userPhone = await getData(LocalStorageKey.phoneKey);
-    final String? userId = await getData(LocalStorageKey.userIdKey);
+  Future<void> getUserData() async {
+    final Map<String, dynamic>? data =
+        await firebaseDbHelper.fetchData(childPath: DbChildPath.personalInfo);
 
-    if (userPhone == null || userId == null) {
-      await AuthRepository().logout();
-      showToast('Invalid credential! Login again');
-      return;
+    if (data != null) {
+      nameController.text = data['taxPayerName'];
+      nidOrPassportController.text = data['taxPayerNid'];
+      tinController.text = data['taxPayerTin'];
+      circleController.text = data['circle'];
+      taxZoneController.text = data['taxZone'];
+      taxYearController.text = data['taxYear'];
+      residentialStatusRadioValue = data['residentialStatus'] ?? 'None';
+      classOfTaxpayersRadioValue = data['classOfTaxPayer'] ?? 'None';
+      taxpayerPrivilegesRadioValue = data['privilegesOfTaxPayer'] ??
+          'None';
+      dobController.text = data['dateOfBirth'];
+      spouseController.text = data['nameOfSpouse'];
+      spouseTinController.text = data['tinOfSpouse'];
+      contactAddressController.text = data['addressOfContact'];
+      telephoneController.text = data['telephone'];
+      mobileController.text = data['mobileNumber'];
+      emailController.text = data['emailAddress'];
+      currentlyWorkingOrgController.text = data['employedOrgName'];
+      orgNameController.text = data['organizationName'];
+      orgBinController.text = data['binOfOrganization'];
+      partnerNameAndTinController.text = data['partnerNameAndTin'];
     }
+    // notifyListeners();
+  }
+
+  Future<void> submitDataButtonOnTap() async {
     if (!personalInfoFormKey.currentState!.validate()) {
       return;
     }
-
-    loading = true;
-    notifyListeners();
-
-    Map<String, dynamic> userDataMap = {
-      'taxPayerName': nameController.text,
-      'taxPayerNid': nidOrPassportController.text,
-      'taxPayerTin': tinController.text,
-      'circle': circleController.text,
-      'taxZone': taxZoneController.text,
-      'taxYear': taxYearController.text,
+    final Map<String, dynamic> userDataMap = {
+      'taxPayerName': nameController.text.trim(),
+      'taxPayerNid': nidOrPassportController.text.trim(),
+      'taxPayerTin': tinController.text.trim(),
+      'circle': circleController.text.trim(),
+      'taxZone': taxZoneController.text.trim(),
+      'taxYear': taxYearController.text.trim(),
       'residentialStatus': residentialStatusRadioValue,
       'classOfTaxPayer': classOfTaxpayersRadioValue == 'None'
           ? null
@@ -81,32 +98,28 @@ class PersonalInfoProvider extends ChangeNotifier {
       'privilegesOfTaxPayer': taxpayerPrivilegesRadioValue == 'None'
           ? null
           : taxpayerPrivilegesRadioValue,
-      'dateOfBirth': dobController.text,
-      'nameOfSpouse': spouseController.text,
-      'tinOfSpouse': spouseTinController.text,
-      'addressOfContact': contactAddressController.text,
-      'telephone': telephoneController.text,
-      'mobileNumber': mobileController.text,
-      'emailAddress': emailController.text,
-      'employedOrgName': currentlyWorkingOrgController.text,
-      'organizationName': orgNameController.text,
-      'binOfOrganization': orgBinController.text,
-      'partnerNameAndTin': partnerNameAndTinController.text,
+      'dateOfBirth': dobController.text.trim(),
+      'nameOfSpouse': spouseController.text.trim(),
+      'tinOfSpouse': spouseTinController.text.trim(),
+      'addressOfContact': contactAddressController.text.trim(),
+      'telephone': telephoneController.text.trim(),
+      'mobileNumber': mobileController.text.trim(),
+      'emailAddress': emailController.text.trim(),
+      'employedOrgName': currentlyWorkingOrgController.text.trim(),
+      'organizationName': orgNameController.text.trim(),
+      'binOfOrganization': orgBinController.text.trim(),
+      'partnerNameAndTin': partnerNameAndTinController.text.trim(),
     };
-
-    await _dbRef
-        .child(userPhone)
-        .child('personalInfo')
-        .set(userDataMap)
-        .then((_) {
-      showToast('Data inserted successfully');
-      loading = false;
-      notifyListeners();
-    }).catchError((error) {
-      showToast('Error saving data');
-      debugPrint('Error inserting data: $error');
-      loading = false;
-      notifyListeners();
-    });
+    functionLoading = true;
+    notifyListeners();
+    final bool result = await firebaseDbHelper.insertData(
+        childPath: DbChildPath.personalInfo, data: userDataMap);
+    if (result) {
+      showToast('Success');
+    } else {
+      showToast('Failed');
+    }
+    functionLoading = false;
+    notifyListeners();
   }
 }
