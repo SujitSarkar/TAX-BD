@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class RebateCalculationInputModel {
-  TextEditingController? lifeInsurance;
-  TextEditingController? contributionToDepositPerson;
-  TextEditingController? investmentInGovt;
-  TextEditingController? investmentInSecurity;
-  TextEditingController? contributionToProvident;
-  TextEditingController? selfContribution;
-  TextEditingController? contributionToApproved;
-  TextEditingController? contributionToBenevolent;
-  TextEditingController? contributionToZakat;
-  TextEditingController? others;
-  TextEditingController? totalInvestment;
-  TextEditingController? amountOfTax;
+  final TextEditingController? lifeInsurance;
+  final TextEditingController? contributionToDepositPerson;
+  final TextEditingController? investmentInGovt;
+  final TextEditingController? investmentInSecurity;
+  final TextEditingController? contributionToProvident;
+  final TextEditingController? selfContribution;
+  final TextEditingController? contributionToApproved;
+  final TextEditingController? contributionToBenevolent;
+  final TextEditingController? contributionToZakat;
+  final TextEditingController? others;
+  final TextEditingController? totalInvestment;
+  final TextEditingController? amountOfTax;
 
   RebateCalculationInputModel({
       this.lifeInsurance,
