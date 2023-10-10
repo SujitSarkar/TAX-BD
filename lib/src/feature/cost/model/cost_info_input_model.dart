@@ -53,8 +53,8 @@ class CostInformationInputModel {
 }
 
 class CostInformationInputModelItem {
-  TextEditingController? amount;
-  TextEditingController? comment;
+  final TextEditingController? amount;
+  final TextEditingController? comment;
 
   CostInformationInputModelItem({this.amount, this.comment});
 
