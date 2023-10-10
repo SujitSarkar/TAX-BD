@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
 import 'package:tax_bd/src/constant/text_size.dart';
 import 'package:tax_bd/src/feature/auth/repository/auth_repository.dart';
+import 'package:tax_bd/src/feature/cost/provider/cost_information_provider.dart';
+import 'package:tax_bd/src/feature/rebate/provider/rebate_calculation_provider.dart';
 import 'package:tax_bd/src/router/app_router.dart';
+import 'package:tax_bd/src/shared/app_navigator_key.dart';
 import 'package:tax_bd/src/shared/widget/normal_card.dart';
+import '../../personal_info/provider/personal_info_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  Future<void> onInit()async{
+    final PersonalInfoProvider personalInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final RebateCalculationProvider rebateCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final CostInformationProvider costInformationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_)async{
+      await Future.wait([
+        personalInfoProvider.getUserData(),
+        rebateCalculationProvider.getRebateCalculationData(),
+        costInformationProvider.getCostInfoData()
+      ]);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
