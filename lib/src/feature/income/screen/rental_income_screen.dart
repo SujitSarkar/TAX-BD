@@ -16,7 +16,7 @@ class RentalIncomeScreen extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: 0.0,
         title: const Text(
-          'ভাড়ার আয়',
+          'Income from Rent',
           style: TextStyle(
               fontSize: TextSize.titleText, fontWeight: FontWeight.w500),
         ),
@@ -46,9 +46,9 @@ class RentalIncomeScreen extends StatelessWidget {
                         padding: EdgeInsets.zero),
                   TextFormFieldWidget(
                       controller: rentalIncomeProvider.rentalIncomeInputList[index].locationAndDescription!,
-                      labelText: 'Location & description',
+                      labelText: 'Location, description and ownership proportion of property',
                       maxLine: 4,
-                      hintText: 'Enter location & description',
+                      hintText: 'Enter location, description and ownership proportion of property',
                       textCapitalization: TextCapitalization.words),
                   const SizedBox(height: 12),
 
