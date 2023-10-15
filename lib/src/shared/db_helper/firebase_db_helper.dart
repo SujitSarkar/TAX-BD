@@ -80,7 +80,7 @@ class FirebaseDbHelper {
         debugPrint('Retrieved $childPath data: $data');
         return mapData;
       } else {
-        debugPrint('No $childPath data found');
+        debugPrint('No $childPath data not found');
       }
     } catch (error) {
       debugPrint('Error fetching $childPath data:::::: $error');
@@ -107,7 +107,7 @@ class FirebaseDbHelper {
         debugPrint('Retrieved $childPath data: $data');
         return listData;
       } else {
-        debugPrint('$childPath data found');
+        debugPrint('$childPath data not found');
       }
     } catch (error) {
       debugPrint('Error fetching $childPath data:::::: $error');

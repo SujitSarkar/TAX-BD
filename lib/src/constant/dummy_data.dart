@@ -4,50 +4,51 @@ import '../feature/home/model/home_data_model.dart';
 class DummyData {
   static final List<HomeDataModel> homeDataList = [
     HomeDataModel(
-        icon: LineAwesomeIcons.identification_card, title: 'ব্যাক্তিগত তথ্য'),
+        icon: LineAwesomeIcons.identification_card, title: 'Personal Information'),
     HomeDataModel(
-        icon: LineAwesomeIcons.hand_holding_us_dollar, title: 'আয়ের তথ্য'),
+        icon: LineAwesomeIcons.hand_holding_us_dollar, title: 'Income Information'),
     HomeDataModel(
-        icon: LineAwesomeIcons.file_invoice_with_us_dollar, title: 'কর গননা'),
-    HomeDataModel(icon: LineAwesomeIcons.percentage, title: 'রেয়াত হিসাব'),
-    HomeDataModel(icon: LineAwesomeIcons.city, title: 'সম্পদের তথ্য'),
-    HomeDataModel(icon: LineAwesomeIcons.coins, title: 'ব্যয় এর তথ্য'),
+        icon: LineAwesomeIcons.file_invoice_with_us_dollar, title: 'Tax Calculation'),
+    HomeDataModel(icon: LineAwesomeIcons.percentage, title: 'Tax Credit'),
+    HomeDataModel(icon: LineAwesomeIcons.city, title: 'Asset Information'),
+    HomeDataModel(icon: LineAwesomeIcons.coins, title: 'Expanse Information'),
   ];
 
   static final List<HomeDataModel> incomeInfoDataList = [
-    HomeDataModel(icon: LineAwesomeIcons.user, title: 'বেতন আয়'),
-    HomeDataModel(icon: LineAwesomeIcons.home, title: 'ভাড়ার আয়'),
-    HomeDataModel(icon: LineAwesomeIcons.tractor, title: 'কৃষি আয়'),
-    HomeDataModel(icon: LineAwesomeIcons.briefcase, title: 'ব্যবসার আয়'),
+    HomeDataModel(icon: LineAwesomeIcons.user, title: 'Income from Employment'),
+    HomeDataModel(icon: LineAwesomeIcons.home, title: 'Income from Rent'),
+    HomeDataModel(icon: LineAwesomeIcons.tractor, title: 'Income from Agriculture'),
+    HomeDataModel(icon: LineAwesomeIcons.briefcase, title: 'Income from Business'),
     HomeDataModel(
-        icon: LineAwesomeIcons.recycle, title: 'আর্থিক সম্পদ থেকে আয়'),
-    HomeDataModel(icon: LineAwesomeIcons.sitemap, title: 'অন্যান্য খাতে আয়'),
-    HomeDataModel(icon: LineAwesomeIcons.landmark, title: 'মুলধনী সম্পদের আয়'),
+        icon: LineAwesomeIcons.recycle, title: 'Income from Financial Assets'),
+    HomeDataModel(icon: LineAwesomeIcons.sitemap, title: 'Income from Other Sectors'),
+    HomeDataModel(icon: LineAwesomeIcons.landmark, title: 'Income from Capital Assets'),
     HomeDataModel(
         icon: LineAwesomeIcons.hand_holding_us_dollar,
-        title: 'অংশীদারি ব্যবসার আয়'),
-    HomeDataModel(icon: LineAwesomeIcons.globe, title: 'বৈদেশী আয়'),
+        title: 'Partnership Business Income'),
+    HomeDataModel(icon: LineAwesomeIcons.globe, title: 'Foreign Income'),
     HomeDataModel(
-        icon: LineAwesomeIcons.users, title: 'স্বামী/স্ত্রী/সন্তানের আয়')
+        icon: LineAwesomeIcons.users, title: 'Income of Spouse/Child')
   ];
 
   static const List<String> residentialStatusList = [
     "Resident",
     "Non-resident"
   ];
-  static const List<String> classOfTaxpayersList = [
-    "Normal people",
+  static const List<String> statusOfTaxpayersList = [
+    "Individual",
     "Firm",
     "Hindu undivided family",
     "Others",
     "None"
   ];
   static const List<String> taxpayerPrivilegesList = [
-    "Graduated war wounded freedom fighter",
-    "Women",
+    "A gazette war-wounded freedom fighter",
+    "Female",
     "Third gender",
-    "Disabled person/person above 56 years of age of taxpayers",
-    "Parents or legal guardian of disabled person",
+    "Disable person",
+    "Age 65 years or more",
+    "A parent of a person with disability",
     "None"
   ]; //প্রতিবন্ধী ব্যক্তি
 }

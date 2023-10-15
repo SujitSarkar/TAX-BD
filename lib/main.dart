@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/app_string.dart';
 import 'package:tax_bd/src/constant/app_theme.dart';
 import 'package:tax_bd/src/feature/auth/provider/auth_provider.dart';
-import 'package:tax_bd/src/feature/cost/provider/cost_information_provider.dart';
+import 'package:tax_bd/src/feature/expanse/provider/expanse_information_provider.dart';
 import 'package:tax_bd/src/feature/home/provider/home_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/agricultural_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/business_income_provider.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => BusinessIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => RebateCalculationProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => TaxCalculationProvider(),lazy: true),
-        ChangeNotifierProvider(create: (context) => CostInformationProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => ExpanseInformationProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => FinancialAssetIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => RentalIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => PersonalInfoProvider()),
