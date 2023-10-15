@@ -10,15 +10,15 @@ class PersonalInfoProvider extends ChangeNotifier {
   bool functionLoading = false;
   final GlobalKey<FormState> personalInfoFormKey = GlobalKey();
   String? residentialStatusRadioValue = DummyData.residentialStatusList.first;
-  String? classOfTaxpayersRadioValue = DummyData.classOfTaxpayersList.first;
-  String? taxpayerPrivilegesRadioValue = DummyData.taxpayerPrivilegesList.first;
+  String? statusOfTaxpayersRadioValue = DummyData.statusOfTaxpayersList.first;
+  String? taxpayerPrivilegesRadioValue = DummyData.taxpayerPrivilegesList.last;
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController nidOrPassportController = TextEditingController();
   final TextEditingController tinController = TextEditingController();
   final TextEditingController circleController = TextEditingController();
   final TextEditingController taxZoneController = TextEditingController();
-  final TextEditingController taxYearController = TextEditingController();
+  final TextEditingController assessmentYearController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController spouseController = TextEditingController();
   final TextEditingController spouseTinController = TextEditingController();
@@ -41,7 +41,7 @@ class PersonalInfoProvider extends ChangeNotifier {
   }
 
   void changeClassOfTaxpayers(String? newValue) {
-    classOfTaxpayersRadioValue = newValue;
+    statusOfTaxpayersRadioValue = newValue;
     notifyListeners();
   }
 
@@ -60,9 +60,9 @@ class PersonalInfoProvider extends ChangeNotifier {
       tinController.text = data['taxPayerTin'];
       circleController.text = data['circle'];
       taxZoneController.text = data['taxZone'];
-      taxYearController.text = data['taxYear'];
+      assessmentYearController.text = data['assessmentYear'];
       residentialStatusRadioValue = data['residentialStatus'] ?? 'None';
-      classOfTaxpayersRadioValue = data['classOfTaxPayer'] ?? 'None';
+      statusOfTaxpayersRadioValue = data['statusOfTaxPayer'] ?? 'None';
       taxpayerPrivilegesRadioValue = data['privilegesOfTaxPayer'] ??
           'None';
       dobController.text = data['dateOfBirth'];
@@ -90,11 +90,11 @@ class PersonalInfoProvider extends ChangeNotifier {
       'taxPayerTin': tinController.text.trim(),
       'circle': circleController.text.trim(),
       'taxZone': taxZoneController.text.trim(),
-      'taxYear': taxYearController.text.trim(),
+      'assessmentYear': assessmentYearController.text.trim(),
       'residentialStatus': residentialStatusRadioValue,
-      'classOfTaxPayer': classOfTaxpayersRadioValue == 'None'
+      'statusOfTaxPayer': statusOfTaxpayersRadioValue == 'None'
           ? null
-          : classOfTaxpayersRadioValue,
+          : statusOfTaxpayersRadioValue,
       'privilegesOfTaxPayer': taxpayerPrivilegesRadioValue == 'None'
           ? null
           : taxpayerPrivilegesRadioValue,
