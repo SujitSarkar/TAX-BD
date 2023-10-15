@@ -8,13 +8,10 @@ class RebateCalculationProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
-  final GlobalKey<FormState> rebateCalculationFormKey = GlobalKey();
-  final TextEditingController nameOfAssesseeController =
-      TextEditingController();
-  final TextEditingController tinController = TextEditingController();
 
   List<RebateCalculationInputModel> rebateCalculationInputList = [];
 
+  ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addRebateCalculationInputListItem() {
     rebateCalculationInputList.add(RebateCalculationInputModel(
         lifeInsurance: TextEditingController(),
@@ -32,15 +29,14 @@ class RebateCalculationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItemOfRebateCalculationInputList(int index) async{
+  void removeItemOfRebateCalculationInputList(int index) async {
     rebateCalculationInputList.removeAt(index);
     await submitDataButtonOnTap();
     notifyListeners();
     showToast('Item deleted');
   }
 
-  ///Functions:::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
+  ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   Future<void> getRebateCalculationData() async {
     rebateCalculationInputList = [];
 
@@ -48,8 +44,6 @@ class RebateCalculationProvider extends ChangeNotifier {
         childPath: DbChildPath.rebateCalculation);
 
     if (data != null) {
-      nameOfAssesseeController.text = data['nameOfAssessee'];
-      tinController.text = data['tin'];
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
           rebateCalculationInputList.add(RebateCalculationInputModel(
@@ -97,27 +91,45 @@ class RebateCalculationProvider extends ChangeNotifier {
   }
 
   Future<void> submitDataButtonOnTap() async {
-    if (!rebateCalculationFormKey.currentState!.validate()) {
-      return;
-    }
     functionLoading = true;
     notifyListeners();
 
     final List<Map<String, dynamic>> rebateDataList = [];
     for (RebateCalculationInputModel element in rebateCalculationInputList) {
-      final double totalInvestment =
-          double.parse(element.lifeInsurance!.text.trim()) +
-              double.parse(element.contributionToDepositPerson!.text.trim()) +
-              double.parse(element.investmentInGovt!.text.trim()) +
-              double.parse(element.investmentInSecurity!.text.trim()) +
-              double.parse(element.contributionToProvident!.text.trim()) +
-              double.parse(element.selfContribution!.text.trim()) +
-              double.parse(element.contributionToApproved!.text.trim()) +
-              double.parse(element.contributionToBenevolent!.text.trim()) +
-              double.parse(element.contributionToZakat!.text.trim()) +
-              double.parse(element.others!.text.trim().isEmpty?'0.0':element.others!.text.trim());
+      final double totalInvestment = double.parse(
+              element.lifeInsurance!.text.isNotEmpty
+                  ? element.lifeInsurance!.text.trim()
+                  : '0.0') +
+          double.parse(element.contributionToDepositPerson!.text.isNotEmpty
+              ? element.contributionToDepositPerson!.text.trim()
+              : '0.0') +
+          double.parse(element.investmentInGovt!.text.isNotEmpty
+              ? element.investmentInGovt!.text.trim()
+              : '0.0') +
+          double.parse(element.investmentInSecurity!.text.isNotEmpty
+              ? element.investmentInSecurity!.text.trim()
+              : '0.0') +
+          double.parse(element.contributionToProvident!.text.isNotEmpty
+              ? element.contributionToProvident!.text.trim()
+              : '0.0') +
+          double.parse(element.selfContribution!.text.isNotEmpty
+              ? element.selfContribution!.text.trim()
+              : '0.0') +
+          double.parse(element.contributionToApproved!.text.isNotEmpty
+              ? element.contributionToApproved!.text.trim()
+              : '0.0') +
+          double.parse(element.contributionToBenevolent!.text.isNotEmpty
+              ? element.contributionToBenevolent!.text.trim()
+              : '0.0') +
+          double.parse(element.contributionToZakat!.text.isNotEmpty
+              ? element.contributionToZakat!.text.trim()
+              : '0.0') +
+          double.parse(element.others!.text.trim().isNotEmpty
+              ? element.others!.text.trim()
+              : '0.0');
 
       element.totalInvestment!.text = '$totalInvestment';
+
       final Map<String, dynamic> dataMap = {
         'lifeInsurance': element.lifeInsurance!.text.trim(),
         'contributionToDepositPerson':
@@ -136,11 +148,8 @@ class RebateCalculationProvider extends ChangeNotifier {
       };
       rebateDataList.add(dataMap);
     }
-    final Map<String, dynamic> rebateDataMap = {
-      'nameOfAssessee': nameOfAssesseeController.text.trim(),
-      'tin': tinController.text.trim(),
-      'data': rebateDataList
-    };
+    final Map<String, dynamic> rebateDataMap = {'data': rebateDataList};
+
     final bool result = await firebaseDbHelper.insertData(
         childPath: DbChildPath.rebateCalculation, data: rebateDataMap);
     if (result) {
