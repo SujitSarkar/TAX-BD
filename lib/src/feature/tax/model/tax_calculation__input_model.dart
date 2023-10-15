@@ -3,34 +3,36 @@ import 'package:flutter/material.dart';
 class TaxCalculationInputModel {
   TextEditingController? grossTax;
   TextEditingController? taxRebate;
-  TextEditingController? taxPayableAfterTaxRebate;
+  TextEditingController? netTaxAfterRebate;
   TextEditingController? minimumTax;
   TextEditingController? taxPayable;
-  TextEditingController? surchargeOfNetWealth;
-  TextEditingController? surchargeOfEnvironmental;
+  TextEditingController? netWealthSurcharge;
+  TextEditingController? environmentalSurcharge;
   TextEditingController? delayInterest;
-  TextEditingController? totalTaxPayable;
-  TextEditingController? taxDeducted;
-  TextEditingController? advanceTax;
+  TextEditingController? totalAmountPayable;
+  TextEditingController? taxDeductedSource;
+  TextEditingController? advanceTaxPaid;
   TextEditingController? adjustmentOfTax;
-  TextEditingController? amountPaidWithReturn;
+  TextEditingController? taxPaidWithReturn;
   TextEditingController? totalTaxPaid;
-  TextEditingController? deficitOrExcess;
+  TextEditingController? excessPayment;
+  TextEditingController? taxExempted;
 
-  TaxCalculationInputModel({
-      this.grossTax,
+  TaxCalculationInputModel(
+      {this.grossTax,
       this.taxRebate,
-      this.taxPayableAfterTaxRebate,
+      this.netTaxAfterRebate,
       this.minimumTax,
       this.taxPayable,
-      this.surchargeOfNetWealth,
-      this.surchargeOfEnvironmental,
+      this.netWealthSurcharge,
+      this.environmentalSurcharge,
       this.delayInterest,
-      this.totalTaxPayable,
-      this.taxDeducted,
-      this.advanceTax,
+      this.totalAmountPayable,
+      this.taxDeductedSource,
+      this.advanceTaxPaid,
       this.adjustmentOfTax,
-      this.amountPaidWithReturn,
+      this.taxPaidWithReturn,
       this.totalTaxPaid,
-      this.deficitOrExcess});
+      this.excessPayment,
+      this.taxExempted});
 }
