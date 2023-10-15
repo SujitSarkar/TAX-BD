@@ -25,6 +25,12 @@ class AgricultureIncomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Column(children: [
+          const Text('Schedule 3',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          const Text('(This part is applicable for agriculture income)',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: TextSize.bodyText)),
+          const SizedBox(height: 16),
           TextFormFieldWidget(
               controller: agriculturalIncomeProvider.nameOfAddressController,
               labelText: 'Name of address',
@@ -45,21 +51,22 @@ class AgricultureIncomeScreen extends StatelessWidget {
                   agriculturalIncomeProvider.agricultureIncomeInputList.length,
               separatorBuilder: (context, index) => const SizedBox(height: 24),
               itemBuilder: (context, index) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (index != 0)
-                    IconButton(
-                        onPressed: () {
-                          agriculturalIncomeProvider
-                              .removeItemOfAgricultureIncomeInputList(
-                              index);
-                        },
-                        icon: const Icon(Icons.cancel_rounded,
-                            color: Colors.grey),
-                        splashRadius: 25,
-                        padding: EdgeInsets.zero),
-                  Table(
-                        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (index != 0)
+                        IconButton(
+                            onPressed: () {
+                              agriculturalIncomeProvider
+                                  .removeItemOfAgricultureIncomeInputList(
+                                      index);
+                            },
+                            icon: const Icon(Icons.cancel_rounded,
+                                color: Colors.grey),
+                            splashRadius: 25,
+                            padding: EdgeInsets.zero),
+                      Table(
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
                         border: TableBorder.all(color: Colors.grey),
                         children: [
                           //Table Header
@@ -90,7 +97,8 @@ class AgricultureIncomeScreen extends StatelessWidget {
                           buildRow(
                               "2. Gross Profit",
                               agriculturalIncomeProvider
-                                  .agricultureIncomeInputList[index].grossProfit!),
+                                  .agricultureIncomeInputList[index]
+                                  .grossProfit!),
                           buildRow(
                               "3. General Expanses, Selling Expanses, Land Revenue, Rates, Interest of Loan, Insurance Premium and Other Expenses",
                               agriculturalIncomeProvider
@@ -99,11 +107,12 @@ class AgricultureIncomeScreen extends StatelessWidget {
                           buildRow(
                               "4. Net Profit (2-3)",
                               agriculturalIncomeProvider
-                                  .agricultureIncomeInputList[index].netProfit!),
+                                  .agricultureIncomeInputList[index]
+                                  .netProfit!),
                         ],
                       ),
-                ],
-              )),
+                    ],
+                  )),
           const SizedBox(height: 12),
           SolidButton(
               onTap: () {
