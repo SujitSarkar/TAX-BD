@@ -1,25 +1,31 @@
 import 'package:flutter/material.dart';
 
 class BusinessIncomeInputModel {
-  TextEditingController? saleTurnoverReceipts;
-  TextEditingController? grossProfit;
-  TextEditingController? generalExpanses;
-  TextEditingController? badDebtExpanses;
-  TextEditingController? netProfit;
-  TextEditingController? cashAndBankBalance;
-  TextEditingController? inventory;
-  TextEditingController? fixedAssets;
-  TextEditingController? otherAssets;
-  TextEditingController? totalAssets;
-  TextEditingController? openingCapital;
-  TextEditingController? balanceSheetNetProfit;
-  TextEditingController? drawingDuringIncomeYear;
-  TextEditingController? closingCapital;
-  TextEditingController? liabilities;
-  TextEditingController? totalCapitalAndLiabilities;
+  final TextEditingController? nameOfBusiness;
+  final TextEditingController? natureOfBusiness;
+  final TextEditingController? addressOfBusiness;
+  final TextEditingController? saleTurnoverReceipt;
+  final TextEditingController? grossProfit;
+  final TextEditingController? generalExpanses;
+  final TextEditingController? badDebtExpanses;
+  final TextEditingController? netProfit;
+  final TextEditingController? cashAndBankBalance;
+  final TextEditingController? inventory;
+  final TextEditingController? fixedAssets;
+  final TextEditingController? otherAssets;
+  final TextEditingController? totalAssets;
+  final TextEditingController? openingCapital;
+  final TextEditingController? balanceSheetNetProfit;
+  final TextEditingController? drawingDuringIncomeYear;
+  final TextEditingController? closingCapital;
+  final TextEditingController? liabilities;
+  final TextEditingController? totalCapitalAndLiabilities;
 
   BusinessIncomeInputModel({
-      this.saleTurnoverReceipts,
+      this.nameOfBusiness,
+      this.natureOfBusiness,
+      this.addressOfBusiness,
+      this.saleTurnoverReceipt,
       this.grossProfit,
       this.generalExpanses,
       this.badDebtExpanses,
