@@ -140,10 +140,14 @@ class PersonalInfoScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
-                          controller: personalInfoProvider.dobController,
+                          controller: personalInfoProvider.dateOfBirthController,
                           labelText: '10. Date of birth',
                           hintText: 'Enter date of birth',
                           required: true,
+                          readOnly: true,
+                          onTap: ()async{
+                            await personalInfoProvider.selectDateOfBirth();
+                          },
                         ),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
@@ -227,7 +231,7 @@ class PersonalInfoScreen extends StatelessWidget {
                             child: personalInfoProvider.functionLoading
                                 ? const LoadingWidget()
                                 : const Text(
-                                    'তথ্য জমা দিন',
+                                    'Submit Data',
                                     style:
                                         TextStyle(fontSize: TextSize.buttonText),
                                   ))

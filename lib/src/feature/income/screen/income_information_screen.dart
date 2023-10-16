@@ -15,7 +15,7 @@ class IncomeInformationScreen extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: 0.0,
         title: const Text(
-          'আয়ের তথ্য',
+          'Income Information',
           style: TextStyle(
               fontSize: TextSize.titleText, fontWeight: FontWeight.w500),
         ),
@@ -57,6 +57,26 @@ class IncomeInformationScreen extends StatelessWidget {
                           case 4:
                             Navigator.pushNamed(
                                 context, AppRouter.financialAssetIncomeScreen);
+                            break;
+                          case 5:
+                            Navigator.pushNamed(
+                                context, AppRouter.othersIncomeScreen);
+                            break;
+                            case 6:
+                            Navigator.pushNamed(
+                                context, AppRouter.capitalGainIncomeScreen);
+                            break;
+                          case 7:
+                            Navigator.pushNamed(
+                                context, AppRouter.partnershipBusinessIncomeScreen);
+                            break;
+                          case 8:
+                            Navigator.pushNamed(
+                                context, AppRouter.foreignIncomeScreen);
+                            break;
+                          case 9:
+                            Navigator.pushNamed(
+                                context, AppRouter.spouseChildrenIncomeScreen);
                             break;
                         }
                       },

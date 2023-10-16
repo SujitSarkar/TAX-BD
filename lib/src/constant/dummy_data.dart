@@ -22,7 +22,7 @@ class DummyData {
     HomeDataModel(
         icon: LineAwesomeIcons.recycle, title: 'Income from Financial Assets'),
     HomeDataModel(icon: LineAwesomeIcons.sitemap, title: 'Income from Other Sectors'),
-    HomeDataModel(icon: LineAwesomeIcons.landmark, title: 'Income from Capital Assets'),
+    HomeDataModel(icon: LineAwesomeIcons.landmark, title: 'Income from Capital Gain'),
     HomeDataModel(
         icon: LineAwesomeIcons.hand_holding_us_dollar,
         title: 'Partnership Business Income'),

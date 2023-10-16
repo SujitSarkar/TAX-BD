@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tax_bd/src/constant/local_storage_key.dart';
-import 'package:tax_bd/src/constant/validator.dart';
 import 'package:tax_bd/src/router/app_router.dart';
 import 'package:tax_bd/src/shared/app_navigator_key.dart';
 import 'package:tax_bd/src/shared/local_storage.dart';
 import '../../../constant/app_toast.dart';
+import '../../../shared/validator.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool loading = false;

@@ -17,7 +17,7 @@ class TableTextFormFieldWidget extends StatelessWidget {
       this.onChanged,
       this.onEditingComplete,
       this.contentPadding,
-      this.focusNode})
+      this.focusNode, this.onTap})
       : super(key: key);
 
   final TextEditingController controller;
@@ -34,6 +34,7 @@ class TableTextFormFieldWidget extends StatelessWidget {
   final Function()? onEditingComplete;
   final FocusNode? focusNode;
   final EdgeInsetsGeometry? contentPadding;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +57,7 @@ class TableTextFormFieldWidget extends StatelessWidget {
       minLines: minLine ?? 1,
       textAlign: textAlign!,
       readOnly: readOnly,
+      onTap: onTap,
       style: TextStyle(
           color: AppColor.textColor, fontWeight: FontWeight.w500, fontSize: 14),
       decoration: InputDecoration(

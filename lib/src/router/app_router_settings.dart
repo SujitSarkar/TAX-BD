@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:tax_bd/src/feature/home/screen/home_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/business_income_screen.dart';
+import 'package:tax_bd/src/feature/income/screen/capital_gain_income_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/financial_asset_income_screen.dart';
+import 'package:tax_bd/src/feature/income/screen/foreign_income_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/govt_salary_income_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/income_information_screen.dart';
+import 'package:tax_bd/src/feature/income/screen/others_income_screen.dart';
+import 'package:tax_bd/src/feature/income/screen/partnership_business_income_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/private_salary_income_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/rental_income_screen.dart';
+import 'package:tax_bd/src/feature/income/screen/spouse_children_income_screen.dart';
 import 'package:tax_bd/src/feature/personal_info/screen/personal_info_screen.dart';
 import '../feature/auth/screen/otp_screen.dart';
 import '../feature/auth/screen/signin_screen.dart';
@@ -113,6 +118,36 @@ class GeneratedRoute {
             transitionsBuilder: slideTransition,
             pageBuilder: (_, animation, secondaryAnimation) =>
             const RentalIncomeScreen());
+      case AppRouter.othersIncomeScreen:
+        return PageRouteBuilder(
+            settings: settings,
+            transitionsBuilder: slideTransition,
+            pageBuilder: (_, animation, secondaryAnimation) =>
+            const OthersIncomeScreen());
+      case AppRouter.spouseChildrenIncomeScreen:
+        return PageRouteBuilder(
+            settings: settings,
+            transitionsBuilder: slideTransition,
+            pageBuilder: (_, animation, secondaryAnimation) =>
+            const SpouseChildrenIncomeScreen());
+      case AppRouter.foreignIncomeScreen:
+        return PageRouteBuilder(
+            settings: settings,
+            transitionsBuilder: slideTransition,
+            pageBuilder: (_, animation, secondaryAnimation) =>
+            const ForeignIncomeScreen());
+      case AppRouter.partnershipBusinessIncomeScreen:
+        return PageRouteBuilder(
+            settings: settings,
+            transitionsBuilder: slideTransition,
+            pageBuilder: (_, animation, secondaryAnimation) =>
+            const PartnershipBusinessIncomeScreen());
+      case AppRouter.capitalGainIncomeScreen:
+        return PageRouteBuilder(
+            settings: settings,
+            transitionsBuilder: slideTransition,
+            pageBuilder: (_, animation, secondaryAnimation) =>
+            const CapitalGainIncomeScreen());
 
       // case AppRouter.companyDetails:
       //   final Company company = settings.arguments as Company;

@@ -4,7 +4,16 @@ import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
 import 'package:tax_bd/src/constant/text_size.dart';
 import 'package:tax_bd/src/feature/auth/repository/auth_repository.dart';
+import 'package:tax_bd/src/feature/income/provider/agricultural_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/business_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/capital_gain_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/financial_asset_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/foreign_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/others_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/partnership_business_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/rental_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/salary_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/spouse_children_income_provider.dart';
 import 'package:tax_bd/src/feature/rebate/provider/rebate_calculation_provider.dart';
 import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import 'package:tax_bd/src/router/app_router.dart';
@@ -22,6 +31,16 @@ class HomeScreen extends StatelessWidget {
     final ExpanseInformationProvider expanseInformationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
     final TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
     final SalaryIncomeProvider salaryIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final RentalIncomeProvider rentalIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final AgriculturalIncomeProvider agriculturalIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final BusinessIncomeProvider businessIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final FinancialAssetIncomeProvider financialAssetIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final OthersIncomeProvider othersIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final SpouseChildrenIncomeProvider spouseChildrenIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final ForeignIncomeProvider foreignIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final PartnershipBusinessIncomeProvider partnershipBusinessIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final CapitalGainIncomeProvider capitalGainIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+
     WidgetsBinding.instance.addPostFrameCallback((_)async{
       await Future.wait([
         personalInfoProvider.getUserData(),
@@ -30,6 +49,15 @@ class HomeScreen extends StatelessWidget {
         taxCalculationProvider.getTaxCalculationData(),
         salaryIncomeProvider.getPrivateSalaryIncomeData(),
         salaryIncomeProvider.getGovtSalaryIncomeData(),
+        rentalIncomeProvider.getRentalIncomeData(),
+        agriculturalIncomeProvider.getAgricultureIncomeData(),
+        businessIncomeProvider.getBusinessIncomeData(),
+        financialAssetIncomeProvider.getFinancialAssetIncomeData(),
+        othersIncomeProvider.getOthersIncomeData(),
+        spouseChildrenIncomeProvider.getSpouseChildrenIncomeData(),
+        foreignIncomeProvider.getForeignIncomeData(),
+        partnershipBusinessIncomeProvider.getPartnershipBusinessIncomeData(),
+        capitalGainIncomeProvider.getCapitalGainIncomeData(),
       ]);
     });
   }

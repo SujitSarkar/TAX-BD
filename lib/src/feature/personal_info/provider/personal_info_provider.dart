@@ -1,8 +1,10 @@
 import 'package:flutter/Material.dart';
+import 'package:intl/intl.dart';
 import 'package:tax_bd/src/constant/app_toast.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
 import '../../../constant/db_child_path.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../../shared/validator.dart';
 
 class PersonalInfoProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
@@ -19,7 +21,8 @@ class PersonalInfoProvider extends ChangeNotifier {
   final TextEditingController circleController = TextEditingController();
   final TextEditingController taxZoneController = TextEditingController();
   final TextEditingController assessmentYearController = TextEditingController();
-  final TextEditingController dobController = TextEditingController();
+  DateTime dateOfBirth = DateTime.now();
+  final TextEditingController dateOfBirthController = TextEditingController();
   final TextEditingController spouseController = TextEditingController();
   final TextEditingController spouseTinController = TextEditingController();
   final TextEditingController contactAddressController =
@@ -50,6 +53,12 @@ class PersonalInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> selectDateOfBirth()async{
+    dateOfBirth = await showDatePickerAndGetDate();
+    dateOfBirthController.text = DateFormat('dd-MMM-yyyy').format(dateOfBirth);
+    notifyListeners();
+  }
+
   Future<void> getUserData() async {
     final Map<String, dynamic>? data =
         await firebaseDbHelper.fetchData(childPath: DbChildPath.personalInfo);
@@ -63,9 +72,9 @@ class PersonalInfoProvider extends ChangeNotifier {
       assessmentYearController.text = data['assessmentYear'];
       residentialStatusRadioValue = data['residentialStatus'] ?? 'None';
       statusOfTaxpayersRadioValue = data['statusOfTaxPayer'] ?? 'None';
-      taxpayerPrivilegesRadioValue = data['privilegesOfTaxPayer'] ??
-          'None';
-      dobController.text = data['dateOfBirth'];
+      taxpayerPrivilegesRadioValue = data['privilegesOfTaxPayer'] ?? 'None';
+      dateOfBirth = DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth']);
+      dateOfBirthController.text = DateFormat('dd-MMM-yyyy').format(dateOfBirth);
       spouseController.text = data['nameOfSpouse'];
       spouseTinController.text = data['tinOfSpouse'];
       contactAddressController.text = data['addressOfContact'];
@@ -98,7 +107,7 @@ class PersonalInfoProvider extends ChangeNotifier {
       'privilegesOfTaxPayer': taxpayerPrivilegesRadioValue == 'None'
           ? null
           : taxpayerPrivilegesRadioValue,
-      'dateOfBirth': dobController.text.trim(),
+      'dateOfBirth': dateOfBirth.millisecondsSinceEpoch,
       'nameOfSpouse': spouseController.text.trim(),
       'tinOfSpouse': spouseTinController.text.trim(),
       'addressOfContact': contactAddressController.text.trim(),

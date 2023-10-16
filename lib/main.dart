@@ -8,8 +8,13 @@ import 'package:tax_bd/src/feature/expanse/provider/expanse_information_provider
 import 'package:tax_bd/src/feature/home/provider/home_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/agricultural_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/business_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/capital_gain_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/financial_asset_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/foreign_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/others_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/partnership_business_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/rental_income_provider.dart';
+import 'package:tax_bd/src/feature/income/provider/spouse_children_income_provider.dart';
 import 'package:tax_bd/src/feature/personal_info/provider/personal_info_provider.dart';
 import 'package:tax_bd/src/feature/rebate/provider/rebate_calculation_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/salary_income_provider.dart';
@@ -35,6 +40,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => HomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => PersonalInfoProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => SalaryIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => AgriculturalIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => BusinessIncomeProvider(),lazy: true),
@@ -43,7 +49,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ExpanseInformationProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => FinancialAssetIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => RentalIncomeProvider(),lazy: true),
-        ChangeNotifierProvider(create: (context) => PersonalInfoProvider()),
+        ChangeNotifierProvider(create: (context) => OthersIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => SpouseChildrenIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => ForeignIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => PartnershipBusinessIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => CapitalGainIncomeProvider(),lazy: true),
       ],
       child: MaterialApp(
         navigatorKey: AppNavigatorKey.key,

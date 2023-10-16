@@ -26,6 +26,7 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
             await salaryIncomeProvider.getPrivateSalaryIncomeData(),
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(children: [
             const Text(
