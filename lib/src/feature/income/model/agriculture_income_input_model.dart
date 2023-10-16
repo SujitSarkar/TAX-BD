@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AgricultureIncomeInputModel {
-  TextEditingController? saleTurnoverReceipts;
-  TextEditingController? grossProfit;
-  TextEditingController? generalExpanses;
-  TextEditingController? netProfit;
+  final TextEditingController? saleTurnoverReceipt;
+  final TextEditingController? grossProfit;
+  final TextEditingController? generalExpanses;
+  final TextEditingController? netProfit;
 
   AgricultureIncomeInputModel(
-      {this.saleTurnoverReceipts,
+      {this.saleTurnoverReceipt,
       this.grossProfit,
       this.generalExpanses,
       this.netProfit});
