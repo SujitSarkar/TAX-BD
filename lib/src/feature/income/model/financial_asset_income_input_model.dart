@@ -1,15 +1,15 @@
 import 'package:flutter/Material.dart';
 
-class FinancialAssetIncomeInputModel{
-  FDRIncomeItemModel? fdrIncome;
-  DPSIncomeItemModel? dpsIncome;
-  IncomeFromBankItemModel? incomeFromBank;
-  InsuranceProfitItemModel? insuranceProfit;
-  OthersProfitItemModel? othersProfit;
-
-  FinancialAssetIncomeInputModel({this.fdrIncome, this.dpsIncome,
-      this.incomeFromBank, this.insuranceProfit, this.othersProfit});
-}
+// class FinancialAssetIncomeInputModel{
+//   FDRIncomeItemModel? fdrIncome;
+//   DPSIncomeItemModel? dpsIncome;
+//   IncomeFromBankItemModel? incomeFromBank;
+//   InsuranceProfitItemModel? insuranceProfit;
+//   OthersProfitItemModel? othersProfit;
+//
+//   FinancialAssetIncomeInputModel({this.fdrIncome, this.dpsIncome,
+//       this.incomeFromBank, this.insuranceProfit, this.othersProfit});
+// }
 
 class FDRIncomeItemModel{
   TextEditingController? fdrNo;
