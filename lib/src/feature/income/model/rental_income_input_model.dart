@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
 class RentalIncomeInputModel {
-  TextEditingController? locationAndDescription;
-  TextEditingController? rentReceipt;
-  TextEditingController? advanceRentReceipt;
-  TextEditingController? valueOfAnyBenefits;
-  TextEditingController? adjustedAdvanceRent;
-  TextEditingController? vacancyAllowance;
-  TextEditingController? totalRentIncome;
-  TextEditingController? repairAD; //AD = Allowance Deduction
-  TextEditingController? municipalAD;
-  TextEditingController? landAD;
-  TextEditingController? interestAD;
-  TextEditingController? insuranceAD;
-  TextEditingController? otherAD;
-  TextEditingController? totalAdmissibleDeduction;
-  TextEditingController? incomeFromHouseProperty;
-  TextEditingController? inCaseOfPartial;
+  final TextEditingController? locationAndDescription;
+  final TextEditingController? rentReceived;
+  final TextEditingController? advanceRentReceived;
+  final TextEditingController? valueOfAnyBenefits;
+  final TextEditingController? adjustedAdvanceRent;
+  final TextEditingController? vacancyAllowance;
+  final TextEditingController? totalRentIncome;
+  final TextEditingController? repairAD; //AD = Allowable Deduction
+  final TextEditingController? municipalAD;
+  final TextEditingController? landAD;
+  final TextEditingController? interestAD;
+  final TextEditingController? insuranceAD;
+  final TextEditingController? otherAD;
+  final TextEditingController? totalAdmissibleDeduction;
+  final TextEditingController? netIncome;
+  final TextEditingController? taxpayerShare;
 
   RentalIncomeInputModel({
       this.locationAndDescription,
-      this.rentReceipt,
-      this.advanceRentReceipt,
+      this.rentReceived,
+      this.advanceRentReceived,
       this.valueOfAnyBenefits,
       this.adjustedAdvanceRent,
       this.vacancyAllowance,
@@ -33,6 +33,6 @@ class RentalIncomeInputModel {
       this.insuranceAD,
       this.otherAD,
       this.totalAdmissibleDeduction,
-      this.incomeFromHouseProperty,
-      this.inCaseOfPartial});
+      this.netIncome,
+      this.taxpayerShare});
 }
