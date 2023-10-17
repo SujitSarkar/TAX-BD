@@ -17,7 +17,9 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
         saleTurnoverReceipt: TextEditingController(),
         grossProfit: TextEditingController(),
         generalExpanses: TextEditingController(),
-        netProfit: TextEditingController()));
+        netProfit: TextEditingController(),
+        exemptedAmount: TextEditingController(),
+    ));
     notifyListeners();
   }
 
@@ -40,7 +42,8 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
               saleTurnoverReceipt: TextEditingController(text: element['saleTurnoverReceipt']),
               grossProfit: TextEditingController(text: element['grossProfit']),
               generalExpanses: TextEditingController(text: element['generalExpanses']),
-              netProfit: TextEditingController(text: element['netProfit'])));
+              netProfit: TextEditingController(text: element['netProfit']),
+              exemptedAmount: TextEditingController(text: element['exemptedAmount'])));
         }
       }
     } else {
@@ -49,7 +52,8 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
               saleTurnoverReceipt: TextEditingController(),
               grossProfit: TextEditingController(),
               generalExpanses: TextEditingController(),
-              netProfit: TextEditingController())
+              netProfit: TextEditingController(),
+            exemptedAmount: TextEditingController(),)
       );
     }
     notifyListeners();
@@ -77,7 +81,8 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
         'saleTurnoverReceipt': element.saleTurnoverReceipt!.text.trim(),
         'grossProfit': element.grossProfit!.text.trim(),
         'generalExpanses': element.generalExpanses!.text.trim(),
-        'netProfit': element.netProfit!.text.trim()
+        'netProfit': element.netProfit!.text.trim(),
+        'exemptedAmount': element.exemptedAmount!.text.trim(),
       };
       agricultureIncomeDataList.add(dataMap);
     }

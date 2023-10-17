@@ -101,6 +101,12 @@ class AgricultureIncomeScreen extends StatelessWidget {
                                 agriculturalIncomeProvider
                                     .agricultureIncomeInputList[index]
                                     .netProfit!,readOnly: true),
+                            buildRow(
+                                "4. Exempted if any",
+                                agriculturalIncomeProvider
+                                    .agricultureIncomeInputList[index]
+                                    .exemptedAmount!),
+
                           ],
                         ),
                       ],
