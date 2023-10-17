@@ -8,7 +8,6 @@ class BusinessIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
-
   List<BusinessIncomeInputModel> businessIncomeInputList = [];
 
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -22,6 +21,7 @@ class BusinessIncomeProvider extends ChangeNotifier {
       generalExpanses: TextEditingController(),
       badDebtExpanses: TextEditingController(),
       netProfit: TextEditingController(),
+      exemptedAmount: TextEditingController(),
       cashAndBankBalance: TextEditingController(),
       inventory: TextEditingController(),
       fixedAssets: TextEditingController(),
@@ -59,6 +59,7 @@ class BusinessIncomeProvider extends ChangeNotifier {
             generalExpanses: TextEditingController(text: element['generalExpanses']),
             badDebtExpanses: TextEditingController(text: element['badDebtExpanses']),
             netProfit: TextEditingController(text: element['netProfit']),
+            exemptedAmount: TextEditingController(text: element['exemptedAmount']),
             cashAndBankBalance: TextEditingController(text: element['cashAndBankBalance']),
             inventory: TextEditingController(text: element['inventory']),
             fixedAssets: TextEditingController(text: element['fixedAssets']),
@@ -95,6 +96,7 @@ class BusinessIncomeProvider extends ChangeNotifier {
             closingCapital: TextEditingController(),
             liabilities: TextEditingController(),
             totalCapitalAndLiabilities: TextEditingController(),
+            exemptedAmount: TextEditingController(),
           )
       );
     }
@@ -161,6 +163,7 @@ class BusinessIncomeProvider extends ChangeNotifier {
         'generalExpanses': element.generalExpanses!.text.trim(),
         'badDebtExpanses': element.badDebtExpanses!.text.trim(),
         'netProfit': element.netProfit!.text.trim(),
+        'exemptedAmount': element.exemptedAmount!.text.trim(),
         'cashAndBankBalance': element.cashAndBankBalance!.text.trim(),
         'inventory': element.inventory!.text.trim(),
         'fixedAssets': element.fixedAssets!.text.trim(),

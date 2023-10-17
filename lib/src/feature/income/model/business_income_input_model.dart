@@ -9,6 +9,7 @@ class BusinessIncomeInputModel {
   final TextEditingController? generalExpanses;
   final TextEditingController? badDebtExpanses;
   final TextEditingController? netProfit;
+  final TextEditingController? exemptedAmount;
   final TextEditingController? cashAndBankBalance;
   final TextEditingController? inventory;
   final TextEditingController? fixedAssets;
@@ -21,8 +22,8 @@ class BusinessIncomeInputModel {
   final TextEditingController? liabilities;
   final TextEditingController? totalCapitalAndLiabilities;
 
-  BusinessIncomeInputModel({
-      this.nameOfBusiness,
+  BusinessIncomeInputModel(
+      {this.nameOfBusiness,
       this.natureOfBusiness,
       this.addressOfBusiness,
       this.saleTurnoverReceipt,
@@ -40,5 +41,6 @@ class BusinessIncomeInputModel {
       this.drawingDuringIncomeYear,
       this.closingCapital,
       this.liabilities,
-      this.totalCapitalAndLiabilities});
+      this.totalCapitalAndLiabilities,
+      this.exemptedAmount});
 }

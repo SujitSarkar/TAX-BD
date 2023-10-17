@@ -118,6 +118,10 @@ class BusinessIncomeScreen extends StatelessWidget {
                                 "5. Net Profit (2-3)",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index].netProfit!,readOnly: true),
+                            buildRow(
+                                "6. Exempted if any",
+                                businessIncomeProvider
+                                    .businessIncomeInputList[index].exemptedAmount!),
 
                             ///Table Header
                             const TableRow(
@@ -140,52 +144,52 @@ class BusinessIncomeScreen extends StatelessWidget {
                             ),
                             //Table Row
                             buildRow(
-                                "6. Cash & Bank Balance",
+                                "7. Cash & Bank Balance",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index]
                                     .cashAndBankBalance!),
                             buildRow(
-                                "7. Inventory",
+                                "8. Inventory",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index].inventory!),
                             buildRow(
-                                "8. Fixed Assets",
+                                "9. Fixed Assets",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index].fixedAssets!),
                             buildRow(
-                                "9. Other Assets",
+                                "10. Other Assets",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index].otherAssets!),
                             buildRow(
-                                "10. Total Assets (6+7+8+9)",
+                                "11. Total Assets (6+7+8+9)",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index].totalAssets!,readOnly: true),
                             buildRow(
-                                "11. Opening Capital",
+                                "12. Opening Capital",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index]
                                     .openingCapital!),
                             buildRow(
-                                "12. Net Profit",
+                                "13. Net Profit",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index]
                                     .balanceSheetNetProfit!),
                             buildRow(
-                                "13. Drawing during the income year",
+                                "14. Drawing during the income year",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index]
                                     .drawingDuringIncomeYear!),
                             buildRow(
-                                "14. Closing Capital (11+12-13)",
+                                "15. Closing Capital (11+12-13)",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index]
                                     .closingCapital!,readOnly: true),
                             buildRow(
-                                "15. Liabilities",
+                                "16. Liabilities",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index].liabilities!),
                             buildRow(
-                                "16. Total Capital & Liabilities (14+15)",
+                                "17. Total Capital & Liabilities (14+15)",
                                 businessIncomeProvider
                                     .businessIncomeInputList[index]
                                     .totalCapitalAndLiabilities!,readOnly: true),
