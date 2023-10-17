@@ -3,6 +3,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/app_string.dart';
 import 'package:tax_bd/src/constant/app_theme.dart';
+import 'package:tax_bd/src/feature/asset/provider/asset_info_provider.dart';
 import 'package:tax_bd/src/feature/auth/provider/auth_provider.dart';
 import 'package:tax_bd/src/feature/expanse/provider/expanse_information_provider.dart';
 import 'package:tax_bd/src/feature/home/provider/home_provider.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ForeignIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => PartnershipBusinessIncomeProvider(),lazy: true),
         ChangeNotifierProvider(create: (context) => CapitalGainIncomeProvider(),lazy: true),
+        ChangeNotifierProvider(create: (context) => AssetInfoProvider(),lazy: true),
       ],
       child: MaterialApp(
         navigatorKey: AppNavigatorKey.key,

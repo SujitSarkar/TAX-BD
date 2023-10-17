@@ -54,7 +54,8 @@ class OthersProfitItemModel{
   TextEditingController? amountOfInvestment;
   TextEditingController? profitReceived;
   TextEditingController? sourceTax;
+  TextEditingController? exemptedAmount;
 
   OthersProfitItemModel({this.investmentDetails, this.amountOfInvestment,
-      this.profitReceived, this.sourceTax});
+      this.profitReceived, this.sourceTax, this.exemptedAmount});
 }

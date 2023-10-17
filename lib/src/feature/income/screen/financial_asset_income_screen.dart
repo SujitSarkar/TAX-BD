@@ -303,6 +303,10 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                             "4. Source tax",
                             financialAssetIncomeProvider
                                 .othersProfitItemList[index].sourceTax!),
+                        buildRow(
+                            "4. Exempted if any",
+                            financialAssetIncomeProvider
+                                .othersProfitItemList[index].exemptedAmount!),
                       ],
                     ),
                   ],

@@ -11,6 +11,7 @@ class PersonalInfoProvider extends ChangeNotifier {
   bool loading = false;
   bool functionLoading = false;
   final GlobalKey<FormState> personalInfoFormKey = GlobalKey();
+  String? genderRadioValue = DummyData.genderList.first;
   String? residentialStatusRadioValue = DummyData.residentialStatusList.first;
   String? statusOfTaxpayersRadioValue = DummyData.statusOfTaxpayersList.first;
   String? taxpayerPrivilegesRadioValue = DummyData.taxpayerPrivilegesList.last;
@@ -38,6 +39,10 @@ class PersonalInfoProvider extends ChangeNotifier {
       TextEditingController();
 
   ///UI interaction functions::::::::::::::::::::::::::::::::::::::::::::::::::
+  void changeGender(String? newValue) {
+    genderRadioValue = newValue;
+    notifyListeners();
+  }
   void changeResidentialStatus(String? newValue) {
     residentialStatusRadioValue = newValue;
     notifyListeners();
@@ -70,6 +75,7 @@ class PersonalInfoProvider extends ChangeNotifier {
       circleController.text = data['circle'];
       taxZoneController.text = data['taxZone'];
       assessmentYearController.text = data['assessmentYear'];
+      genderRadioValue= data['gender'];
       residentialStatusRadioValue = data['residentialStatus'] ?? 'None';
       statusOfTaxpayersRadioValue = data['statusOfTaxPayer'] ?? 'None';
       taxpayerPrivilegesRadioValue = data['privilegesOfTaxPayer'] ?? 'None';
@@ -100,6 +106,7 @@ class PersonalInfoProvider extends ChangeNotifier {
       'circle': circleController.text.trim(),
       'taxZone': taxZoneController.text.trim(),
       'assessmentYear': assessmentYearController.text.trim(),
+      'gender': genderRadioValue,
       'residentialStatus': residentialStatusRadioValue,
       'statusOfTaxPayer': statusOfTaxpayersRadioValue == 'None'
           ? null

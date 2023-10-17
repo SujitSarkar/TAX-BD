@@ -91,6 +91,11 @@ class OthersIncomeScreen extends StatelessWidget {
                             othersIncomeProvider
                                 .othersIncomeInputList[index]
                                 .tdsDeducted!),
+                        buildRow(
+                            "4. Exempted if any",
+                            othersIncomeProvider
+                                .othersIncomeInputList[index]
+                                .exemptedAmount!),
                       ],
                     ),
                   ],

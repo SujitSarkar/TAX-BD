@@ -98,6 +98,11 @@ class PartnershipBusinessIncomeScreen extends StatelessWidget {
                             partnershipBusinessIncomeProvider
                                 .partnershipBusinessIncomeInputList[index]
                                 .totalProfit!,readOnly: true),
+                        buildRow(
+                            "5. Exempted if any",
+                            partnershipBusinessIncomeProvider
+                                .partnershipBusinessIncomeInputList[index]
+                                .exemptedAmount!),
                       ],
                     ),
                   ],

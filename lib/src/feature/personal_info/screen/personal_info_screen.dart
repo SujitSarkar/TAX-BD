@@ -79,7 +79,27 @@ class PersonalInfoScreen extends StatelessWidget {
                           required: true,
                         ),
                         const SizedBox(height: 16),
-                        Text('7. Residential Status',
+                        Text('7. Gender',
+                            style: TextStyle(
+                                color: AppColor.textColor,
+                                fontSize: TextSize.bodyText)),
+                        Column(
+                          children: DummyData.genderList
+                              .map((String option) {
+                            return RadioListTile(
+                              contentPadding: EdgeInsets.zero,
+                              dense: true,
+                              title: Text(option),
+                              value: option,
+                              groupValue: personalInfoProvider
+                                  .genderRadioValue,
+                              onChanged:
+                              personalInfoProvider.changeGender,
+                            );
+                          }).toList(),
+                        ),
+                        const SizedBox(height: 16),
+                        Text('8. Residential Status',
                             style: TextStyle(
                                 color: AppColor.textColor,
                                 fontSize: TextSize.bodyText)),
@@ -99,7 +119,7 @@ class PersonalInfoScreen extends StatelessWidget {
                           }).toList(),
                         ),
                         const SizedBox(height: 16),
-                        Text('8. Status of TAX payer',
+                        Text('9. Status of TAX payer',
                             style: TextStyle(
                                 color: AppColor.textColor,
                                 fontSize: TextSize.bodyText)),
@@ -119,7 +139,7 @@ class PersonalInfoScreen extends StatelessWidget {
                           }).toList(),
                         ),
                         const SizedBox(height: 16),
-                        Text('9. Privileges of TAX payer',
+                        Text('10. Privileges of TAX payer',
                             style: TextStyle(
                                 color: AppColor.textColor,
                                 fontSize: TextSize.bodyText)),
@@ -141,7 +161,7 @@ class PersonalInfoScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                           controller: personalInfoProvider.dateOfBirthController,
-                          labelText: '10. Date of birth',
+                          labelText: '11. Date of birth',
                           hintText: 'Enter date of birth',
                           required: true,
                           readOnly: true,
@@ -152,40 +172,40 @@ class PersonalInfoScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.spouseController,
-                            labelText: '11. Name of spouse',
+                            labelText: '12. Name of spouse',
                             hintText: 'Enter name of spouse',
                             textCapitalization: TextCapitalization.words),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.spouseTinController,
-                            labelText: '12. TIN of spouse',
+                            labelText: '13. TIN of spouse',
                             hintText: 'Enter TIN of spouse',
                             textInputType: TextInputType.number),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                           controller:
                               personalInfoProvider.contactAddressController,
-                          labelText: '13. Address of contact',
+                          labelText: '14. Address of contact',
                           hintText: 'Enter Address of contact',
                           required: true,
                         ),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.telephoneController,
-                            labelText: '14. Telephone',
+                            labelText: '15. Telephone',
                             hintText: 'Enter Telephone',
                             textInputType: TextInputType.phone),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.mobileController,
-                            labelText: '15. Mobile number',
+                            labelText: '16. Mobile number',
                             hintText: 'Enter Mobile number',
                             required: true,
                             textInputType: TextInputType.phone),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.emailController,
-                            labelText: '16. Email address',
+                            labelText: '17. Email address',
                             hintText: 'Enter email address',
                             required: true,
                             textInputType: TextInputType.emailAddress),
@@ -194,20 +214,20 @@ class PersonalInfoScreen extends StatelessWidget {
                             controller: personalInfoProvider
                                 .currentlyWorkingOrgController,
                             labelText:
-                                '17. If employed, employer’s name (latest employer’s name in case of multiple employment)',
+                                '18. If employed, employer’s name (latest employer’s name in case of multiple employment)',
                             hintText: 'Enter if employed, employer’s name (latest employer’s name in case of multiple employment)',
                             textCapitalization: TextCapitalization.words),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.orgNameController,
-                            labelText: '18. Organization name',
+                            labelText: '19. Organization name',
                             hintText: 'Enter Organization name',
                             required: true,
                             textCapitalization: TextCapitalization.words),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.orgBinController,
-                            labelText: '19. BIN of organization',
+                            labelText: '20. BIN of organization',
                             hintText: 'Enter BIN of organization',
                             required: true,
                             textInputType: TextInputType.number),
@@ -216,7 +236,7 @@ class PersonalInfoScreen extends StatelessWidget {
                           controller:
                               personalInfoProvider.partnerNameAndTinController,
                           labelText:
-                              '20. Name and TIN of Partners/Members in case of Firm/Association of Persons',
+                              '21. Name and TIN of Partners/Members in case of Firm/Association of Persons',
                           minLine: 2,
                           maxLine: 3,
                           hintText:

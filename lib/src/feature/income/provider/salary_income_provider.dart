@@ -11,7 +11,6 @@ class SalaryIncomeProvider extends ChangeNotifier {
   bool functionLoading = false;
 
   List<PrivateSalaryIncomeInputModel> privateSalaryIncomeInputList = [];
-
   List<GovtSalaryIncomeInputModel> govtSalaryIncomeInputList = [];
 
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -158,6 +157,12 @@ class SalaryIncomeProvider extends ChangeNotifier {
               ? '0.0'
               : element.exemptedAmount!.text.trim());
 
+      if ((totalSalaryReceivedValue / 3) < 450000) {
+        element.exemptedAmount!.text = '${totalSalaryReceivedValue / 3}';
+      } else {
+        element.exemptedAmount!.text = 450000.toString();
+      }
+
       element.totalSalaryReceived!.text = '$totalSalaryReceivedValue';
       element.totalIncomeFromSalary!.text = '$totalIncomeFromSalaryValue';
       notifyListeners();
@@ -197,29 +202,78 @@ class SalaryIncomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
-  ///Govt Salary
+  ///Govt Salary:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addGovtSalaryIncomeInputListItem() {
     govtSalaryIncomeInputList.add(
       GovtSalaryIncomeInputModel(
-        basicPay: TextEditingController(),
-        arrearPay: TextEditingController(),
-        specialAllowance: TextEditingController(),
-        houseRentAllowance: TextEditingController(),
-        medicalAllowance: TextEditingController(),
-        conveyanceAllowance: TextEditingController(),
-        festivalAllowance: TextEditingController(),
-        supportStaffAllowance: TextEditingController(),
-        leaveAllowance: TextEditingController(),
-        honorariumReward: TextEditingController(),
-        overtimeAllowances: TextEditingController(),
-        banglaNoboborshoAllowances: TextEditingController(),
-        interestAccruedOnProvidentFund: TextEditingController(),
-        lumpGrant: TextEditingController(),
-        gratuity: TextEditingController(),
-        others: TextEditingController(),
-        total: TextEditingController(),
+        basicPay: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        arrearPay: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        specialAllowance: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        houseRentAllowance: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        medicalAllowance: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        conveyanceAllowance: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        festivalAllowance: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        supportStaffAllowance: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        leaveAllowance: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        honorariumReward: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        overtimeAllowances: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        banglaNoboborshoAllowances: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        interestAccruedOnProvidentFund: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        lumpGrant: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        gratuity: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        others: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
+        total: GovtSalaryIncomeInputModelItem(
+            amount: TextEditingController(),
+            exempted: TextEditingController(),
+            taxable: TextEditingController()),
       ),
     );
     notifyListeners();
@@ -242,34 +296,128 @@ class SalaryIncomeProvider extends ChangeNotifier {
         for (var element in data['data']) {
           govtSalaryIncomeInputList.add(
             GovtSalaryIncomeInputModel(
-              basicPay: TextEditingController(text: element['basicPay']),
-              arrearPay: TextEditingController(text: element['arrearPay']),
-              specialAllowance:
-                  TextEditingController(text: element['specialAllowance']),
-              houseRentAllowance:
-                  TextEditingController(text: element['houseRentAllowance']),
-              medicalAllowance:
-                  TextEditingController(text: element['medicalAllowance']),
-              conveyanceAllowance:
-                  TextEditingController(text: element['conveyanceAllowance']),
-              festivalAllowance:
-                  TextEditingController(text: element['festivalAllowance']),
-              supportStaffAllowance:
-                  TextEditingController(text: element['supportStaffAllowance']),
-              leaveAllowance:
-                  TextEditingController(text: element['leaveAllowance']),
-              honorariumReward:
-                  TextEditingController(text: element['honorariumReward']),
-              overtimeAllowances:
-                  TextEditingController(text: element['overtimeAllowances']),
-              banglaNoboborshoAllowances: TextEditingController(
-                  text: element['banglaNoboborshoAllowances']),
-              interestAccruedOnProvidentFund: TextEditingController(
-                  text: element['interestAccruedOnProvidentFund']),
-              lumpGrant: TextEditingController(text: element['lumpGrant']),
-              gratuity: TextEditingController(text: element['gratuity']),
-              others: TextEditingController(text: element['others']),
-              total: TextEditingController(text: element['total']),
+              basicPay: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['basicPay']['amount']),
+                  exempted: TextEditingController(
+                      text: element['basicPay']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['basicPay']['taxable'])),
+              arrearPay: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['arrearPay']['amount']),
+                  exempted: TextEditingController(
+                      text: element['arrearPay']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['arrearPay']['taxable'])),
+              specialAllowance: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['specialAllowance']['amount']),
+                  exempted: TextEditingController(
+                      text: element['specialAllowance']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['specialAllowance']['taxable'])),
+              houseRentAllowance: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['houseRentAllowance']['amount']),
+                  exempted: TextEditingController(
+                      text: element['houseRentAllowance']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['houseRentAllowance']['taxable'])),
+              medicalAllowance: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['medicalAllowance']['amount']),
+                  exempted: TextEditingController(
+                      text: element['medicalAllowance']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['medicalAllowance']['taxable'])),
+              conveyanceAllowance: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['conveyanceAllowance']['amount']),
+                  exempted: TextEditingController(
+                      text: element['conveyanceAllowance']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['conveyanceAllowance']['taxable'])),
+              festivalAllowance: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['festivalAllowance']['amount']),
+                  exempted: TextEditingController(
+                      text: element['festivalAllowance']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['festivalAllowance']['taxable'])),
+              supportStaffAllowance: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['supportStaffAllowance']['amount']),
+                  exempted: TextEditingController(
+                      text: element['supportStaffAllowance']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['supportStaffAllowance']['taxable'])),
+              leaveAllowance: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['leaveAllowance']['amount']),
+                  exempted: TextEditingController(
+                      text: element['leaveAllowance']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['leaveAllowance']['taxable'])),
+              honorariumReward: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['honorariumReward']['amount']),
+                  exempted: TextEditingController(
+                      text: element['honorariumReward']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['honorariumReward']['taxable'])),
+              overtimeAllowances: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['overtimeAllowances']['amount']),
+                  exempted: TextEditingController(
+                      text: element['overtimeAllowances']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['overtimeAllowances']['taxable'])),
+              banglaNoboborshoAllowances: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['banglaNoboborshoAllowances']['amount']),
+                  exempted: TextEditingController(
+                      text: element['banglaNoboborshoAllowances']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['banglaNoboborshoAllowances']['taxable'])),
+              interestAccruedOnProvidentFund: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['interestAccruedOnProvidentFund']
+                          ['amount']),
+                  exempted: TextEditingController(
+                      text: element['interestAccruedOnProvidentFund']
+                          ['exempted']),
+                  taxable: TextEditingController(
+                      text: element['interestAccruedOnProvidentFund']
+                          ['taxable'])),
+              lumpGrant: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['lumpGrant']['amount']),
+                  exempted: TextEditingController(
+                      text: element['lumpGrant']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['lumpGrant']['taxable'])),
+              gratuity: GovtSalaryIncomeInputModelItem(
+                  amount: TextEditingController(
+                      text: element['gratuity']['amount']),
+                  exempted: TextEditingController(
+                      text: element['gratuity']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['gratuity']['taxable'])),
+              others: GovtSalaryIncomeInputModelItem(
+                  amount:
+                      TextEditingController(text: element['others']['amount']),
+                  exempted: TextEditingController(
+                      text: element['others']['exempted']),
+                  taxable: TextEditingController(
+                      text: element['others']['taxable'])),
+              total: GovtSalaryIncomeInputModelItem(
+                  amount:
+                      TextEditingController(text: element['total']['amount']),
+                  exempted:
+                      TextEditingController(text: element['total']['exempted']),
+                  taxable:
+                      TextEditingController(text: element['total']['taxable'])),
             ),
           );
         }
@@ -277,23 +425,74 @@ class SalaryIncomeProvider extends ChangeNotifier {
     } else {
       govtSalaryIncomeInputList.add(
         GovtSalaryIncomeInputModel(
-          basicPay: TextEditingController(),
-          arrearPay: TextEditingController(),
-          specialAllowance: TextEditingController(),
-          houseRentAllowance: TextEditingController(),
-          medicalAllowance: TextEditingController(),
-          conveyanceAllowance: TextEditingController(),
-          festivalAllowance: TextEditingController(),
-          supportStaffAllowance: TextEditingController(),
-          leaveAllowance: TextEditingController(),
-          honorariumReward: TextEditingController(),
-          overtimeAllowances: TextEditingController(),
-          banglaNoboborshoAllowances: TextEditingController(),
-          interestAccruedOnProvidentFund: TextEditingController(),
-          lumpGrant: TextEditingController(),
-          gratuity: TextEditingController(),
-          others: TextEditingController(),
-          total: TextEditingController(),
+          basicPay: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          arrearPay: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          specialAllowance: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          houseRentAllowance: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          medicalAllowance: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          conveyanceAllowance: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          festivalAllowance: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          supportStaffAllowance: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          leaveAllowance: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          honorariumReward: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          overtimeAllowances: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          banglaNoboborshoAllowances: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          interestAccruedOnProvidentFund: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          lumpGrant: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          gratuity: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          others: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
+          total: GovtSalaryIncomeInputModelItem(
+              amount: TextEditingController(),
+              exempted: TextEditingController(),
+              taxable: TextEditingController()),
         ),
       );
     }
@@ -306,77 +505,215 @@ class SalaryIncomeProvider extends ChangeNotifier {
     final List<Map<String, dynamic>> govtSalaryIncomeDataList = [];
 
     for (GovtSalaryIncomeInputModel element in govtSalaryIncomeInputList) {
-      final double totalValue = double.parse(element.basicPay!.text.isEmpty
+      final double totalAmountValue = double.parse(
+              element.basicPay!.amount!.text.isEmpty
+                  ? '0.0'
+                  : element.basicPay!.amount!.text.trim()) +
+          double.parse(element.arrearPay!.amount!.text.isEmpty
               ? '0.0'
-              : element.basicPay!.text.trim()) +
-          double.parse(element.arrearPay!.text.isEmpty
+              : element.arrearPay!.amount!.text.trim()) +
+          double.parse(element.specialAllowance!.amount!.text.isEmpty
               ? '0.0'
-              : element.arrearPay!.text.trim()) +
-          double.parse(element.specialAllowance!.text.isEmpty
+              : element.specialAllowance!.amount!.text.trim()) +
+          double.parse(element.houseRentAllowance!.amount!.text.isEmpty
               ? '0.0'
-              : element.specialAllowance!.text.trim()) +
-          double.parse(element.houseRentAllowance!.text.isEmpty
+              : element.houseRentAllowance!.amount!.text.trim()) +
+          double.parse(element.medicalAllowance!.amount!.text.isEmpty
               ? '0.0'
-              : element.houseRentAllowance!.text.trim()) +
-          double.parse(element.medicalAllowance!.text.isEmpty
+              : element.medicalAllowance!.amount!.text.trim()) +
+          double.parse(element.conveyanceAllowance!.amount!.text.isEmpty
               ? '0.0'
-              : element.medicalAllowance!.text.trim()) +
-          double.parse(element.conveyanceAllowance!.text.isEmpty
+              : element.conveyanceAllowance!.amount!.text.trim()) +
+          double.parse(element.festivalAllowance!.amount!.text.isEmpty
               ? '0.0'
-              : element.conveyanceAllowance!.text.trim()) +
-          double.parse(element.festivalAllowance!.text.isEmpty
+              : element.festivalAllowance!.amount!.text.trim()) +
+          double.parse(element.supportStaffAllowance!.amount!.text.isEmpty
               ? '0.0'
-              : element.festivalAllowance!.text.trim()) +
-          double.parse(element.supportStaffAllowance!.text.isEmpty
+              : element.supportStaffAllowance!.amount!.text.trim()) +
+          double.parse(element.leaveAllowance!.amount!.text.isEmpty
               ? '0.0'
-              : element.supportStaffAllowance!.text.trim()) +
-          double.parse(element.leaveAllowance!.text.isEmpty
+              : element.leaveAllowance!.amount!.text.trim()) +
+          double.parse(element.honorariumReward!.amount!.text.isEmpty
               ? '0.0'
-              : element.leaveAllowance!.text.trim()) +
-          double.parse(element.honorariumReward!.text.isEmpty
-              ? '0.0'
-              : element.honorariumReward!.text.trim()) +
-          double.parse(element.overtimeAllowances!.text.isEmpty
-              ? '0.0'
-              : element.overtimeAllowances!.text.trim()) +
-          double.parse(element.banglaNoboborshoAllowances!.text.isEmpty
-              ? '0.0'
-              : element.banglaNoboborshoAllowances!.text.trim()) +
-          double.parse(element.interestAccruedOnProvidentFund!.text.isEmpty
-              ? '0.0'
-              : element.interestAccruedOnProvidentFund!.text.trim()) +
-          double.parse(element.lumpGrant!.text.isEmpty
-              ? '0.0'
-              : element.lumpGrant!.text.trim()) +
-          double.parse(element.gratuity!.text.isEmpty
-              ? '0.0'
-              : element.gratuity!.text.trim()) +
-          double.parse(element.others!.text.isEmpty
-              ? '0.0'
-              : element.others!.text.trim());
+              : element.honorariumReward!.amount!.text.trim()) +
+          double.parse(
+              element.overtimeAllowances!.amount!.text.isEmpty ? '0.0' : element.overtimeAllowances!.amount!.text.trim()) +
+          double.parse(element.banglaNoboborshoAllowances!.amount!.text.isEmpty ? '0.0' : element.banglaNoboborshoAllowances!.amount!.text.trim()) +
+          double.parse(element.interestAccruedOnProvidentFund!.amount!.text.isEmpty ? '0.0' : element.interestAccruedOnProvidentFund!.amount!.text.trim()) +
+          double.parse(element.lumpGrant!.amount!.text.isEmpty ? '0.0' : element.lumpGrant!.amount!.text.trim()) +
+          double.parse(element.gratuity!.amount!.text.isEmpty ? '0.0' : element.gratuity!.amount!.text.trim()) +
+          double.parse(element.others!.amount!.text.isEmpty ? '0.0' : element.others!.amount!.text.trim());
 
-      element.total!.text = '$totalValue';
+      final double totalExemptedValue = double.parse(
+          element.basicPay!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.basicPay!.exempted!.text.trim()) +
+          double.parse(element.arrearPay!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.arrearPay!.exempted!.text.trim()) +
+          double.parse(element.specialAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.specialAllowance!.exempted!.text.trim()) +
+          double.parse(element.houseRentAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.houseRentAllowance!.exempted!.text.trim()) +
+          double.parse(element.medicalAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.medicalAllowance!.exempted!.text.trim()) +
+          double.parse(element.conveyanceAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.conveyanceAllowance!.exempted!.text.trim()) +
+          double.parse(element.festivalAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.festivalAllowance!.exempted!.text.trim()) +
+          double.parse(element.supportStaffAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.supportStaffAllowance!.exempted!.text.trim()) +
+          double.parse(element.leaveAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.leaveAllowance!.exempted!.text.trim()) +
+          double.parse(element.honorariumReward!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.honorariumReward!.exempted!.text.trim()) +
+          double.parse(
+              element.overtimeAllowances!.exempted!.text.isEmpty ? '0.0' : element.overtimeAllowances!.exempted!.text.trim()) +
+          double.parse(element.banglaNoboborshoAllowances!.exempted!.text.isEmpty ? '0.0' : element.banglaNoboborshoAllowances!.exempted!.text.trim()) +
+          double.parse(element.interestAccruedOnProvidentFund!.exempted!.text.isEmpty ? '0.0' : element.interestAccruedOnProvidentFund!.exempted!.text.trim()) +
+          double.parse(element.lumpGrant!.exempted!.text.isEmpty ? '0.0' : element.lumpGrant!.exempted!.text.trim()) +
+          double.parse(element.gratuity!.exempted!.text.isEmpty ? '0.0' : element.gratuity!.exempted!.text.trim()) +
+          double.parse(element.others!.exempted!.text.isEmpty ? '0.0' : element.others!.exempted!.text.trim());
+
+      final double totalTaxableValue = double.parse(
+          element.basicPay!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.basicPay!.taxable!.text.trim()) +
+          double.parse(element.arrearPay!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.arrearPay!.taxable!.text.trim()) +
+          double.parse(element.specialAllowance!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.specialAllowance!.taxable!.text.trim()) +
+          double.parse(element.houseRentAllowance!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.houseRentAllowance!.taxable!.text.trim()) +
+          double.parse(element.medicalAllowance!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.medicalAllowance!.taxable!.text.trim()) +
+          double.parse(element.conveyanceAllowance!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.conveyanceAllowance!.taxable!.text.trim()) +
+          double.parse(element.festivalAllowance!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.festivalAllowance!.taxable!.text.trim()) +
+          double.parse(element.supportStaffAllowance!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.supportStaffAllowance!.taxable!.text.trim()) +
+          double.parse(element.leaveAllowance!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.leaveAllowance!.taxable!.text.trim()) +
+          double.parse(element.honorariumReward!.taxable!.text.isEmpty
+              ? '0.0'
+              : element.honorariumReward!.taxable!.text.trim()) +
+          double.parse(
+              element.overtimeAllowances!.taxable!.text.isEmpty ? '0.0' : element.overtimeAllowances!.taxable!.text.trim()) +
+          double.parse(element.banglaNoboborshoAllowances!.taxable!.text.isEmpty ? '0.0' : element.banglaNoboborshoAllowances!.taxable!.text.trim()) +
+          double.parse(element.interestAccruedOnProvidentFund!.taxable!.text.isEmpty ? '0.0' : element.interestAccruedOnProvidentFund!.taxable!.text.trim()) +
+          double.parse(element.lumpGrant!.taxable!.text.isEmpty ? '0.0' : element.lumpGrant!.taxable!.text.trim()) +
+          double.parse(element.gratuity!.taxable!.text.isEmpty ? '0.0' : element.gratuity!.taxable!.text.trim()) +
+          double.parse(element.others!.taxable!.text.isEmpty ? '0.0' : element.others!.taxable!.text.trim());
+
+      element.total!.amount!.text = '$totalAmountValue';
+      element.total!.exempted!.text = '$totalExemptedValue';
+      element.total!.taxable!.text = '$totalTaxableValue';
       notifyListeners();
 
       final Map<String, dynamic> dataMap = {
-        'basicPay': element.basicPay!.text,
-        'arrearPay': element.arrearPay!.text,
-        'specialAllowance': element.specialAllowance!.text,
-        'houseRentAllowance': element.houseRentAllowance!.text,
-        'medicalAllowance': element.medicalAllowance!.text,
-        'conveyanceAllowance': element.conveyanceAllowance!.text,
-        'festivalAllowance': element.festivalAllowance!.text,
-        'supportStaffAllowance': element.supportStaffAllowance!.text,
-        'leaveAllowance': element.leaveAllowance!.text,
-        'honorariumReward': element.honorariumReward!.text,
-        'overtimeAllowances': element.overtimeAllowances!.text,
-        'banglaNoboborshoAllowances': element.banglaNoboborshoAllowances!.text,
+        'basicPay': {
+          'amount': element.basicPay!.amount!.text,
+          'exempted': element.basicPay!.exempted!.text,
+          'taxable': element.basicPay!.taxable!.text
+        },
+        'arrearPay': {
+          'amount': element.arrearPay!.amount!.text,
+          'exempted': element.arrearPay!.exempted!.text,
+          'taxable': element.arrearPay!.taxable!.text
+        },
+        'specialAllowance': {
+          'amount': element.specialAllowance!.amount!.text,
+          'exempted': element.specialAllowance!.exempted!.text,
+          'taxable': element.specialAllowance!.taxable!.text
+        },
+        'houseRentAllowance': {
+          'amount': element.houseRentAllowance!.amount!.text,
+          'exempted': element.houseRentAllowance!.exempted!.text,
+          'taxable': element.houseRentAllowance!.taxable!.text
+        },
+        'medicalAllowance': {
+          'amount': element.medicalAllowance!.amount!.text,
+          'exempted': element.medicalAllowance!.exempted!.text,
+          'taxable': element.medicalAllowance!.taxable!.text
+        },
+        'conveyanceAllowance': {
+          'amount': element.conveyanceAllowance!.amount!.text,
+          'exempted': element.conveyanceAllowance!.exempted!.text,
+          'taxable': element.conveyanceAllowance!.taxable!.text
+        },
+        'festivalAllowance': {
+          'amount': element.festivalAllowance!.amount!.text,
+          'exempted': element.festivalAllowance!.exempted!.text,
+          'taxable': element.festivalAllowance!.taxable!.text
+        },
+        'supportStaffAllowance': {
+          'amount': element.supportStaffAllowance!.amount!.text,
+          'exempted': element.supportStaffAllowance!.exempted!.text,
+          'taxable': element.supportStaffAllowance!.taxable!.text
+        },
+        'leaveAllowance': {
+          'amount': element.leaveAllowance!.amount!.text,
+          'exempted': element.leaveAllowance!.exempted!.text,
+          'taxable': element.leaveAllowance!.taxable!.text
+        },
+        'honorariumReward': {
+          'amount': element.honorariumReward!.amount!.text,
+          'exempted': element.honorariumReward!.exempted!.text,
+          'taxable': element.honorariumReward!.taxable!.text
+        },
+        'overtimeAllowances': {
+          'amount': element.overtimeAllowances!.amount!.text,
+          'exempted': element.overtimeAllowances!.exempted!.text,
+          'taxable': element.overtimeAllowances!.taxable!.text
+        },
+        'banglaNoboborshoAllowances': {
+          'amount': element.banglaNoboborshoAllowances!.amount!.text,
+          'exempted': element.banglaNoboborshoAllowances!.exempted!.text,
+          'taxable': element.banglaNoboborshoAllowances!.taxable!.text
+        },
         'interestAccruedOnProvidentFund':
-            element.interestAccruedOnProvidentFund!.text,
-        'lumpGrant': element.lumpGrant!.text,
-        'gratuity': element.gratuity!.text,
-        'others': element.others!.text,
-        'total': element.total!.text,
+        {
+          'amount': element.interestAccruedOnProvidentFund!.amount!.text,
+          'exempted': element.interestAccruedOnProvidentFund!.exempted!.text,
+          'taxable': element.interestAccruedOnProvidentFund!.taxable!.text
+        },
+        'lumpGrant': {
+          'amount': element.lumpGrant!.amount!.text,
+          'exempted': element.lumpGrant!.exempted!.text,
+          'taxable': element.lumpGrant!.taxable!.text
+        },
+        'gratuity': {
+          'amount': element.gratuity!.amount!.text,
+          'exempted': element.gratuity!.exempted!.text,
+          'taxable': element.gratuity!.taxable!.text
+        },
+        'others':{
+          'amount': element.others!.amount!.text,
+          'exempted': element.others!.exempted!.text,
+          'taxable': element.others!.taxable!.text
+        },
+        'total': {
+          'amount': element.total!.amount!.text,
+          'exempted': element.total!.exempted!.text,
+          'taxable': element.total!.taxable!.text
+        },
       };
       govtSalaryIncomeDataList.add(dataMap);
     }

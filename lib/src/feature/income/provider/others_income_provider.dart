@@ -17,6 +17,7 @@ class OthersIncomeProvider extends ChangeNotifier {
         particular: TextEditingController(),
         tdsDeducted: TextEditingController(),
         description: TextEditingController(),
+        exemptedAmount: TextEditingController()
         ));
     notifyListeners();
   }
@@ -39,6 +40,7 @@ class OthersIncomeProvider extends ChangeNotifier {
             particular: TextEditingController(text: element['particular']),
             tdsDeducted: TextEditingController(text: element['tdsDeducted']),
             description: TextEditingController(text: element['description']),
+            exemptedAmount: TextEditingController(text: element['exemptedAmount'])
           ));
         }
       }
@@ -47,6 +49,7 @@ class OthersIncomeProvider extends ChangeNotifier {
         particular: TextEditingController(),
         tdsDeducted: TextEditingController(),
         description: TextEditingController(),
+        exemptedAmount: TextEditingController(),
       ));
     }
     notifyListeners();
@@ -63,6 +66,7 @@ class OthersIncomeProvider extends ChangeNotifier {
         'particular': element.particular!.text.trim(),
         'tdsDeducted': element.tdsDeducted!.text.trim(),
         'description': element.description!.text.trim(),
+        'exemptedAmount': element.exemptedAmount!.text.trim(),
       };
       othersIncomeDataList.add(dataMap);
     }

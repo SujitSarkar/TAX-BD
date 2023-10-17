@@ -115,7 +115,7 @@ class CapitalGainIncomeScreen extends StatelessWidget {
                                     .capitalGainIncomeInputList[index]
                                     .salesCost!),
                             buildRow(
-                                "7. Gain",
+                                "7. Gain (5-4-6)",
                                 capitalGainIncomeProvider
                                     .capitalGainIncomeInputList[index].gain!,
                                 readOnly: true),

@@ -85,10 +85,18 @@ class ForeignIncomeScreen extends StatelessWidget {
                         ),
                         //Table Row
                         buildRow(
-                            "2. Particular",
+                            "1. Particular",
                             foreignIncomeProvider
                                 .foreignIncomeInputList[index]
                                 .particular!),
+                        foreignIncomeProvider
+                            .foreignIncomeInputList[index]
+                            .throughBankingChannel?
+                          buildRow(
+                              "2. Exempted",
+                              foreignIncomeProvider
+                                  .foreignIncomeInputList[index]
+                                  .exemptedAmount!,readOnly: true):const TableRow(children: [Text(''),Text('')]),
                       ],
                     ),
                   ],

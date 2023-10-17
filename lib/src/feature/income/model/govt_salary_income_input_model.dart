@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 class GovtSalaryIncomeInputModel {
-  TextEditingController? basicPay;
-  TextEditingController? arrearPay;
-  TextEditingController? specialAllowance;
-  TextEditingController? houseRentAllowance;
-  TextEditingController? medicalAllowance;
-  TextEditingController? conveyanceAllowance;
-  TextEditingController? festivalAllowance;
-  TextEditingController? supportStaffAllowance;
-  TextEditingController? leaveAllowance;
-  TextEditingController? honorariumReward;
-  TextEditingController? overtimeAllowances ;
-  TextEditingController? banglaNoboborshoAllowances;
-  TextEditingController? interestAccruedOnProvidentFund;
-  TextEditingController? lumpGrant;
-  TextEditingController? gratuity;
-  TextEditingController? others;
-  TextEditingController? total;
+  GovtSalaryIncomeInputModelItem? basicPay;
+  GovtSalaryIncomeInputModelItem? arrearPay;
+  GovtSalaryIncomeInputModelItem? specialAllowance;
+  GovtSalaryIncomeInputModelItem? houseRentAllowance;
+  GovtSalaryIncomeInputModelItem? medicalAllowance;
+  GovtSalaryIncomeInputModelItem? conveyanceAllowance;
+  GovtSalaryIncomeInputModelItem? festivalAllowance;
+  GovtSalaryIncomeInputModelItem? supportStaffAllowance;
+  GovtSalaryIncomeInputModelItem? leaveAllowance;
+  GovtSalaryIncomeInputModelItem? honorariumReward;
+  GovtSalaryIncomeInputModelItem? overtimeAllowances ;
+  GovtSalaryIncomeInputModelItem? banglaNoboborshoAllowances;
+  GovtSalaryIncomeInputModelItem? interestAccruedOnProvidentFund;
+  GovtSalaryIncomeInputModelItem? lumpGrant;
+  GovtSalaryIncomeInputModelItem? gratuity;
+  GovtSalaryIncomeInputModelItem? others;
+  GovtSalaryIncomeInputModelItem? total;
 
   GovtSalaryIncomeInputModel({
       this.basicPay,
@@ -37,4 +37,12 @@ class GovtSalaryIncomeInputModel {
       this.gratuity,
       this.others,
       this.total});
+}
+
+class GovtSalaryIncomeInputModelItem{
+  TextEditingController? amount;
+  TextEditingController? exempted;
+  TextEditingController? taxable;
+
+  GovtSalaryIncomeInputModelItem({this.amount, this.exempted, this.taxable});
 }

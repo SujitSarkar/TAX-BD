@@ -77,7 +77,8 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
         investmentDetails: TextEditingController(),
         amountOfInvestment: TextEditingController(),
         profitReceived: TextEditingController(),
-        sourceTax: TextEditingController()));
+        sourceTax: TextEditingController(),
+        exemptedAmount: TextEditingController()));
     notifyListeners();
   }
   Future<void> removeOthersProfitListItem(int index) async{
@@ -166,14 +167,17 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
               investmentDetails: TextEditingController(text: element['investmentDetails']),
               amountOfInvestment: TextEditingController(text: element['amountOfInvestment']),
               profitReceived: TextEditingController(text: element['profitReceived']),
-              sourceTax: TextEditingController(text: element['sourceTax'])));
+              sourceTax: TextEditingController(text: element['sourceTax']),
+              exemptedAmount: TextEditingController(text: element['exemptedAmount']),
+          ));
         }
       }else{
         othersProfitItemList.add(OthersProfitItemModel(
             investmentDetails: TextEditingController(),
             amountOfInvestment: TextEditingController(),
             profitReceived: TextEditingController(),
-            sourceTax: TextEditingController()));
+            sourceTax: TextEditingController(),
+            exemptedAmount: TextEditingController()));
       }
 
     } else {
@@ -200,7 +204,8 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
           investmentDetails: TextEditingController(),
           amountOfInvestment: TextEditingController(),
           profitReceived: TextEditingController(),
-          sourceTax: TextEditingController()));
+          sourceTax: TextEditingController(),
+          exemptedAmount: TextEditingController()));
     }
     notifyListeners();
   }
@@ -260,6 +265,7 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
         'amountOfInvestment': element.amountOfInvestment!.text.trim(),
         'profitReceived': element.profitReceived!.text.trim(),
         'sourceTax': element.sourceTax!.text.trim(),
+        'exemptedAmount': element.exemptedAmount!.text.trim(),
       };
       othersDataList.add(othersDataMap);
     }

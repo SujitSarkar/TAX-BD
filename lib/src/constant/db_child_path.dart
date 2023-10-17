@@ -3,6 +3,7 @@ class DbChildPath {
   static const String rebateCalculation = 'rebateCalculation';
   static const String expanseInformation = 'expanseInformation';
   static const String taxCalculation = 'taxCalculation';
+  static const String assetInfo = 'assetInfo';
 
   ///Income
   static const String privateSalaryIncome = 'privateSalaryIncome';

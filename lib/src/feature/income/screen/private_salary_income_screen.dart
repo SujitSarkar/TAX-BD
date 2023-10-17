@@ -152,7 +152,7 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
                                 "14. Exempted Amount (as per Part 1 of 6th Schedule)",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
-                                    .exemptedAmount!),
+                                    .exemptedAmount!,readOnly: true),
                             buildRow(
                                 "15. Total income from salary (13-14)",
                                 salaryIncomeProvider

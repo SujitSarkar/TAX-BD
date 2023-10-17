@@ -19,6 +19,7 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
         profit: TextEditingController(),
         salaryDiscountCommission: TextEditingController(),
         totalProfit: TextEditingController(),
+        exemptedAmount: TextEditingController(),
     ));
     notifyListeners();
   }
@@ -43,6 +44,7 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
             profit: TextEditingController(text: element['profit']),
             salaryDiscountCommission: TextEditingController(text: element['salaryDiscountCommission']),
             totalProfit: TextEditingController(text: element['totalProfit']),
+            exemptedAmount: TextEditingController(text: element['exemptedAmount']),
           ));
         }
       }
@@ -53,6 +55,7 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
         profit: TextEditingController(),
         salaryDiscountCommission: TextEditingController(),
         totalProfit: TextEditingController(),
+        exemptedAmount: TextEditingController(),
       ));
     }
     notifyListeners();
@@ -81,6 +84,7 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
         'profit': element.profit!.text.trim(),
         'salaryDiscountCommission': element.salaryDiscountCommission!.text.trim(),
         'totalProfit': element.totalProfit!.text.trim(),
+        'exemptedAmount': element.exemptedAmount!.text.trim(),
       };
       partnershipBusinessIncomeDataList.add(dataMap);
     }

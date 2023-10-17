@@ -11,7 +11,7 @@ class DummyData {
         icon: LineAwesomeIcons.file_invoice_with_us_dollar, title: 'Tax Calculation'),
     HomeDataModel(icon: LineAwesomeIcons.percentage, title: 'Tax Credit'),
     HomeDataModel(icon: LineAwesomeIcons.city, title: 'Asset Information'),
-    HomeDataModel(icon: LineAwesomeIcons.coins, title: 'Expanse Information'),
+    HomeDataModel(icon: LineAwesomeIcons.coins, title: 'Expense Information'),
   ];
 
   static final List<HomeDataModel> incomeInfoDataList = [
@@ -29,6 +29,12 @@ class DummyData {
     HomeDataModel(icon: LineAwesomeIcons.globe, title: 'Foreign Income'),
     HomeDataModel(
         icon: LineAwesomeIcons.users, title: 'Income of Spouse/Child')
+  ];
+
+  static const List<String> genderList = [
+    "Man",
+    "Women",
+    "Others"
   ];
 
   static const List<String> residentialStatusList = [
