@@ -53,7 +53,7 @@ class PartnershipBusinessIncomeScreen extends StatelessWidget {
                       TableCellVerticalAlignment.middle,
                       border: TableBorder.all(color: Colors.grey),
                       children: [
-                        //Table Header
+                        ///Table Header
                         const TableRow(
                           children: [
                             Padding(
@@ -72,12 +72,26 @@ class PartnershipBusinessIncomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        //Table Row
-                        buildRow(
-                            "1. Particular",
-                            partnershipBusinessIncomeProvider
-                                .partnershipBusinessIncomeInputList[index]
-                                .particular!),
+                        ///Table Row
+                        TableRow(
+                          children: [
+                            TableTextFormFieldWidget(
+                              controller: partnershipBusinessIncomeProvider
+                                  .partnershipBusinessIncomeInputList[index]
+                                  .particular!.description!,
+                              textCapitalization: TextCapitalization.sentences,
+                              maxLine: 5,
+                              hintText: 'Particular',
+                            ),
+                            TableTextFormFieldWidget(
+                              controller: partnershipBusinessIncomeProvider
+                                  .partnershipBusinessIncomeInputList[index]
+                                  .particular!.amount!,
+                              textInputType: TextInputType.number,
+                              hintText: '0.00',
+                            ),
+                          ],
+                        ),
                         buildRow(
                             "2. Tax Paid",
                             partnershipBusinessIncomeProvider
@@ -94,7 +108,7 @@ class PartnershipBusinessIncomeScreen extends StatelessWidget {
                                 .partnershipBusinessIncomeInputList[index]
                                 .salaryDiscountCommission!),
                         buildRow(
-                            "5. Total Profit",
+                            "5. Total Profit (3+4)",
                             partnershipBusinessIncomeProvider
                                 .partnershipBusinessIncomeInputList[index]
                                 .totalProfit!,readOnly: true),

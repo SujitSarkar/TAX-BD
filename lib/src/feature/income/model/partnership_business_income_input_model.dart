@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 
+import 'others_income_input_model.dart';
+
 class PartnershipBusinessIncomeInputModel {
-  final TextEditingController? particular;
+  final ParticularInputModel? particular;
   final TextEditingController? taxPaid;
   final TextEditingController? profit;
   final TextEditingController? salaryDiscountCommission;

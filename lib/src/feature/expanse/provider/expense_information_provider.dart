@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
-import '../model/expanse_info_input_model.dart';
+import '../model/expense_info_input_model.dart';
 
-class ExpanseInformationProvider extends ChangeNotifier {
+class ExpenseInformationProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
   bool deleteButtonOnTap = false;
 
-  List<ExpanseInformationInputModel> expanseInformationInputItemList = [];
+  List<ExpenseInformationInputModel> expanseInformationInputItemList = [];
 
   void clearAllData(){
     expanseInformationInputItemList=[];
   }
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addCostInformationInputListItem() {
-    expanseInformationInputItemList.add(ExpanseInformationInputModel(
+    expanseInformationInputItemList.add(ExpenseInformationInputModel(
       personalAndFoodingExpanses: ExpanseInformationInputModelItem(
           amount: TextEditingController(), comment: TextEditingController()),
       houseExpanse: ExpanseInformationInputModelItem(
@@ -58,7 +58,7 @@ class ExpanseInformationProvider extends ChangeNotifier {
     if (data != null) {
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
-          expanseInformationInputItemList.add(ExpanseInformationInputModel(
+          expanseInformationInputItemList.add(ExpenseInformationInputModel(
             personalAndFoodingExpanses: ExpanseInformationInputModelItem(
                 amount: TextEditingController(
                     text: element['personalAndFoodingExpanses']['amount']),
@@ -109,7 +109,7 @@ class ExpanseInformationProvider extends ChangeNotifier {
         }
       }
     } else {
-      expanseInformationInputItemList.add(ExpanseInformationInputModel(
+      expanseInformationInputItemList.add(ExpenseInformationInputModel(
         personalAndFoodingExpanses: ExpanseInformationInputModelItem(
             amount: TextEditingController(), comment: TextEditingController()),
         houseExpanse: ExpanseInformationInputModelItem(
@@ -139,7 +139,7 @@ class ExpanseInformationProvider extends ChangeNotifier {
     notifyListeners();
 
     final List<Map<String, dynamic>> costInfoDataList = [];
-    for (ExpanseInformationInputModel element
+    for (ExpenseInformationInputModel element
         in expanseInformationInputItemList) {
       final double total = double.parse(
               element.personalAndFoodingExpanses!.amount!.text.isEmpty

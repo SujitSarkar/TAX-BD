@@ -5,7 +5,6 @@ import 'package:tax_bd/src/shared/widget/solid_button.dart';
 import '../../../constant/text_size.dart';
 import '../../../shared/widget/loading_widget.dart';
 import '../../../shared/widget/table_text_field_widget.dart';
-import '../../../shared/widget/text_field_widget.dart';
 
 class OthersIncomeScreen extends StatelessWidget {
   const OthersIncomeScreen({super.key});
@@ -48,20 +47,13 @@ class OthersIncomeScreen extends StatelessWidget {
                               color: Colors.grey),
                           splashRadius: 25,
                           padding: EdgeInsets.zero),
-                    TextFormFieldWidget(
-                        controller: othersIncomeProvider.othersIncomeInputList[index]
-                            .description!,
-                        labelText: 'Description',
-                        maxLine: 3,
-                        hintText: 'Enter Description',
-                        textCapitalization: TextCapitalization.sentences),
-                    const SizedBox(height: 12),
+
                     Table(
                       defaultVerticalAlignment:
                       TableCellVerticalAlignment.middle,
                       border: TableBorder.all(color: Colors.grey),
                       children: [
-                        //Table Header
+                        ///Table Header
                         const TableRow(
                           children: [
                             Padding(
@@ -80,12 +72,27 @@ class OthersIncomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        //Table Row
-                        buildRow(
-                            "2.Particular",
-                            othersIncomeProvider
-                                .othersIncomeInputList[index]
-                                .particular!),
+
+                        ///Table Row
+                        TableRow(
+                          children: [
+                            TableTextFormFieldWidget(
+                              controller: othersIncomeProvider
+                                  .othersIncomeInputList[index]
+                                  .particular!.description!,
+                              textCapitalization: TextCapitalization.sentences,
+                              maxLine: 5,
+                              hintText: 'Particular',
+                            ),
+                            TableTextFormFieldWidget(
+                              controller: othersIncomeProvider
+                                  .othersIncomeInputList[index]
+                                  .particular!.amount!,
+                              textInputType: TextInputType.number,
+                              hintText: '0.00',
+                            ),
+                          ],
+                        ),
                         buildRow(
                             "3. TDS Deducted",
                             othersIncomeProvider

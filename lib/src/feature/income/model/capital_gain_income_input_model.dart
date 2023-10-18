@@ -1,7 +1,8 @@
 import 'package:flutter/Material.dart';
+import 'others_income_input_model.dart';
 
 class CapitalGainIncomeInputModel{
-  final TextEditingController? particular;
+  final ParticularInputModel? particular;
   DateTime? acquisitionDateTime;
   final TextEditingController? acquisitionDateText;
   DateTime? salesDateTime;

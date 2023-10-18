@@ -77,13 +77,58 @@ class TaxCalculationScreen extends StatelessWidget {
                             ),
                             //Table Row
                             buildRow(
+                                "1. Income from Employment (annex Schedule 1)",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromEmployment!,readOnly: true),
+                            buildRow(
+                                "2. Income from Rent (annex Schedule 2)",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromRent!,readOnly: true),
+                            buildRow(
+                                "3. Income from Agriculture (annex Schedule 3)",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromAgriculture!,readOnly: true),
+                            buildRow(
+                                "4. Income from Business (annex Schedule 4)",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromBusiness!,readOnly: true),
+                            buildRow(
+                                "5. Income from Capital Gain",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromCapitalGain!,readOnly: true),
+                            buildRow(
+                                "6. Income from Financial Assets(Bank Interest, Dividend, Securities Profit etc)",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromFinancialAsset!,readOnly: true),
+                            buildRow(
+                                "7. Income from Other Sources(Royalty, License Fees, Honorarium, Govt. Incentive etc.)",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromOtherSource!,readOnly: true),
+                            buildRow(
+                                "8. Share of Income from Firm or AoP",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromFirm!,readOnly: true),
+                            buildRow(
+                                "9. Income of Minor or Spouse (if not Taxpayer)",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromMinorOrSpouse!,readOnly: true),
+                            buildRow(
+                                "10. Taxable Income from Abroad",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].incomeFromAbroad!,readOnly: true),
+                            buildRow(
+                                "11. Total Income (Aggregate of Serial 1 to 10)",
+                                taxCalculationProvider
+                                    .taxCalculationInputList[index].totalIncome!,readOnly: true),
+
+                            buildRow(
                                 "12. Gross Tax on Taxable Income",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index].grossTax!),
                             buildRow(
                                 "13. Tax Rebate (annex Schedule 5)",
                                 taxCalculationProvider
-                                    .taxCalculationInputList[index].taxRebate!),
+                                    .taxCalculationInputList[index].taxRebate!,readOnly: true),
                             buildRow(
                                 "14. Net Tax after Rebate (12–13)",
                                 taxCalculationProvider
@@ -99,62 +144,62 @@ class TaxCalculationScreen extends StatelessWidget {
                                 "16. Tax Payable (Higher of 14 and 15)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
-                                    .taxPayable!),
+                                    .taxPayable!,readOnly: true),
                             buildRow(
-                                "17. Net Wealth Surcharge (if applicable)",
+                                "17(a). Net Wealth Surcharge (if applicable)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .netWealthSurcharge!),
                             buildRow(
-                                "18. Environmental Surcharge (if applicable)",
+                                "(b). Environmental Surcharge (if applicable)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .environmentalSurcharge!),
                             buildRow(
-                                "19. Delay Interest, Penalty or any other amountUnder Income Tax Act (if any)",
+                                "18. Delay Interest, Penalty or any other amountUnder Income Tax Act (if any)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .delayInterest!),
                             buildRow(
-                                "20. Total Amount Payable (16 + 17 + 18)",
+                                "19. Total Amount Payable (16+17+18)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .totalAmountPayable!,
                                 readOnly: true),
                             buildRow(
-                                "21. Tax Deducted or Collected at Source (attach proof)",
+                                "20. Tax Deducted or Collected at Source (attach proof)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .taxDeductedSource!),
                             buildRow(
-                                "22. Advance Tax paid (attach proof)",
+                                "21. Advance Tax paid (attach proof)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .advanceTaxPaid!),
                             buildRow(
-                                "23. Adjustment of Tax Refund {mention assessment year(s) of refund}",
+                                "22. Adjustment of Tax Refund {mention assessment year(s) of refund}",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .adjustmentOfTax!),
                             buildRow(
-                                "24. Tax Paid with this Return",
+                                "23. Tax Paid with this Return",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .taxPaidWithReturn!),
                             buildRow(
-                                "25. Total Tax Paid and Adjusted (20+21+22+23)",
+                                "24. Total Tax Paid and Adjusted (20+21+22+23)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .totalTaxPaid!,
                                 readOnly: true),
                             buildRow(
-                                "26. Excess Payment (24–19)",
+                                "25. Excess Payment (24–19)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .excessPayment!,
                                 readOnly: true),
                             buildRow(
-                                "27. Tax Exempted/Tax Free Income (attach proof)",
+                                "26. Tax Exempted/Tax Free Income (attach proof)",
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .taxExempted!),

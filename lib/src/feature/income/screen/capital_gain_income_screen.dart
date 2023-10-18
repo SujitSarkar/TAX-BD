@@ -56,7 +56,7 @@ class CapitalGainIncomeScreen extends StatelessWidget {
                               TableCellVerticalAlignment.middle,
                           border: TableBorder.all(color: Colors.grey),
                           children: [
-                            //Table Header
+                            ///Table Header
                             const TableRow(
                               children: [
                                 Padding(
@@ -77,12 +77,26 @@ class CapitalGainIncomeScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            //Table Row
-                            buildRow(
-                                "1. Particular",
-                                capitalGainIncomeProvider
-                                    .capitalGainIncomeInputList[index]
-                                    .particular!),
+                            ///Table Row
+                            TableRow(
+                              children: [
+                                TableTextFormFieldWidget(
+                                  controller: capitalGainIncomeProvider
+                                      .capitalGainIncomeInputList[index]
+                                      .particular!.description!,
+                                  textCapitalization: TextCapitalization.sentences,
+                                  maxLine: 5,
+                                  hintText: 'Particular',
+                                ),
+                                TableTextFormFieldWidget(
+                                  controller: capitalGainIncomeProvider
+                                      .capitalGainIncomeInputList[index]
+                                      .particular!.amount!,
+                                  textInputType: TextInputType.number,
+                                  hintText: '0.00',
+                                ),
+                              ],
+                            ),
                             buildRow(
                                 "2. Acquisition Date",
                                 capitalGainIncomeProvider

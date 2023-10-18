@@ -9,8 +9,9 @@ class AppRouter {
   ///Home Screen
   static const String rebateCalculationScreen = '/rebate-calculation-screen';
   static const String taxCalculationScreen = '/tax-calculation-screen';
-  static const String expanseInformationScreen = '/expanse-information-screen';
+  static const String expenseInformationScreen = '/expense-information-screen';
   static const String personalInfoScreen = '/personal-info-screen';
+  static const String assetInfoScreen = '/asset-info-screen';
 
   ///Income Screens
   static const String incomeInfoScreen = '/income-info-screen';

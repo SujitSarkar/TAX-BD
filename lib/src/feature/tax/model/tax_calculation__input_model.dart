@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 
 class TaxCalculationInputModel {
+  TextEditingController? incomeFromEmployment;
+  TextEditingController? incomeFromRent;
+  TextEditingController? incomeFromAgriculture;
+  TextEditingController? incomeFromBusiness;
+  TextEditingController? incomeFromCapitalGain;
+  TextEditingController? incomeFromFinancialAsset;
+  TextEditingController? incomeFromOtherSource;
+  TextEditingController? incomeFromFirm;
+  TextEditingController? incomeFromMinorOrSpouse;
+  TextEditingController? incomeFromAbroad;
+  TextEditingController? totalIncome;
+
   TextEditingController? grossTax;
   TextEditingController? taxRebate;
   TextEditingController? netTaxAfterRebate;
@@ -18,8 +30,19 @@ class TaxCalculationInputModel {
   TextEditingController? excessPayment;
   TextEditingController? taxExempted;
 
-  TaxCalculationInputModel(
-      {this.grossTax,
+  TaxCalculationInputModel({
+      this.incomeFromEmployment,
+      this.incomeFromRent,
+      this.incomeFromAgriculture,
+      this.incomeFromBusiness,
+      this.incomeFromCapitalGain,
+      this.incomeFromFinancialAsset,
+      this.incomeFromOtherSource,
+      this.incomeFromFirm,
+      this.incomeFromMinorOrSpouse,
+      this.incomeFromAbroad,
+      this.totalIncome,
+      this.grossTax,
       this.taxRebate,
       this.netTaxAfterRebate,
       this.minimumTax,

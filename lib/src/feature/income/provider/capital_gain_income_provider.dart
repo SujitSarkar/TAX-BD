@@ -5,6 +5,7 @@ import '../../../constant/db_child_path.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
 import '../../../shared/validator.dart';
 import '../model/capital_gain_income_input_model.dart';
+import '../model/others_income_input_model.dart';
 
 class CapitalGainIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
@@ -32,7 +33,10 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addCapitalGainInputListItem() {
     capitalGainIncomeInputList.add(CapitalGainIncomeInputModel(
-      particular: TextEditingController(),
+      particular: ParticularInputModel(
+        description: TextEditingController(),
+        amount: TextEditingController(),
+      ),
       acquisitionDateTime: DateTime.now(),
       acquisitionDateText: TextEditingController(),
       salesDateTime: DateTime.now(),
@@ -60,7 +64,10 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
           capitalGainIncomeInputList.add(CapitalGainIncomeInputModel(
-            particular: TextEditingController(text: element['particular']),
+            particular: ParticularInputModel(
+              description: TextEditingController(text: element['particular']['description']),
+              amount: TextEditingController(text: element['particular']['amount']),
+            ),
             acquisitionDateTime: DateTime.fromMillisecondsSinceEpoch(element['acquisitionDateTime']),
             acquisitionDateText: TextEditingController(text: DateFormat('dd-MMM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(element['acquisitionDateTime']))),
             salesDateTime: DateTime.fromMillisecondsSinceEpoch(element['salesDateTime']),
@@ -74,11 +81,14 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
       }
     } else {
       capitalGainIncomeInputList.add(CapitalGainIncomeInputModel(
-        particular: TextEditingController(),
+        particular: ParticularInputModel(
+          description: TextEditingController(),
+          amount: TextEditingController(),
+        ),
         acquisitionDateTime: DateTime.now(),
-        acquisitionDateText: TextEditingController(),
+        acquisitionDateText: TextEditingController(text: DateFormat('dd-MMM-yyyy').format(DateTime.now())),
         salesDateTime: DateTime.now(),
-        salesDateText: TextEditingController(),
+        salesDateText: TextEditingController(text: DateFormat('dd-MMM-yyyy').format(DateTime.now())),
         acquisitionValue: TextEditingController(),
         sales: TextEditingController(),
         salesCost: TextEditingController(),
@@ -109,7 +119,10 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
       notifyListeners();
 
       final Map<String, dynamic> dataMap = {
-        'particular': element.particular!.text.trim(),
+        'particular': {
+          'description': element.particular!.description!.text.trim(),
+          'amount': element.particular!.amount!.text.trim()
+        },
         'acquisitionDateTime': element.acquisitionDateTime!.millisecondsSinceEpoch,
         'salesDateTime': element.salesDateTime!.millisecondsSinceEpoch,
         'acquisitionValue': element.acquisitionValue!.text.trim(),

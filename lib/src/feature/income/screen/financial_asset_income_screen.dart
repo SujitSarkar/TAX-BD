@@ -6,6 +6,7 @@ import '../../../constant/text_size.dart';
 import '../../../shared/widget/loading_widget.dart';
 import '../../../shared/widget/solid_button.dart';
 import '../../../shared/widget/table_text_field_widget.dart';
+import '../../../shared/widget/text_field_widget.dart';
 
 class FinancialAssetIncomeScreen extends StatelessWidget {
   const FinancialAssetIncomeScreen({super.key});
@@ -74,6 +75,10 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                                 "4. Source tax",
                                 financialAssetIncomeProvider
                                     .fdrIncomeItemList[index].sourceTax!),
+                            buildRow(
+                                "5. Total",
+                                financialAssetIncomeProvider
+                                    .fdrIncomeItemList[index].total!,readOnly: true),
                           ],
                         ),
                       ],
@@ -132,6 +137,10 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                             "4. Source tax",
                             financialAssetIncomeProvider
                                 .dpsIncomeItemList[index].sourceTax!),
+                        buildRow(
+                            "5. Total",
+                            financialAssetIncomeProvider
+                                .dpsIncomeItemList[index].total!,readOnly: true),
                       ],
                     ),
                   ],
@@ -187,6 +196,10 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                             "3. Source tax",
                             financialAssetIncomeProvider
                                 .incomeFromBankItemList[index].sourceTax!),
+                        buildRow(
+                            "4. Total",
+                            financialAssetIncomeProvider
+                                .incomeFromBankItemList[index].total!,readOnly: true),
                       ],
                     ),
                   ],
@@ -245,6 +258,10 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                             "4. Source tax",
                             financialAssetIncomeProvider
                                 .insuranceProfitItemList[index].sourceTax!),
+                        buildRow(
+                            "5. Total",
+                            financialAssetIncomeProvider
+                                .insuranceProfitItemList[index].total!,readOnly: true),
                       ],
                     ),
                   ],
@@ -282,31 +299,40 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                               color: Colors.grey),
                           splashRadius: 25,
                           padding: EdgeInsets.zero),
+                    TextFormFieldWidget(
+                        controller: financialAssetIncomeProvider
+                            .othersProfitItemList[index].investmentDetails!,
+                        labelText: 'Investment details',
+                        maxLine: 3,
+                        hintText: 'Enter Investment details',
+                        textCapitalization: TextCapitalization.sentences),
+                    const SizedBox(height: 12),
+
                     Table(
                       defaultVerticalAlignment:
                       TableCellVerticalAlignment.middle,
                       border: TableBorder.all(color: Colors.grey),
                       children: [
                         buildRow(
-                            "1. Investment details",
-                            financialAssetIncomeProvider
-                                .othersProfitItemList[index].investmentDetails!),
-                        buildRow(
-                            "2. Amount of investment",
+                            "1. Amount of investment",
                             financialAssetIncomeProvider
                                 .othersProfitItemList[index].amountOfInvestment!),
                         buildRow(
-                            "3. Profit received",
+                            "2. Profit received",
                             financialAssetIncomeProvider
                                 .othersProfitItemList[index].profitReceived!),
                         buildRow(
-                            "4. Source tax",
+                            "3. Source tax",
                             financialAssetIncomeProvider
                                 .othersProfitItemList[index].sourceTax!),
                         buildRow(
                             "4. Exempted if any",
                             financialAssetIncomeProvider
                                 .othersProfitItemList[index].exemptedAmount!),
+                        buildRow(
+                            "5. Total",
+                            financialAssetIncomeProvider
+                                .othersProfitItemList[index].total!,readOnly: true),
                       ],
                     ),
                   ],
@@ -338,7 +364,7 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
     );
   }
 
-  TableRow buildRow(String label, TextEditingController controller) {
+  TableRow buildRow(String label, TextEditingController controller,{bool readOnly=false,bool requiredData=false}) {
     return TableRow(
       children: [
         Padding(padding: const EdgeInsets.all(8.0), child: Text(label)),
@@ -346,6 +372,8 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
           controller: controller,
           textInputType: TextInputType.number,
           hintText: '0.00',
+          readOnly: readOnly,
+          required: requiredData,
         ),
       ],
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../model/others_income_input_model.dart';
 import '../model/partnership_business_income_input_model.dart';
 
 class PartnershipBusinessIncomeProvider extends ChangeNotifier {
@@ -18,7 +19,10 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addPartnershipBusinessInputListItem() {
     partnershipBusinessIncomeInputList.add(PartnershipBusinessIncomeInputModel(
-        particular: TextEditingController(),
+      particular: ParticularInputModel(
+        description: TextEditingController(),
+        amount: TextEditingController(),
+      ),
         taxPaid: TextEditingController(),
         profit: TextEditingController(),
         salaryDiscountCommission: TextEditingController(),
@@ -43,7 +47,10 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
           partnershipBusinessIncomeInputList.add(PartnershipBusinessIncomeInputModel(
-            particular: TextEditingController(text: element['particular']),
+            particular: ParticularInputModel(
+              description: TextEditingController(text: element['particular']['description']),
+              amount: TextEditingController(text: element['particular']['amount']),
+            ),
             taxPaid: TextEditingController(text: element['taxPaid']),
             profit: TextEditingController(text: element['profit']),
             salaryDiscountCommission: TextEditingController(text: element['salaryDiscountCommission']),
@@ -54,7 +61,10 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
       }
     } else {
       partnershipBusinessIncomeInputList.add(PartnershipBusinessIncomeInputModel(
-        particular: TextEditingController(),
+        particular: ParticularInputModel(
+          description: TextEditingController(),
+          amount: TextEditingController(),
+        ),
         taxPaid: TextEditingController(),
         profit: TextEditingController(),
         salaryDiscountCommission: TextEditingController(),
@@ -83,7 +93,10 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
       notifyListeners();
 
       final Map<String, dynamic> dataMap = {
-        'particular': element.particular!.text.trim(),
+        'particular': {
+          'description': element.particular!.description!.text.trim(),
+          'amount': element.particular!.amount!.text.trim()
+        },
         'taxPaid': element.taxPaid!.text.trim(),
         'profit': element.profit!.text.trim(),
         'salaryDiscountCommission': element.salaryDiscountCommission!.text.trim(),

@@ -18,9 +18,11 @@ class OthersIncomeProvider extends ChangeNotifier {
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addOthersInputListItem() {
     othersIncomeInputList.add(OthersIncomeInputModel(
-        particular: TextEditingController(),
+        particular: ParticularInputModel(
+          description: TextEditingController(),
+          amount: TextEditingController(),
+        ),
         tdsDeducted: TextEditingController(),
-        description: TextEditingController(),
         exemptedAmount: TextEditingController()
         ));
     notifyListeners();
@@ -41,18 +43,22 @@ class OthersIncomeProvider extends ChangeNotifier {
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
           othersIncomeInputList.add(OthersIncomeInputModel(
-            particular: TextEditingController(text: element['particular']),
+            particular: ParticularInputModel(
+              description: TextEditingController(text: element['particular']['description']),
+              amount: TextEditingController(text: element['particular']['amount']),
+          ),
             tdsDeducted: TextEditingController(text: element['tdsDeducted']),
-            description: TextEditingController(text: element['description']),
             exemptedAmount: TextEditingController(text: element['exemptedAmount'])
           ));
         }
       }
     } else {
       othersIncomeInputList.add(OthersIncomeInputModel(
-        particular: TextEditingController(),
+        particular: ParticularInputModel(
+          description: TextEditingController(),
+          amount: TextEditingController(),
+        ),
         tdsDeducted: TextEditingController(),
-        description: TextEditingController(),
         exemptedAmount: TextEditingController(),
       ));
     }
@@ -67,9 +73,11 @@ class OthersIncomeProvider extends ChangeNotifier {
     for (OthersIncomeInputModel element in othersIncomeInputList) {
 
       final Map<String, dynamic> dataMap = {
-        'particular': element.particular!.text.trim(),
+        'particular': {
+          'description': element.particular!.description!.text.trim(),
+          'amount': element.particular!.amount!.text.trim()
+        },
         'tdsDeducted': element.tdsDeducted!.text.trim(),
-        'description': element.description!.text.trim(),
         'exemptedAmount': element.exemptedAmount!.text.trim(),
       };
       othersIncomeDataList.add(dataMap);

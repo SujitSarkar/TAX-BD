@@ -4,14 +4,14 @@ import 'package:tax_bd/src/shared/widget/solid_button.dart';
 import '../../../constant/text_size.dart';
 import '../../../shared/widget/loading_widget.dart';
 import '../../../shared/widget/table_text_field_widget.dart';
-import '../provider/expanse_information_provider.dart';
+import '../provider/expense_information_provider.dart';
 
-class ExpanseInformationScreen extends StatelessWidget {
-  const ExpanseInformationScreen({super.key});
+class ExpenseInformationScreen extends StatelessWidget {
+  const ExpenseInformationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final ExpanseInformationProvider expanseInformationProvider =
+    final ExpenseInformationProvider expenseInformationProvider =
         Provider.of(context);
     return Scaffold(
       appBar: AppBar(
@@ -23,7 +23,7 @@ class ExpanseInformationScreen extends StatelessWidget {
         ),
       ),
       body: RefreshIndicator(
-        onRefresh: () async => await expanseInformationProvider.getCostInfoData(),
+        onRefresh: () async => await expenseInformationProvider.getCostInfoData(),
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -31,7 +31,7 @@ class ExpanseInformationScreen extends StatelessWidget {
             ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: expanseInformationProvider
+                itemCount: expenseInformationProvider
                     .expanseInformationInputItemList.length,
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 24),
@@ -39,11 +39,11 @@ class ExpanseInformationScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (index != 0)
-                          expanseInformationProvider.deleteButtonOnTap
+                          expenseInformationProvider.deleteButtonOnTap
                               ? const CircularProgressIndicator()
                               : IconButton(
                                   onPressed: () {
-                                    expanseInformationProvider
+                                    expenseInformationProvider
                                         .removeItemOfCostInformationInputList(
                                             index);
                                   },
@@ -92,91 +92,91 @@ class ExpanseInformationScreen extends StatelessWidget {
 
                             buildRow(
                                 "1. Personal and family fooding, clothing and other essentials",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .personalAndFoodingExpanses!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .personalAndFoodingExpanses!
                                     .comment!),
                             buildRow(
                                 "2. Housing Expense",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .houseExpanse!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .houseExpanse!
                                     .comment!),
                             buildRow(
                                 "3. Personal Transport Expenses",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .personalTransportExpanses!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .personalTransportExpanses!
                                     .comment!),
                             buildRow(
                                 "4. Utility Expense (Electricity, Gas, Water, Telephone, Mobile, Internet etc. Bills)",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .utilityExpanses!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .utilityExpanses!
                                     .comment!),
                             buildRow(
                                 "5. Education Expense",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .educationExpanses!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .educationExpanses!
                                     .comment!),
                             buildRow(
                                 "6. Personal Expenses for local & foreign travel, vacation etc.",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .personalExpanses!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .personalExpanses!
                                     .comment!),
                             buildRow(
                                 "7. Festival and Other special expenses",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .festivalExpanses!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .festivalExpanses!
                                     .comment!),
                             buildRow(
                                 "8. Tax Deducted / Collected at Source (with TS on Profit of Sanchaypatra) and Tax & Surcharge Paid based on Tax Return of Last Year)  ",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .taxDeduction!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .taxDeduction!
                                     .comment!),
                             buildRow(
                                 "8. Interest Paid on Personal Loan Received from Institution & Other Source",
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .interestPaid!
                                     .amount!,
-                                expanseInformationProvider
+                                expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .interestPaid!
                                     .comment!),
@@ -196,7 +196,7 @@ class ExpanseInformationScreen extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: TableTextFormFieldWidget(
-                                      controller: expanseInformationProvider.expanseInformationInputItemList[index].total!,
+                                      controller: expenseInformationProvider.expanseInformationInputItemList[index].total!,
                                       hintText: '0.00',
                                       required: false,
                                     readOnly: true,
@@ -212,16 +212,16 @@ class ExpanseInformationScreen extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
                     onPressed: () {
-                      expanseInformationProvider
+                      expenseInformationProvider
                           .addCostInformationInputListItem();
                     },
                     child: const Text('Add More'))),
             const SizedBox(height: 12),
             SolidButton(
                 onTap: () async {
-                  await expanseInformationProvider.submitDataButtonOnTap();
+                  await expenseInformationProvider.submitDataButtonOnTap();
                 },
-                child: expanseInformationProvider.functionLoading
+                child: expenseInformationProvider.functionLoading
                     ? const LoadingWidget()
                     : const Text(
                         'Submit Data',

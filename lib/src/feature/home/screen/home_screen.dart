@@ -3,6 +3,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
 import 'package:tax_bd/src/constant/text_size.dart';
+import 'package:tax_bd/src/feature/asset/provider/asset_info_provider.dart';
 import 'package:tax_bd/src/feature/auth/repository/auth_repository.dart';
 import 'package:tax_bd/src/feature/income/provider/agricultural_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/business_income_provider.dart';
@@ -19,7 +20,7 @@ import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import 'package:tax_bd/src/router/app_router.dart';
 import 'package:tax_bd/src/shared/app_navigator_key.dart';
 import 'package:tax_bd/src/shared/widget/normal_card.dart';
-import '../../expanse/provider/expanse_information_provider.dart';
+import '../../expanse/provider/expense_information_provider.dart';
 import '../../personal_info/provider/personal_info_provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
     final PersonalInfoProvider personalInfoProvider = Provider.of(context,listen: false);
     final RebateCalculationProvider rebateCalculationProvider = Provider.of(context,listen: false);
-    final ExpanseInformationProvider expanseInformationProvider = Provider.of(context,listen: false);
+    final ExpenseInformationProvider expenseInformationProvider = Provider.of(context,listen: false);
     final TaxCalculationProvider taxCalculationProvider = Provider.of(context,listen: false);
     final SalaryIncomeProvider salaryIncomeProvider = Provider.of(context,listen: false);
     final RentalIncomeProvider rentalIncomeProvider = Provider.of(context,listen: false);
@@ -41,13 +42,11 @@ class HomeScreen extends StatelessWidget {
     final ForeignIncomeProvider foreignIncomeProvider = Provider.of(context,listen: false);
     final PartnershipBusinessIncomeProvider partnershipBusinessIncomeProvider = Provider.of(context,listen: false);
     final CapitalGainIncomeProvider capitalGainIncomeProvider = Provider.of(context,listen: false);
+    final AssetInfoProvider assetInfoProvider = Provider.of(context,listen: false);
 
     WidgetsBinding.instance.addPostFrameCallback((_)async{
       await Future.wait([
-        personalInfoProvider.getUserData(),
         rebateCalculationProvider.getRebateCalculationData(),
-        expanseInformationProvider.getCostInfoData(),
-        taxCalculationProvider.getTaxCalculationData(),
         salaryIncomeProvider.getPrivateSalaryIncomeData(),
         salaryIncomeProvider.getGovtSalaryIncomeData(),
         rentalIncomeProvider.getRentalIncomeData(),
@@ -60,6 +59,14 @@ class HomeScreen extends StatelessWidget {
         partnershipBusinessIncomeProvider.getPartnershipBusinessIncomeData(),
         capitalGainIncomeProvider.getCapitalGainIncomeData(),
       ]);
+
+      await Future.wait([
+        taxCalculationProvider.getTaxCalculationData(),
+        personalInfoProvider.getUserData(),
+        expenseInformationProvider.getCostInfoData(),
+      ]);
+
+      await assetInfoProvider.getAssetInfoData();
     });
   }
 
@@ -130,9 +137,13 @@ class HomeScreen extends StatelessWidget {
                                   Navigator.pushNamed(
                                       context, AppRouter.rebateCalculationScreen);
                                   break;
+                                case 4:
+                                  Navigator.pushNamed(
+                                      context, AppRouter.assetInfoScreen);
+                                  break;
                                 case 5:
                                   Navigator.pushNamed(
-                                      context, AppRouter.expanseInformationScreen);
+                                      context, AppRouter.expenseInformationScreen);
                                   break;
                               }
                             },

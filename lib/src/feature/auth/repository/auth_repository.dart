@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:tax_bd/src/feature/asset/provider/asset_info_provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../shared/app_navigator_key.dart';
 import '../../../router/app_router.dart';
@@ -17,7 +18,7 @@ import 'package:tax_bd/src/feature/income/provider/salary_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/spouse_children_income_provider.dart';
 import 'package:tax_bd/src/feature/rebate/provider/rebate_calculation_provider.dart';
 import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
-import '../../expanse/provider/expanse_information_provider.dart';
+import '../../expanse/provider/expense_information_provider.dart';
 import '../../personal_info/provider/personal_info_provider.dart';
 
 class AuthRepository {
@@ -28,7 +29,7 @@ class AuthRepository {
         Provider.of(context, listen: false);
     final RebateCalculationProvider rebateCalculationProvider =
         Provider.of(context, listen: false);
-    final ExpanseInformationProvider expanseInformationProvider =
+    final ExpenseInformationProvider expenseInformationProvider =
         Provider.of(context, listen: false);
     final TaxCalculationProvider taxCalculationProvider =
         Provider.of(context, listen: false);
@@ -52,11 +53,13 @@ class AuthRepository {
         Provider.of(context, listen: false);
     final CapitalGainIncomeProvider capitalGainIncomeProvider =
         Provider.of(context, listen: false);
+    final AssetInfoProvider assetInfoProvider =
+        Provider.of(context, listen: false);
     try {
       ///Clear All Data
       personalInfoProvider.clearAllData();
       rebateCalculationProvider.clearAllData();
-      expanseInformationProvider.clearAllData();
+      expenseInformationProvider.clearAllData();
       taxCalculationProvider.clearAllData();
       salaryIncomeProvider.clearAllData();
       salaryIncomeProvider.clearAllData();
@@ -69,6 +72,7 @@ class AuthRepository {
       foreignIncomeProvider.clearAllData();
       partnershipBusinessIncomeProvider.clearAllData();
       capitalGainIncomeProvider.clearAllData();
+      assetInfoProvider.clearAllData();
 
       await FirebaseAuth.instance.signOut();
       ///Clear Cache

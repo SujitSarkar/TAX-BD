@@ -30,7 +30,10 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
         fdrNo: TextEditingController(),
         investmentFigure: TextEditingController(),
         profitReceived: TextEditingController(),
-        sourceTax: TextEditingController()));
+        sourceTax: TextEditingController(),
+        total: TextEditingController(),
+    ),
+    );
     notifyListeners();
   }
   Future<void> removeFdrIncomeListItem(int index) async{
@@ -44,7 +47,9 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
         dpsNo: TextEditingController(),
         totalDepositAmount: TextEditingController(),
         profitReceived: TextEditingController(),
-        sourceTax: TextEditingController()));
+        sourceTax: TextEditingController(),
+      total: TextEditingController(),
+    ));
     notifyListeners();
   }
   Future<void> removeDpsIncomeListItem(int index) async{
@@ -57,7 +62,9 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
     incomeFromBankItemList.add(IncomeFromBankItemModel(
         bankAccountNo: TextEditingController(),
         profitReceived: TextEditingController(),
-        sourceTax: TextEditingController()));
+        sourceTax: TextEditingController(),
+        total: TextEditingController(),
+    ));
     notifyListeners();
   }
   Future<void> removeIncomeFromBankListItem(int index) async{
@@ -71,7 +78,9 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
         insurancePolicyNo: TextEditingController(),
         premiumDeposit: TextEditingController(),
         profitReceived: TextEditingController(),
-        sourceTax: TextEditingController()));
+        sourceTax: TextEditingController(),
+        total: TextEditingController(),
+    ));
     notifyListeners();
   }
   Future<void> removeInsuranceProfitListItem(int index) async{
@@ -86,7 +95,9 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
         amountOfInvestment: TextEditingController(),
         profitReceived: TextEditingController(),
         sourceTax: TextEditingController(),
-        exemptedAmount: TextEditingController()));
+        exemptedAmount: TextEditingController(),
+        total: TextEditingController(),
+    ));
     notifyListeners();
   }
   Future<void> removeOthersProfitListItem(int index) async{
@@ -113,14 +124,18 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
               fdrNo: TextEditingController(text: element['fdrNo']),
               investmentFigure: TextEditingController(text: element['investmentFigure']),
               profitReceived: TextEditingController(text: element['profitReceived']),
-              sourceTax: TextEditingController(text: element['sourceTax'])));
+              sourceTax: TextEditingController(text: element['sourceTax']),
+              total: TextEditingController(text: element['total']),
+          ));
         }
       }else{
         fdrIncomeItemList.add(FDRIncomeItemModel(
             fdrNo: TextEditingController(),
             investmentFigure: TextEditingController(),
             profitReceived: TextEditingController(),
-            sourceTax: TextEditingController()));
+            sourceTax: TextEditingController(),
+            total: TextEditingController(),
+        ));
       }
       //DPS data fetching
       if(data['dpsIncome'].isNotEmpty){
@@ -129,14 +144,18 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
               dpsNo: TextEditingController(text: element['dpsNo']),
               totalDepositAmount: TextEditingController(text: element['totalDepositAmount']),
               profitReceived: TextEditingController(text: element['profitReceived']),
-              sourceTax: TextEditingController(text: element['sourceTax'])));
+              sourceTax: TextEditingController(text: element['sourceTax']),
+              total: TextEditingController(text: element['total'])
+          ));
         }
       }else{
         dpsIncomeItemList.add(DPSIncomeItemModel(
             dpsNo: TextEditingController(),
             totalDepositAmount: TextEditingController(),
             profitReceived: TextEditingController(),
-            sourceTax: TextEditingController()));
+            sourceTax: TextEditingController(),
+            total: TextEditingController(),
+        ));
       }
       //Bank data fetching
       if(data['incomeFromBank'].isNotEmpty){
@@ -144,13 +163,17 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
           incomeFromBankItemList.add(IncomeFromBankItemModel(
               bankAccountNo: TextEditingController(text: element['bankAccountNo']),
               profitReceived: TextEditingController(text: element['profitReceived']),
-              sourceTax: TextEditingController(text: element['sourceTax'])));
+              sourceTax: TextEditingController(text: element['sourceTax']),
+              total: TextEditingController(text: element['total']),
+          ));
         }
       }else{
         incomeFromBankItemList.add(IncomeFromBankItemModel(
             bankAccountNo: TextEditingController(),
             profitReceived: TextEditingController(),
-            sourceTax: TextEditingController()));
+            sourceTax: TextEditingController(),
+            total: TextEditingController(),
+        ));
       }
       //Insurance data fetching
       if(data['insuranceProfit'].isNotEmpty){
@@ -159,14 +182,18 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
               insurancePolicyNo: TextEditingController(text: element['insurancePolicyNo']),
               premiumDeposit: TextEditingController(text: element['premiumDeposit']),
               profitReceived: TextEditingController(text: element['profitReceived']),
-              sourceTax: TextEditingController(text: element['sourceTax'])));
+              sourceTax: TextEditingController(text: element['sourceTax']),
+              total: TextEditingController(text: element['total']),
+          ));
         }
       }else{
         insuranceProfitItemList.add(InsuranceProfitItemModel(
             insurancePolicyNo: TextEditingController(),
             premiumDeposit: TextEditingController(),
             profitReceived: TextEditingController(),
-            sourceTax: TextEditingController()));
+            sourceTax: TextEditingController(),
+            total: TextEditingController(),
+        ));
       }
       //Others data fetching
       if(data['othersProfit'].isNotEmpty){
@@ -177,6 +204,7 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
               profitReceived: TextEditingController(text: element['profitReceived']),
               sourceTax: TextEditingController(text: element['sourceTax']),
               exemptedAmount: TextEditingController(text: element['exemptedAmount']),
+              total: TextEditingController(text: element['total']),
           ));
         }
       }else{
@@ -185,7 +213,9 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
             amountOfInvestment: TextEditingController(),
             profitReceived: TextEditingController(),
             sourceTax: TextEditingController(),
-            exemptedAmount: TextEditingController()));
+            exemptedAmount: TextEditingController(),
+            total: TextEditingController(),
+        ));
       }
 
     } else {
@@ -193,27 +223,34 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
           fdrNo: TextEditingController(),
           investmentFigure: TextEditingController(),
           profitReceived: TextEditingController(),
-          sourceTax: TextEditingController()));
+          sourceTax: TextEditingController(),
+          total: TextEditingController(),
+      ));
       dpsIncomeItemList.add(DPSIncomeItemModel(
           dpsNo: TextEditingController(),
           totalDepositAmount: TextEditingController(),
           profitReceived: TextEditingController(),
-          sourceTax: TextEditingController()));
+          sourceTax: TextEditingController(),
+          total: TextEditingController(),
+      ));
       incomeFromBankItemList.add(IncomeFromBankItemModel(
           bankAccountNo: TextEditingController(),
           profitReceived: TextEditingController(),
-          sourceTax: TextEditingController()));
+          sourceTax: TextEditingController(),
+          total: TextEditingController(),));
       insuranceProfitItemList.add(InsuranceProfitItemModel(
           insurancePolicyNo: TextEditingController(),
           premiumDeposit: TextEditingController(),
           profitReceived: TextEditingController(),
-          sourceTax: TextEditingController()));
+          sourceTax: TextEditingController(),
+          total: TextEditingController(),));
       othersProfitItemList.add(OthersProfitItemModel(
           investmentDetails: TextEditingController(),
           amountOfInvestment: TextEditingController(),
           profitReceived: TextEditingController(),
           sourceTax: TextEditingController(),
-          exemptedAmount: TextEditingController()));
+          exemptedAmount: TextEditingController(),
+          total: TextEditingController(),));
     }
     notifyListeners();
   }
@@ -229,51 +266,86 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
 
     ///FDR
     for (FDRIncomeItemModel element in fdrIncomeItemList) {
+      double totalValue = double.parse(element.investmentFigure!.text.isNotEmpty? element.investmentFigure!.text.trim():'0')+
+          double.parse(element.profitReceived!.text.isNotEmpty? element.profitReceived!.text.trim():'0')+
+          double.parse(element.sourceTax!.text.isNotEmpty? element.sourceTax!.text.trim():'0');
+      element.total!.text = '$totalValue';
+      notifyListeners();
+
       final Map<String, dynamic> fdrDataMap = {
         'fdrNo': element.fdrNo!.text.trim(),
         'investmentFigure': element.investmentFigure!.text.trim(),
         'profitReceived': element.profitReceived!.text.trim(),
         'sourceTax': element.sourceTax!.text.trim(),
+        'total': element.total!.text.trim(),
       };
       fdrDataList.add(fdrDataMap);
     }
     ///DPS
     for (DPSIncomeItemModel element in dpsIncomeItemList) {
+      double totalValue = double.parse(element.totalDepositAmount!.text.isNotEmpty? element.totalDepositAmount!.text.trim():'0')+
+          double.parse(element.profitReceived!.text.isNotEmpty? element.profitReceived!.text.trim():'0')+
+          double.parse(element.sourceTax!.text.isNotEmpty? element.sourceTax!.text.trim():'0');
+      element.total!.text = '$totalValue';
+      notifyListeners();
+
       final Map<String, dynamic> dpsDataMap = {
         'dpsNo': element.dpsNo!.text.trim(),
         'totalDepositAmount': element.totalDepositAmount!.text.trim(),
         'profitReceived': element.profitReceived!.text.trim(),
         'sourceTax': element.sourceTax!.text.trim(),
+        'total': element.total!.text.trim(),
       };
       dpsDataList.add(dpsDataMap);
     }
     ///Bank
     for (IncomeFromBankItemModel element in incomeFromBankItemList) {
+      double totalValue = double.parse(element.profitReceived!.text.isNotEmpty? element.profitReceived!.text.trim():'0')+
+          double.parse(element.sourceTax!.text.isNotEmpty? element.sourceTax!.text.trim():'0');
+      element.total!.text = '$totalValue';
+      notifyListeners();
+
       final Map<String, dynamic> bankDataMap = {
         'bankAccountNo': element.bankAccountNo!.text.trim(),
         'profitReceived': element.profitReceived!.text.trim(),
         'sourceTax': element.sourceTax!.text.trim(),
+        'total': element.total!.text.trim(),
       };
       bankDataList.add(bankDataMap);
     }
     ///Insurance
     for (InsuranceProfitItemModel element in insuranceProfitItemList) {
+      double totalValue = double.parse(element.premiumDeposit!.text.isNotEmpty? element.premiumDeposit!.text.trim():'0')+
+          double.parse(element.profitReceived!.text.isNotEmpty? element.profitReceived!.text.trim():'0')+
+          double.parse(element.sourceTax!.text.isNotEmpty? element.sourceTax!.text.trim():'0');
+      element.total!.text = '$totalValue';
+      notifyListeners();
+
       final Map<String, dynamic> insuranceDataMap = {
         'insurancePolicyNo': element.insurancePolicyNo!.text.trim(),
         'premiumDeposit': element.premiumDeposit!.text.trim(),
         'profitReceived': element.profitReceived!.text.trim(),
         'sourceTax': element.sourceTax!.text.trim(),
+        'total': element.total!.text.trim(),
       };
       insuranceDataList.add(insuranceDataMap);
     }
     ///Others
     for (OthersProfitItemModel element in othersProfitItemList) {
+      double totalValue = double.parse(element.amountOfInvestment!.text.isNotEmpty? element.amountOfInvestment!.text.trim():'0')+
+          double.parse(element.profitReceived!.text.isNotEmpty? element.profitReceived!.text.trim():'0')+
+          double.parse(element.sourceTax!.text.isNotEmpty? element.sourceTax!.text.trim():'0') -
+          double.parse(element.exemptedAmount!.text.isNotEmpty? element.exemptedAmount!.text.trim():'0');
+      element.total!.text = '$totalValue';
+      notifyListeners();
+
       final Map<String, dynamic> othersDataMap = {
         'investmentDetails': element.investmentDetails!.text.trim(),
         'amountOfInvestment': element.amountOfInvestment!.text.trim(),
         'profitReceived': element.profitReceived!.text.trim(),
         'sourceTax': element.sourceTax!.text.trim(),
         'exemptedAmount': element.exemptedAmount!.text.trim(),
+        'total': element.total!.text.trim(),
       };
       othersDataList.add(othersDataMap);
     }

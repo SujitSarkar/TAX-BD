@@ -3,6 +3,7 @@ import 'package:tax_bd/src/feature/income/model/spouse_children_income_input_mod
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../model/others_income_input_model.dart';
 
 class SpouseChildrenIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
@@ -18,7 +19,10 @@ class SpouseChildrenIncomeProvider extends ChangeNotifier {
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addSpouseChildrenInputListItem() {
     spouseChildrenIncomeInputList.add(SpouseChildrenIncomeInputModel(
-      particular: TextEditingController(),
+      particular: ParticularInputModel(
+        description: TextEditingController(),
+        amount: TextEditingController(),
+      ),
     ));
     notifyListeners();
   }
@@ -38,13 +42,19 @@ class SpouseChildrenIncomeProvider extends ChangeNotifier {
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
           spouseChildrenIncomeInputList.add(SpouseChildrenIncomeInputModel(
-            particular: TextEditingController(text: element['particular']),
+            particular: ParticularInputModel(
+              description: TextEditingController(text: element['particular']['description']),
+              amount: TextEditingController(text: element['particular']['amount']),
+            ),
           ));
         }
       }
     } else {
       spouseChildrenIncomeInputList.add(SpouseChildrenIncomeInputModel(
-        particular: TextEditingController(),
+        particular: ParticularInputModel(
+          description: TextEditingController(),
+          amount: TextEditingController(),
+        ),
       ));
     }
     notifyListeners();
@@ -58,7 +68,10 @@ class SpouseChildrenIncomeProvider extends ChangeNotifier {
     for (SpouseChildrenIncomeInputModel element in spouseChildrenIncomeInputList) {
 
       final Map<String, dynamic> dataMap = {
-        'particular': element.particular!.text.trim(),
+        'particular': {
+          'description': element.particular!.description!.text.trim(),
+          'amount': element.particular!.amount!.text.trim()
+        },
       };
       spouseChildrenIncomeDataList.add(dataMap);
     }

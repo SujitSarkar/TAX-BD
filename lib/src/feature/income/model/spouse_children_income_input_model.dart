@@ -1,7 +1,7 @@
-import 'package:flutter/Material.dart';
+import 'others_income_input_model.dart';
 
 class SpouseChildrenIncomeInputModel{
-  final TextEditingController? particular;
+  final ParticularInputModel? particular;
 
   SpouseChildrenIncomeInputModel({this.particular});
 }

@@ -3,6 +3,7 @@ import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
 import '../model/foreign_income_input_model.dart';
+import '../model/others_income_input_model.dart';
 
 class ForeignIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
@@ -18,7 +19,10 @@ class ForeignIncomeProvider extends ChangeNotifier {
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addForeignInputListItem() {
     foreignIncomeInputList.add(ForeignIncomeInputModel(
-        particular: TextEditingController(),
+        particular: ParticularInputModel(
+          description: TextEditingController(),
+          amount: TextEditingController(),
+        ),
         exemptedAmount: TextEditingController(),
         throughBankingChannel: true));
     notifyListeners();
@@ -35,7 +39,7 @@ class ForeignIncomeProvider extends ChangeNotifier {
 
     if (foreignIncomeInputList[index].throughBankingChannel) {
       foreignIncomeInputList[index].exemptedAmount!.text =
-          foreignIncomeInputList[index].particular!.text;
+          foreignIncomeInputList[index].particular!.amount!.text;
     }
     notifyListeners();
   }
@@ -49,7 +53,10 @@ class ForeignIncomeProvider extends ChangeNotifier {
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
           foreignIncomeInputList.add(ForeignIncomeInputModel(
-              particular: TextEditingController(text: element['particular']),
+              particular: ParticularInputModel(
+                description: TextEditingController(text: element['particular']['description']),
+                amount: TextEditingController(text: element['particular']['amount']),
+              ),
               exemptedAmount:
                   TextEditingController(text: element['exemptedAmount']),
               throughBankingChannel: element['throughBankingChannel']));
@@ -57,7 +64,10 @@ class ForeignIncomeProvider extends ChangeNotifier {
       }
     } else {
       foreignIncomeInputList.add(ForeignIncomeInputModel(
-          particular: TextEditingController(), throughBankingChannel: true));
+          particular: ParticularInputModel(
+            description: TextEditingController(),
+            amount: TextEditingController(),
+          ), throughBankingChannel: true,exemptedAmount: TextEditingController()));
     }
     notifyListeners();
   }
@@ -69,13 +79,16 @@ class ForeignIncomeProvider extends ChangeNotifier {
 
     for (ForeignIncomeInputModel element in foreignIncomeInputList) {
       if(element.throughBankingChannel){
-        element.exemptedAmount!.text=element.particular!.text;
+        element.exemptedAmount!.text=element.particular!.amount!.text;
       }
       final Map<String, dynamic> dataMap = {
-        'particular': element.particular!.text.trim(),
+        'particular': {
+          'description': element.particular!.description!.text.trim(),
+          'amount': element.particular!.amount!.text.trim()
+        },
         'throughBankingChannel': element.throughBankingChannel,
         'exemptedAmount':
-            element.throughBankingChannel ? element.particular!.text.trim() : ''
+            element.throughBankingChannel ? element.particular!.amount!.text.trim() : ''
       };
       foreignIncomeDataList.add(dataMap);
     }

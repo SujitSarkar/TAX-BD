@@ -83,12 +83,26 @@ class ForeignIncomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        //Table Row
-                        buildRow(
-                            "1. Particular",
-                            foreignIncomeProvider
-                                .foreignIncomeInputList[index]
-                                .particular!),
+                        ///Table Row
+                        TableRow(
+                          children: [
+                            TableTextFormFieldWidget(
+                              controller: foreignIncomeProvider
+                                  .foreignIncomeInputList[index]
+                                  .particular!.description!,
+                              textCapitalization: TextCapitalization.sentences,
+                              maxLine: 5,
+                              hintText: 'Particular',
+                            ),
+                            TableTextFormFieldWidget(
+                              controller: foreignIncomeProvider
+                                  .foreignIncomeInputList[index]
+                                  .particular!.amount!,
+                              textInputType: TextInputType.number,
+                              hintText: '0.00',
+                            ),
+                          ],
+                        ),
                         foreignIncomeProvider
                             .foreignIncomeInputList[index]
                             .throughBankingChannel?

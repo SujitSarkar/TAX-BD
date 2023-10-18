@@ -72,12 +72,26 @@ class SpouseChildrenIncomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        //Table Row
-                        buildRow(
-                            "2.Particular",
-                            spouseChildrenIncomeProvider
-                                .spouseChildrenIncomeInputList[index]
-                                .particular!),
+                        ///Table Row
+                        TableRow(
+                          children: [
+                            TableTextFormFieldWidget(
+                              controller: spouseChildrenIncomeProvider
+                                  .spouseChildrenIncomeInputList[index]
+                                  .particular!.description!,
+                              textCapitalization: TextCapitalization.sentences,
+                              maxLine: 5,
+                              hintText: 'Particular',
+                            ),
+                            TableTextFormFieldWidget(
+                              controller: spouseChildrenIncomeProvider
+                                  .spouseChildrenIncomeInputList[index]
+                                  .particular!.amount!,
+                              textInputType: TextInputType.number,
+                              hintText: '0.00',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ],
