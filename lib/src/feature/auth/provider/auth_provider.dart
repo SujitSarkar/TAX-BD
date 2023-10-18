@@ -8,6 +8,7 @@ import 'package:tax_bd/src/shared/app_navigator_key.dart';
 import 'package:tax_bd/src/shared/local_storage.dart';
 import '../../../constant/app_toast.dart';
 import '../../../shared/validator.dart';
+import '../../home/screen/home_screen.dart';
 
 class AuthProvider extends ChangeNotifier {
   bool loading = false;
@@ -63,13 +64,13 @@ class AuthProvider extends ChangeNotifier {
           await auth.signInWithCredential(credential).then((value) async {
             final User? user = value.user;
             if (user != null) {
-              await storeDataToLocal(user).then((value) {
-                loading = true;
+              await storeDataToLocal(user).then((value) async{
+                _timer?.cancel();
+                loading = false;
                 notifyListeners();
-                Navigator.pushNamedAndRemoveUntil(
-                    AppNavigatorKey.key.currentState!.context,
-                    AppRouter.home,
-                    (route) => false);
+                await const HomeScreen().onInit().then((value) =>
+                    Navigator.pushNamedAndRemoveUntil(
+                        AppNavigatorKey.key.currentState!.context, AppRouter.home, (route) => false));
               });
             } else {
               loading = false;
@@ -138,14 +139,13 @@ class AuthProvider extends ChangeNotifier {
           .then((value) async {
         final User? user = value.user;
         if (user != null) {
-          _timer?.cancel();
-          await storeDataToLocal(user).then((value) {
-            loading = true;
+          await storeDataToLocal(user).then((value) async{
+            _timer?.cancel();
+            loading = false;
             notifyListeners();
-            Navigator.pushNamedAndRemoveUntil(
-                AppNavigatorKey.key.currentState!.context,
-                AppRouter.home,
-                (route) => false);
+            await const HomeScreen().onInit().then((value) =>
+                Navigator.pushNamedAndRemoveUntil(
+                    AppNavigatorKey.key.currentState!.context, AppRouter.home, (route) => false));
           });
         } else {
           loading = false;

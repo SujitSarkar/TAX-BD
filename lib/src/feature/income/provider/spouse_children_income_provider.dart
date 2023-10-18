@@ -11,6 +11,10 @@ class SpouseChildrenIncomeProvider extends ChangeNotifier {
 
   List<SpouseChildrenIncomeInputModel> spouseChildrenIncomeInputList = [];
 
+  void clearAllData(){
+    spouseChildrenIncomeInputList=[];
+  }
+
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addSpouseChildrenInputListItem() {
     spouseChildrenIncomeInputList.add(SpouseChildrenIncomeInputModel(

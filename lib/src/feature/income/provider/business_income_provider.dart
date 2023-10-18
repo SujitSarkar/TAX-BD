@@ -10,6 +10,10 @@ class BusinessIncomeProvider extends ChangeNotifier {
   bool functionLoading = false;
   List<BusinessIncomeInputModel> businessIncomeInputList = [];
 
+  void clearAllData(){
+    businessIncomeInputList=[];
+  }
+
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addBusinessInputListItem() {
     businessIncomeInputList.add(BusinessIncomeInputModel(

@@ -68,14 +68,30 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(widget.labelText,
-            style: TextStyle(
-                color: AppColor.textColor, fontSize: TextSize.bodyText)),
+        Text.rich(
+          TextSpan(
+            style: const TextStyle(fontSize: TextSize.bodyText),
+            children: <InlineSpan>[
+              WidgetSpan(
+                child: Text(widget.labelText),
+              ),
+              WidgetSpan(
+                child: Text(widget.required ? '*' : '',
+                    style: const TextStyle(color: Colors.red)),
+              ),
+            ],
+          ),
+        ),
         const SizedBox(height: 10),
         TextFormField(
           validator: (val) => !widget.required || val != null && val.isNotEmpty
               ? null
-              : "${widget.labelText} can't be empty",
+              : "${widget.labelText.replaceAll('0', "")
+              .replaceAll('1', "").replaceAll('2', "").replaceAll('3', "")
+              .replaceAll('4', "").replaceAll('5', "").replaceAll('6', "")
+              .replaceAll('7', "").replaceAll('8', "")
+              .replaceAll('9', "").replaceFirst('.', "")
+              .replaceFirst(' ', '')} can't be empty",
           controller: widget.controller,
           onTap: widget.onTap,
           focusNode: widget.focusNode,

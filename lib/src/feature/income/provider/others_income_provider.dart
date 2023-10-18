@@ -11,6 +11,10 @@ class OthersIncomeProvider extends ChangeNotifier {
 
   List<OthersIncomeInputModel> othersIncomeInputList = [];
 
+  void clearAllData(){
+    othersIncomeInputList=[];
+  }
+
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addOthersInputListItem() {
     othersIncomeInputList.add(OthersIncomeInputModel(

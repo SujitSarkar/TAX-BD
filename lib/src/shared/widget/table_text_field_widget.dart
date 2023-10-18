@@ -6,7 +6,7 @@ class TableTextFormFieldWidget extends StatelessWidget {
       {Key? key,
       required this.controller,
       required this.hintText,
-      this.required = true,
+      this.required = false,
       this.textInputType,
       this.textCapitalization,
       this.textAlign = TextAlign.left,

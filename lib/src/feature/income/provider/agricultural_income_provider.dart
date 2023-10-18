@@ -11,6 +11,10 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
 
   List<AgricultureIncomeInputModel> agricultureIncomeInputList = [];
 
+  void clearAllData(){
+    agricultureIncomeInputList=[];
+  }
+
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addAgricultureInputListItem() {
     agricultureIncomeInputList.add(AgricultureIncomeInputModel(

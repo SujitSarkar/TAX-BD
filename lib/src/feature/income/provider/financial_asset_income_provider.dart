@@ -15,6 +15,14 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
   List<InsuranceProfitItemModel> insuranceProfitItemList = [];
   List<OthersProfitItemModel> othersProfitItemList = [];
 
+  void clearAllData(){
+    fdrIncomeItemList=[];
+    dpsIncomeItemList=[];
+    incomeFromBankItemList=[];
+    insuranceProfitItemList=[];
+    othersProfitItemList=[];
+  }
+
   ///UI interaction functions::::::::::::::::::::::::::::::::::::::::::::::::::
   ///FDR
   void addFdrIncomeListItem() {

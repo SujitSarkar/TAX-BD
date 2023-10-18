@@ -11,6 +11,10 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
 
   List<PartnershipBusinessIncomeInputModel> partnershipBusinessIncomeInputList = [];
 
+  void clearAllData(){
+    partnershipBusinessIncomeInputList=[];
+  }
+
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addPartnershipBusinessInputListItem() {
     partnershipBusinessIncomeInputList.add(PartnershipBusinessIncomeInputModel(

@@ -13,6 +13,10 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
 
   List<CapitalGainIncomeInputModel> capitalGainIncomeInputList = [];
 
+  void clearAllData(){
+    capitalGainIncomeInputList=[];
+  }
+
   ///UI Functions:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   Future<void> selectAcquisitionDate(int index)async{
     capitalGainIncomeInputList[index].acquisitionDateTime = await showDatePickerAndGetDate();

@@ -26,20 +26,21 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   Future<void> onInit()async{
-    final PersonalInfoProvider personalInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final RebateCalculationProvider rebateCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final ExpanseInformationProvider expanseInformationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final SalaryIncomeProvider salaryIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final RentalIncomeProvider rentalIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final AgriculturalIncomeProvider agriculturalIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final BusinessIncomeProvider businessIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final FinancialAssetIncomeProvider financialAssetIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final OthersIncomeProvider othersIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final SpouseChildrenIncomeProvider spouseChildrenIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final ForeignIncomeProvider foreignIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final PartnershipBusinessIncomeProvider partnershipBusinessIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-    final CapitalGainIncomeProvider capitalGainIncomeProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+    final BuildContext context = AppNavigatorKey.key.currentState!.context;
+    final PersonalInfoProvider personalInfoProvider = Provider.of(context,listen: false);
+    final RebateCalculationProvider rebateCalculationProvider = Provider.of(context,listen: false);
+    final ExpanseInformationProvider expanseInformationProvider = Provider.of(context,listen: false);
+    final TaxCalculationProvider taxCalculationProvider = Provider.of(context,listen: false);
+    final SalaryIncomeProvider salaryIncomeProvider = Provider.of(context,listen: false);
+    final RentalIncomeProvider rentalIncomeProvider = Provider.of(context,listen: false);
+    final AgriculturalIncomeProvider agriculturalIncomeProvider = Provider.of(context,listen: false);
+    final BusinessIncomeProvider businessIncomeProvider = Provider.of(context,listen: false);
+    final FinancialAssetIncomeProvider financialAssetIncomeProvider = Provider.of(context,listen: false);
+    final OthersIncomeProvider othersIncomeProvider = Provider.of(context,listen: false);
+    final SpouseChildrenIncomeProvider spouseChildrenIncomeProvider = Provider.of(context,listen: false);
+    final ForeignIncomeProvider foreignIncomeProvider = Provider.of(context,listen: false);
+    final PartnershipBusinessIncomeProvider partnershipBusinessIncomeProvider = Provider.of(context,listen: false);
+    final CapitalGainIncomeProvider capitalGainIncomeProvider = Provider.of(context,listen: false);
 
     WidgetsBinding.instance.addPostFrameCallback((_)async{
       await Future.wait([

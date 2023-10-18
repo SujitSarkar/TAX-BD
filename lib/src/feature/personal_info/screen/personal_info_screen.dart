@@ -46,8 +46,8 @@ class PersonalInfoScreen extends StatelessWidget {
                             controller:
                                 personalInfoProvider.nidOrPassportController,
                             labelText:
-                                '2. Nation NID/passport (if there is no NID)',
-                            hintText: 'Enter TIN',
+                                '2. Nation NID/Passport (if there is no NID)',
+                            hintText: 'Enter Nation NID/Passport',
                             required: true,
                             textInputType: TextInputType.number),
                         const SizedBox(height: 16),
@@ -201,6 +201,7 @@ class PersonalInfoScreen extends StatelessWidget {
                             labelText: '16. Mobile number',
                             hintText: 'Enter Mobile number',
                             required: true,
+                            readOnly: true,
                             textInputType: TextInputType.phone),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(

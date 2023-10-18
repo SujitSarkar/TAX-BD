@@ -13,6 +13,11 @@ class SalaryIncomeProvider extends ChangeNotifier {
   List<PrivateSalaryIncomeInputModel> privateSalaryIncomeInputList = [];
   List<GovtSalaryIncomeInputModel> govtSalaryIncomeInputList = [];
 
+  void clearAllData(){
+    privateSalaryIncomeInputList=[];
+    govtSalaryIncomeInputList=[];
+  }
+
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   ///Private Salary
   void addPrivateSalaryIncomeInputListItem() {

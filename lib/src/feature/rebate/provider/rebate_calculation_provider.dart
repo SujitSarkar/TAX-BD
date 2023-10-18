@@ -11,6 +11,10 @@ class RebateCalculationProvider extends ChangeNotifier {
 
   List<RebateCalculationInputModel> rebateCalculationInputList = [];
 
+  void clearAllData(){
+    rebateCalculationInputList=[];
+  }
+
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addRebateCalculationInputListItem() {
     rebateCalculationInputList.add(RebateCalculationInputModel(

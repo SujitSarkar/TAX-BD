@@ -11,6 +11,10 @@ class TaxCalculationProvider extends ChangeNotifier {
 
   List<TaxCalculationInputModel> taxCalculationInputList = [];
 
+  void clearAllData(){
+    taxCalculationInputList=[];
+  }
+
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addTaxCalculationInputListItem() {
     taxCalculationInputList.add(

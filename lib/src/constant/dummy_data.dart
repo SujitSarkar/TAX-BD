@@ -50,7 +50,6 @@ class DummyData {
   ];
   static const List<String> taxpayerPrivilegesList = [
     "A gazette war-wounded freedom fighter",
-    "Female",
     "Third gender",
     "Disable person",
     "Age 65 years or more",

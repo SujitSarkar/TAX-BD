@@ -11,6 +11,10 @@ class ForeignIncomeProvider extends ChangeNotifier {
 
   List<ForeignIncomeInputModel> foreignIncomeInputList = [];
 
+  void clearAllData(){
+    foreignIncomeInputList=[];
+  }
+
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addForeignInputListItem() {
     foreignIncomeInputList.add(ForeignIncomeInputModel(

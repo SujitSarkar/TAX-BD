@@ -11,6 +11,10 @@ class RentalIncomeProvider extends ChangeNotifier {
 
   List<RentalIncomeInputModel> rentalIncomeInputList = [];
 
+  void clearAllData(){
+    rentalIncomeInputList=[];
+  }
+
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addRentalIncomeInputListItem() {
     rentalIncomeInputList.add(RentalIncomeInputModel(

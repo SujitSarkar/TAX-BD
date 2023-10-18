@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:tax_bd/src/constant/app_toast.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../constant/local_storage_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../../shared/local_storage.dart';
 import '../../../shared/validator.dart';
 
 class PersonalInfoProvider extends ChangeNotifier {
@@ -15,14 +17,15 @@ class PersonalInfoProvider extends ChangeNotifier {
   String? residentialStatusRadioValue = DummyData.residentialStatusList.first;
   String? statusOfTaxpayersRadioValue = DummyData.statusOfTaxpayersList.first;
   String? taxpayerPrivilegesRadioValue = DummyData.taxpayerPrivilegesList.last;
+  DateTime dateOfBirth = DateTime.now();
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController nidOrPassportController = TextEditingController();
   final TextEditingController tinController = TextEditingController();
   final TextEditingController circleController = TextEditingController();
   final TextEditingController taxZoneController = TextEditingController();
-  final TextEditingController assessmentYearController = TextEditingController();
-  DateTime dateOfBirth = DateTime.now();
+  final TextEditingController assessmentYearController =
+      TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
   final TextEditingController spouseController = TextEditingController();
   final TextEditingController spouseTinController = TextEditingController();
@@ -38,11 +41,32 @@ class PersonalInfoProvider extends ChangeNotifier {
   final TextEditingController partnerNameAndTinController =
       TextEditingController();
 
+  void clearAllData(){
+    nameController.clear();
+    nidOrPassportController.clear();
+    tinController.clear();
+    circleController.clear();
+    taxZoneController.clear();
+    assessmentYearController.clear();
+    dateOfBirthController.clear();
+    spouseController.clear();
+    spouseTinController.clear();
+    contactAddressController.clear();
+    telephoneController.clear();
+    mobileController.clear();
+    emailController.clear();
+    currentlyWorkingOrgController.clear();
+    orgNameController.clear();
+    orgBinController.clear();
+    partnerNameAndTinController.clear();
+  }
+
   ///UI interaction functions::::::::::::::::::::::::::::::::::::::::::::::::::
   void changeGender(String? newValue) {
     genderRadioValue = newValue;
     notifyListeners();
   }
+
   void changeResidentialStatus(String? newValue) {
     residentialStatusRadioValue = newValue;
     notifyListeners();
@@ -58,13 +82,14 @@ class PersonalInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> selectDateOfBirth()async{
+  Future<void> selectDateOfBirth() async {
     dateOfBirth = await showDatePickerAndGetDate();
     dateOfBirthController.text = DateFormat('dd-MMM-yyyy').format(dateOfBirth);
     notifyListeners();
   }
 
   Future<void> getUserData() async {
+    final String? userPhone = await getData(LocalStorageKey.phoneKey);
     final Map<String, dynamic>? data =
         await firebaseDbHelper.fetchData(childPath: DbChildPath.personalInfo);
 
@@ -75,12 +100,13 @@ class PersonalInfoProvider extends ChangeNotifier {
       circleController.text = data['circle'];
       taxZoneController.text = data['taxZone'];
       assessmentYearController.text = data['assessmentYear'];
-      genderRadioValue= data['gender'];
+      genderRadioValue = data['gender'];
       residentialStatusRadioValue = data['residentialStatus'] ?? 'None';
       statusOfTaxpayersRadioValue = data['statusOfTaxPayer'] ?? 'None';
       taxpayerPrivilegesRadioValue = data['privilegesOfTaxPayer'] ?? 'None';
       dateOfBirth = DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth']);
-      dateOfBirthController.text = DateFormat('dd-MMM-yyyy').format(dateOfBirth);
+      dateOfBirthController.text =
+          DateFormat('dd-MMM-yyyy').format(dateOfBirth);
       spouseController.text = data['nameOfSpouse'];
       spouseTinController.text = data['tinOfSpouse'];
       contactAddressController.text = data['addressOfContact'];
@@ -91,6 +117,8 @@ class PersonalInfoProvider extends ChangeNotifier {
       orgNameController.text = data['organizationName'];
       orgBinController.text = data['binOfOrganization'];
       partnerNameAndTinController.text = data['partnerNameAndTin'];
+    }else{
+      mobileController.text= userPhone!;
     }
     // notifyListeners();
   }

@@ -12,6 +12,9 @@ class ExpanseInformationProvider extends ChangeNotifier {
 
   List<ExpanseInformationInputModel> expanseInformationInputItemList = [];
 
+  void clearAllData(){
+    expanseInformationInputItemList=[];
+  }
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addCostInformationInputListItem() {
     expanseInformationInputItemList.add(ExpanseInformationInputModel(
