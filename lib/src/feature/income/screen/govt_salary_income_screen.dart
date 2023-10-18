@@ -392,7 +392,7 @@ class GovtSalaryIncomeScreen extends StatelessWidget {
           controller: taxable,
           textInputType: TextInputType.number,
           hintText: '0.00',
-          readOnly: readOnly,
+          readOnly: true,
           required: requiredData,
         ),
       ],

@@ -510,6 +510,124 @@ class SalaryIncomeProvider extends ChangeNotifier {
     final List<Map<String, dynamic>> govtSalaryIncomeDataList = [];
 
     for (GovtSalaryIncomeInputModel element in govtSalaryIncomeInputList) {
+      ///Exempted calculation
+      element.basicPay!.taxable!.text = (double.parse(
+          element.basicPay!.amount!.text.isEmpty
+              ? '0.0'
+              : element.basicPay!.amount!.text.trim()) - double.parse(
+          element.basicPay!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.basicPay!.exempted!.text.trim())).toString();
+
+      element.arrearPay!.taxable!.text = (double.parse(
+          element.arrearPay!.amount!.text.isEmpty
+              ? '0.0'
+              : element.arrearPay!.amount!.text.trim()) - double.parse(
+          element.arrearPay!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.arrearPay!.exempted!.text.trim())).toString();
+
+      element.specialAllowance!.taxable!.text = (double.parse(
+          element.specialAllowance!.amount!.text.isEmpty
+              ? '0.0'
+              : element.specialAllowance!.amount!.text.trim()) - double.parse(
+          element.specialAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.specialAllowance!.exempted!.text.trim())).toString();
+      element.houseRentAllowance!.taxable!.text = (double.parse(
+          element.houseRentAllowance!.amount!.text.isEmpty
+              ? '0.0'
+              : element.houseRentAllowance!.amount!.text.trim()) - double.parse(
+          element.houseRentAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.houseRentAllowance!.exempted!.text.trim())).toString();
+      element.medicalAllowance!.taxable!.text = (double.parse(
+          element.medicalAllowance!.amount!.text.isEmpty
+              ? '0.0'
+              : element.medicalAllowance!.amount!.text.trim()) - double.parse(
+          element.medicalAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.medicalAllowance!.exempted!.text.trim())).toString();
+      element.conveyanceAllowance!.taxable!.text = (double.parse(
+          element.conveyanceAllowance!.amount!.text.isEmpty
+              ? '0.0'
+              : element.conveyanceAllowance!.amount!.text.trim()) - double.parse(
+          element.conveyanceAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.conveyanceAllowance!.exempted!.text.trim())).toString();
+      element.festivalAllowance!.taxable!.text = (double.parse(
+          element.festivalAllowance!.amount!.text.isEmpty
+              ? '0.0'
+              : element.festivalAllowance!.amount!.text.trim()) - double.parse(
+          element.festivalAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.festivalAllowance!.exempted!.text.trim())).toString();
+      element.supportStaffAllowance!.taxable!.text = (double.parse(
+          element.supportStaffAllowance!.amount!.text.isEmpty
+              ? '0.0'
+              : element.supportStaffAllowance!.amount!.text.trim()) - double.parse(
+          element.supportStaffAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.supportStaffAllowance!.exempted!.text.trim())).toString();
+      element.leaveAllowance!.taxable!.text = (double.parse(
+          element.leaveAllowance!.amount!.text.isEmpty
+              ? '0.0'
+              : element.leaveAllowance!.amount!.text.trim()) - double.parse(
+          element.leaveAllowance!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.leaveAllowance!.exempted!.text.trim())).toString();
+      element.honorariumReward!.taxable!.text = (double.parse(
+          element.honorariumReward!.amount!.text.isEmpty
+              ? '0.0'
+              : element.honorariumReward!.amount!.text.trim()) - double.parse(
+          element.honorariumReward!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.honorariumReward!.exempted!.text.trim())).toString();
+      element.overtimeAllowances!.taxable!.text = (double.parse(
+          element.overtimeAllowances!.amount!.text.isEmpty
+              ? '0.0'
+              : element.overtimeAllowances!.amount!.text.trim()) - double.parse(
+          element.overtimeAllowances!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.overtimeAllowances!.exempted!.text.trim())).toString();
+      element.banglaNoboborshoAllowances!.taxable!.text = (double.parse(
+          element.banglaNoboborshoAllowances!.amount!.text.isEmpty
+              ? '0.0'
+              : element.banglaNoboborshoAllowances!.amount!.text.trim()) - double.parse(
+          element.banglaNoboborshoAllowances!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.banglaNoboborshoAllowances!.exempted!.text.trim())).toString();
+
+      element.interestAccruedOnProvidentFund!.taxable!.text = (double.parse(
+          element.interestAccruedOnProvidentFund!.amount!.text.isEmpty
+              ? '0.0'
+              : element.interestAccruedOnProvidentFund!.amount!.text.trim()) - double.parse(
+          element.interestAccruedOnProvidentFund!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.interestAccruedOnProvidentFund!.exempted!.text.trim())).toString();
+      element.lumpGrant!.taxable!.text = (double.parse(
+          element.lumpGrant!.amount!.text.isEmpty
+              ? '0.0'
+              : element.lumpGrant!.amount!.text.trim()) - double.parse(
+          element.lumpGrant!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.lumpGrant!.exempted!.text.trim())).toString();
+      element.gratuity!.taxable!.text = (double.parse(
+          element.gratuity!.amount!.text.isEmpty
+              ? '0.0'
+              : element.gratuity!.amount!.text.trim()) - double.parse(
+          element.gratuity!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.gratuity!.exempted!.text.trim())).toString();
+      element.others!.taxable!.text = (double.parse(
+          element.others!.amount!.text.isEmpty
+              ? '0.0'
+              : element.others!.amount!.text.trim()) - double.parse(
+          element.others!.exempted!.text.isEmpty
+              ? '0.0'
+              : element.others!.exempted!.text.trim())).toString();
+
+      ///Total Calculation
       final double totalAmountValue = double.parse(
               element.basicPay!.amount!.text.isEmpty
                   ? '0.0'
