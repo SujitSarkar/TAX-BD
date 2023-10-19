@@ -92,7 +92,7 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('assets/image/bd_logo.png', height: 60, width: 60),
+                Image.asset('assets/image/logo_trans.png', height: 60, width: 60),
                 const SizedBox(width: 12),
                 const Text(
                   'Income TAX BD',

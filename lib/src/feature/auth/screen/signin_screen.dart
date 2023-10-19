@@ -30,7 +30,7 @@ class SignInScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset('assets/image/bd_logo.png',
+                    Image.asset('assets/image/logo_trans.png',
                         height: 80, width: 80),
                     const SizedBox(height: 10),
                     const Text(

@@ -76,6 +76,10 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
 
     for (AgricultureIncomeInputModel element in agricultureIncomeInputList) {
 
+      if(element.grossProfit!.text.isEmpty){
+        element.grossProfit!.text = element.grossProfit!.text;
+      }
+
       final double totalValueOfNetProfit =
           double.parse(element.grossProfit!.text.isEmpty
               ? '0.0'
