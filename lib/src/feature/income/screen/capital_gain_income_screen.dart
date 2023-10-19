@@ -29,135 +29,140 @@ class CapitalGainIncomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(children: [
-            ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount:
-                    capitalGainIncomeProvider.capitalGainIncomeInputList.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 24),
-                itemBuilder: (context, index) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (index != 0)
-                          IconButton(
-                              onPressed: () {
-                                capitalGainIncomeProvider
-                                    .removeItemOfCapitalGainIncomeInputList(
-                                        index);
-                              },
-                              icon: const Icon(Icons.cancel_rounded,
-                                  color: Colors.grey),
-                              splashRadius: 25,
-                              padding: EdgeInsets.zero),
-                        Table(
-                          defaultVerticalAlignment:
-                              TableCellVerticalAlignment.middle,
-                          border: TableBorder.all(color: Colors.grey),
-                          children: [
-                            ///Table Header
-                            const TableRow(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Summary of Income',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+          child: Form(
+            key: capitalGainIncomeProvider.capitalGainKey,
+            child: Column(children: [
+              ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount:
+                      capitalGainIncomeProvider.capitalGainIncomeInputList.length,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 24),
+                  itemBuilder: (context, index) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (index != 0)
+                            IconButton(
+                                onPressed: () {
+                                  capitalGainIncomeProvider
+                                      .removeItemOfCapitalGainIncomeInputList(
+                                          index);
+                                },
+                                icon: const Icon(Icons.cancel_rounded,
+                                    color: Colors.grey),
+                                splashRadius: 25,
+                                padding: EdgeInsets.zero),
+                          Table(
+                            defaultVerticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            border: TableBorder.all(color: Colors.grey),
+                            children: [
+                              ///Table Header
+                              const TableRow(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Summary of Income',
+                                      style:
+                                          TextStyle(fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Amount of taka',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                  Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Amount of taka',
+                                      style:
+                                          TextStyle(fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            ///Table Row
-                            TableRow(
-                              children: [
-                                TableTextFormFieldWidget(
-                                  controller: capitalGainIncomeProvider
+                                ],
+                              ),
+                              ///Table Row
+                              TableRow(
+                                children: [
+                                  TableTextFormFieldWidget(
+                                    controller: capitalGainIncomeProvider
+                                        .capitalGainIncomeInputList[index]
+                                        .particular!.description!,
+                                    textCapitalization: TextCapitalization.sentences,
+                                    maxLine: 5,
+                                    hintText: 'Particular',
+                                    required: true,
+                                  ),
+                                  TableTextFormFieldWidget(
+                                    controller: capitalGainIncomeProvider
+                                        .capitalGainIncomeInputList[index]
+                                        .particular!.amount!,
+                                    textInputType: TextInputType.number,
+                                    hintText: '0.00',
+                                  ),
+                                ],
+                              ),
+                              buildRow(
+                                  "2. Acquisition Date",
+                                  capitalGainIncomeProvider
                                       .capitalGainIncomeInputList[index]
-                                      .particular!.description!,
-                                  textCapitalization: TextCapitalization.sentences,
-                                  maxLine: 5,
-                                  hintText: 'Particular',
-                                ),
-                                TableTextFormFieldWidget(
-                                  controller: capitalGainIncomeProvider
+                                      .acquisitionDateText!,
+                                  readOnly: true, onTap: () {
+                                capitalGainIncomeProvider
+                                    .selectAcquisitionDate(index);
+                              }),
+                              buildRow(
+                                  "3. Sales Date",
+                                  capitalGainIncomeProvider
                                       .capitalGainIncomeInputList[index]
-                                      .particular!.amount!,
-                                  textInputType: TextInputType.number,
-                                  hintText: '0.00',
-                                ),
-                              ],
-                            ),
-                            buildRow(
-                                "2. Acquisition Date",
-                                capitalGainIncomeProvider
-                                    .capitalGainIncomeInputList[index]
-                                    .acquisitionDateText!,
-                                readOnly: true, onTap: () {
-                              capitalGainIncomeProvider
-                                  .selectAcquisitionDate(index);
-                            }),
-                            buildRow(
-                                "3. Sales Date",
-                                capitalGainIncomeProvider
-                                    .capitalGainIncomeInputList[index]
-                                    .salesDateText!,
-                                readOnly: true, onTap: () {
-                              capitalGainIncomeProvider.selectSalesDate(index);
-                            }),
-                            buildRow(
-                                "4. Acquisition Value",
-                                capitalGainIncomeProvider
-                                    .capitalGainIncomeInputList[index]
-                                    .acquisitionValue!),
-                            buildRow(
-                                "5. Sales",
-                                capitalGainIncomeProvider
-                                    .capitalGainIncomeInputList[index].sales!),
-                            buildRow(
-                                "6. Sales Cost",
-                                capitalGainIncomeProvider
-                                    .capitalGainIncomeInputList[index]
-                                    .salesCost!),
-                            buildRow(
-                                "7. Gain (5-4-6)",
-                                capitalGainIncomeProvider
-                                    .capitalGainIncomeInputList[index].gain!,
-                                readOnly: true),
-                          ],
-                        ),
-                      ],
-                    )),
-            const SizedBox(height: 12),
-            Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                    onPressed: () {
-                      capitalGainIncomeProvider.addCapitalGainInputListItem();
-                    },
-                    child: const Text('Add More'))),
-            const SizedBox(height: 12),
-            SolidButton(
-                onTap: () async {
-                  await capitalGainIncomeProvider
-                      .submitCapitalGainIncomeButtonOnTap();
-                },
-                child: capitalGainIncomeProvider.functionLoading
-                    ? const LoadingWidget()
-                    : const Text(
-                        'Submit Data',
-                        style: TextStyle(fontSize: TextSize.titleText),
-                      ))
-          ]),
+                                      .salesDateText!,
+                                  readOnly: true, onTap: () {
+                                capitalGainIncomeProvider.selectSalesDate(index);
+                              }),
+
+                              buildRow(
+                                  "4. Sales",
+                                  capitalGainIncomeProvider
+                                      .capitalGainIncomeInputList[index].sales!),
+                              buildRow(
+                                  "5. Acquisition Cost",
+                                  capitalGainIncomeProvider
+                                      .capitalGainIncomeInputList[index]
+                                      .acquisitionValue!),
+                              buildRow(
+                                  "6. Sales Cost",
+                                  capitalGainIncomeProvider
+                                      .capitalGainIncomeInputList[index]
+                                      .salesCost!),
+                              buildRow(
+                                  "7. Gain (4-5-6)",
+                                  capitalGainIncomeProvider
+                                      .capitalGainIncomeInputList[index].gain!,
+                                  readOnly: true),
+                            ],
+                          ),
+                        ],
+                      )),
+              const SizedBox(height: 12),
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        capitalGainIncomeProvider.addCapitalGainInputListItem();
+                      },
+                      child: const Text('Add More'))),
+              const SizedBox(height: 12),
+              SolidButton(
+                  onTap: () async {
+                    await capitalGainIncomeProvider
+                        .submitCapitalGainIncomeButtonOnTap();
+                  },
+                  child: capitalGainIncomeProvider.functionLoading
+                      ? const LoadingWidget()
+                      : const Text(
+                          'Submit Data',
+                          style: TextStyle(fontSize: TextSize.titleText),
+                        ))
+            ]),
+          ),
         ),
       ),
     );

@@ -223,14 +223,12 @@ class PersonalInfoScreen extends StatelessWidget {
                             controller: personalInfoProvider.orgNameController,
                             labelText: '19. Organization name',
                             hintText: 'Enter Organization name',
-                            required: true,
                             textCapitalization: TextCapitalization.words),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.orgBinController,
                             labelText: '20. BIN of organization',
                             hintText: 'Enter BIN of organization',
-                            required: true,
                             textInputType: TextInputType.number),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(

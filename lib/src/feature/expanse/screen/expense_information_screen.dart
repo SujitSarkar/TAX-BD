@@ -17,7 +17,7 @@ class ExpenseInformationScreen extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: 0.0,
         title: const Text(
-          'Expenses Relating to Lifestyle',
+          'Expenses of Lifestyle',
           style: TextStyle(
               fontSize: TextSize.titleText, fontWeight: FontWeight.w500),
         ),
@@ -39,9 +39,7 @@ class ExpenseInformationScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         if (index != 0)
-                          expenseInformationProvider.deleteButtonOnTap
-                              ? const CircularProgressIndicator()
-                              : IconButton(
+                          IconButton(
                                   onPressed: () {
                                     expenseInformationProvider
                                         .removeItemOfCostInformationInputList(
@@ -171,7 +169,7 @@ class ExpenseInformationScreen extends StatelessWidget {
                                     .taxDeduction!
                                     .comment!),
                             buildRow(
-                                "8. Interest Paid on Personal Loan Received from Institution & Other Source",
+                                "9. Interest Paid on Personal Loan Received from Institution & Other Source",
                                 expenseInformationProvider
                                     .expanseInformationInputItemList[index]
                                     .interestPaid!

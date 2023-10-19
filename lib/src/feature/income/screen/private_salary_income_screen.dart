@@ -147,7 +147,7 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
                                     .totalSalaryReceived!,
-                                readOnly: true),
+                                readOnly: true,isBold: true),
                             buildRow(
                                 "14. Exempted Amount (as per Part 1 of 6th Schedule)",
                                 salaryIncomeProvider
@@ -158,7 +158,7 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
                                     .totalIncomeFromSalary!,
-                                readOnly: true)
+                                readOnly: true,isBold: true)
                           ],
                         ),
                       ],
@@ -191,10 +191,10 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
   }
 
   TableRow buildRow(String label, TextEditingController controller,
-      {bool readOnly = false, bool requiredData = false}) {
+      {bool readOnly = false, bool requiredData = false,bool isBold = false}) {
     return TableRow(
       children: [
-        Padding(padding: const EdgeInsets.all(8.0), child: Text(label)),
+        Padding(padding: const EdgeInsets.all(8.0), child: Text(label,style: TextStyle(fontWeight: isBold?FontWeight.bold:null))),
         TableTextFormFieldWidget(
           controller: controller,
           textInputType: TextInputType.number,

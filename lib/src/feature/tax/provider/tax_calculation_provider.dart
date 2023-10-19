@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tax_bd/src/feature/asset/provider/asset_info_provider.dart';
 import 'package:tax_bd/src/feature/income/model/capital_gain_income_input_model.dart';
 import 'package:tax_bd/src/feature/income/model/rental_income_input_model.dart';
 import 'package:tax_bd/src/feature/income/model/spouse_children_income_input_model.dart';
@@ -62,6 +63,8 @@ class TaxCalculationProvider extends ChangeNotifier {
     incomeFromAbroadValue = 0.0;
     totalIncomeValue = 0.0;
     taxRebateValue = 0.0;
+    loading = false;
+    functionLoading = false;
   }
 
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -108,7 +111,7 @@ class TaxCalculationProvider extends ChangeNotifier {
   }
 
   ///Functions:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-  Future<void> getAllIncomeData() async {
+  void getAllIncomeData() {
     incomeFromEmploymentValue = 0.0;
     incomeFromRentValue = 0.0;
     incomeFromAgricultureValue = 0.0;
@@ -167,8 +170,8 @@ class TaxCalculationProvider extends ChangeNotifier {
     for (RentalIncomeInputModel element
         in rentalIncomeProvider.rentalIncomeInputList) {
       rentIncome = rentIncome +
-          double.parse(element.totalRentIncome!.text.isNotEmpty
-              ? element.totalRentIncome!.text.trim()
+          double.parse(element.netIncome!.text.isNotEmpty
+              ? element.netIncome!.text.trim()
               : '0.0');
     }
     ///Agriculture Income
@@ -235,9 +238,6 @@ class TaxCalculationProvider extends ChangeNotifier {
       financialAssetIncome = financialAssetIncome +
           (double.parse(element.total!.text.isNotEmpty
                   ? element.total!.text
-                  : '0.0') -
-              double.parse(element.exemptedAmount!.text.isNotEmpty
-                  ? element.exemptedAmount!.text.trim()
                   : '0.0'));
     }
     ///Others Sector Income
@@ -276,15 +276,20 @@ class TaxCalculationProvider extends ChangeNotifier {
     }
     ///Foreign Income
     double foreignIncome = 0.0;
-    for (ForeignIncomeInputModel element
-        in foreignIncomeProvider.foreignIncomeInputList) {
-      foreignIncome = foreignIncome +
-          (double.parse(element.particular!.amount!.text.isNotEmpty
-                  ? element.particular!.amount!.text.trim()
-                  : '0.0') -
-              double.parse(element.exemptedAmount!.text.isNotEmpty
-                  ? element.exemptedAmount!.text.trim()
-                  : '0.0'));
+    for (ForeignIncomeInputModel element in foreignIncomeProvider.foreignIncomeInputList) {
+      if(element.throughBankingChannel==true){
+        foreignIncome = foreignIncome + (double.parse(element.particular!.amount!.text.isNotEmpty
+            ? element.particular!.amount!.text.trim()
+            : '0.0') -
+            double.parse(element.exemptedAmount!.text.isNotEmpty
+                ? element.exemptedAmount!.text.trim()
+                : '0.0'));
+      }else{
+        foreignIncome = foreignIncome + (double.parse(element.particular!.amount!.text.isNotEmpty
+            ? element.particular!.amount!.text.trim()
+            : '0.0'));
+      }
+
     }
     ///Spouse Children Income
     double spouseChildrenIncome = 0.0;
@@ -328,7 +333,7 @@ class TaxCalculationProvider extends ChangeNotifier {
   }
 
   Future<void> getTaxCalculationData() async {
-    await getAllIncomeData();
+    getAllIncomeData();
     taxCalculationInputList = [];
 
     final Map<String, dynamic>? data =
@@ -513,13 +518,17 @@ class TaxCalculationProvider extends ChangeNotifier {
       'data': taxCalculationDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.taxCalculation, data: taxCalculationDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.taxCalculation, data: taxCalculationDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
+
     functionLoading = false;
     notifyListeners();
   }

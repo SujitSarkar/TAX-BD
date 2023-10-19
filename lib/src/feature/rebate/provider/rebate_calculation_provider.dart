@@ -13,6 +13,8 @@ class RebateCalculationProvider extends ChangeNotifier {
 
   void clearAllData(){
     rebateCalculationInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

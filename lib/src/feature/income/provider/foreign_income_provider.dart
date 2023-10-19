@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
+import '../../tax/provider/tax_calculation_provider.dart';
 import '../model/foreign_income_input_model.dart';
 import '../model/others_income_input_model.dart';
 
@@ -9,11 +13,13 @@ class ForeignIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
-
+  final GlobalKey<FormState> foreignIncomeKey = GlobalKey();
   List<ForeignIncomeInputModel> foreignIncomeInputList = [];
 
   void clearAllData(){
     foreignIncomeInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -73,6 +79,9 @@ class ForeignIncomeProvider extends ChangeNotifier {
   }
 
   Future<void> submitForeignIncomeButtonOnTap() async {
+    if(!foreignIncomeKey.currentState!.validate()){
+      return;
+    }
     functionLoading = true;
     notifyListeners();
     final List<Map<String, dynamic>> foreignIncomeDataList = [];
@@ -96,13 +105,18 @@ class ForeignIncomeProvider extends ChangeNotifier {
       'data': foreignIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.foreignIncome, data: foreignIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.foreignIncome, data: foreignIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

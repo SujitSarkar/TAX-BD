@@ -87,7 +87,7 @@ class RentalIncomeScreen extends StatelessWidget {
                                 .rentalIncomeInputList[index]
                                 .rentReceived!),
                         buildRow(
-                            "2. Advance rent receipts",
+                            "2. Advance rent Received",
                             rentalIncomeProvider
                                 .rentalIncomeInputList[index].advanceRentReceived!),
                         buildRow(
@@ -104,7 +104,7 @@ class RentalIncomeScreen extends StatelessWidget {
                             rentalIncomeProvider
                                 .rentalIncomeInputList[index].vacancyAllowance!),
                         buildRow(
-                            "6. Total Rent Income (1+2+3)-4-5",
+                            "6. Total Rent Income 1+2+3-4-5",
                             rentalIncomeProvider
                                 .rentalIncomeInputList[index].totalRentIncome!,readOnly: true),
                         const TableRow(
@@ -150,15 +150,15 @@ class RentalIncomeScreen extends StatelessWidget {
                             rentalIncomeProvider
                                 .rentalIncomeInputList[index].otherAD!),
                         buildRow(
-                            "9. Total Admissible deductions",
+                            "8. Total Admissible deductions",
                             rentalIncomeProvider
                                 .rentalIncomeInputList[index].totalAdmissibleDeduction!,readOnly: true),
                         buildRow(
-                            "10. Net Income (6-9)",
+                            "9. Net Income (6-8)",
                             rentalIncomeProvider
                                 .rentalIncomeInputList[index].netIncome!,readOnly: true),
                         buildRow(
-                            "11. Taxpayer’s Share, if applicable",
+                            "10. Taxpayer’s Share, if applicable",
                             rentalIncomeProvider
                                 .rentalIncomeInputList[index].taxpayerShare!),
                       ],

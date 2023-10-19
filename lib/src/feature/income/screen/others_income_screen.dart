@@ -27,107 +27,111 @@ class OthersIncomeScreen extends StatelessWidget {
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
           padding: const EdgeInsets.symmetric(horizontal: 12),
-          child: Column(children: [
-            ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount:
-                othersIncomeProvider.othersIncomeInputList.length,
-                separatorBuilder: (context, index) => const SizedBox(height: 24),
-                itemBuilder: (context, index) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (index != 0)
-                      IconButton(
-                          onPressed: () {
-                            othersIncomeProvider
-                                .removeItemOfOthersIncomeInputList(index);
-                          },
-                          icon: const Icon(Icons.cancel_rounded,
-                              color: Colors.grey),
-                          splashRadius: 25,
-                          padding: EdgeInsets.zero),
+          child: Form(
+            key: othersIncomeProvider.othersIncomeKey,
+            child: Column(children: [
+              ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount:
+                  othersIncomeProvider.othersIncomeInputList.length,
+                  separatorBuilder: (context, index) => const SizedBox(height: 24),
+                  itemBuilder: (context, index) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (index != 0)
+                        IconButton(
+                            onPressed: () {
+                              othersIncomeProvider
+                                  .removeItemOfOthersIncomeInputList(index);
+                            },
+                            icon: const Icon(Icons.cancel_rounded,
+                                color: Colors.grey),
+                            splashRadius: 25,
+                            padding: EdgeInsets.zero),
 
-                    Table(
-                      defaultVerticalAlignment:
-                      TableCellVerticalAlignment.middle,
-                      border: TableBorder.all(color: Colors.grey),
-                      children: [
-                        ///Table Header
-                        const TableRow(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Summary of Income',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                      Table(
+                        defaultVerticalAlignment:
+                        TableCellVerticalAlignment.middle,
+                        border: TableBorder.all(color: Colors.grey),
+                        children: [
+                          ///Table Header
+                          const TableRow(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Summary of Income',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                'Amount of taka',
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                              Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Amount of taka',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
 
-                        ///Table Row
-                        TableRow(
-                          children: [
-                            TableTextFormFieldWidget(
-                              controller: othersIncomeProvider
+                          ///Table Row
+                          TableRow(
+                            children: [
+                              TableTextFormFieldWidget(
+                                controller: othersIncomeProvider
+                                    .othersIncomeInputList[index]
+                                    .particular!.description!,
+                                textCapitalization: TextCapitalization.sentences,
+                                maxLine: 5,
+                                hintText: 'Particular',
+                                required: true,
+                              ),
+                              TableTextFormFieldWidget(
+                                controller: othersIncomeProvider
+                                    .othersIncomeInputList[index]
+                                    .particular!.amount!,
+                                textInputType: TextInputType.number,
+                                hintText: '0.00',
+                              ),
+                            ],
+                          ),
+                          buildRow(
+                              "3. TDS Deducted",
+                              othersIncomeProvider
                                   .othersIncomeInputList[index]
-                                  .particular!.description!,
-                              textCapitalization: TextCapitalization.sentences,
-                              maxLine: 5,
-                              hintText: 'Particular',
-                            ),
-                            TableTextFormFieldWidget(
-                              controller: othersIncomeProvider
+                                  .tdsDeducted!),
+                          buildRow(
+                              "4. Exempted if any",
+                              othersIncomeProvider
                                   .othersIncomeInputList[index]
-                                  .particular!.amount!,
-                              textInputType: TextInputType.number,
-                              hintText: '0.00',
-                            ),
-                          ],
-                        ),
-                        buildRow(
-                            "3. TDS Deducted",
-                            othersIncomeProvider
-                                .othersIncomeInputList[index]
-                                .tdsDeducted!),
-                        buildRow(
-                            "4. Exempted if any",
-                            othersIncomeProvider
-                                .othersIncomeInputList[index]
-                                .exemptedAmount!),
-                      ],
-                    ),
-                  ],
-                )),
-            const SizedBox(height: 12),
-            Align(
-                alignment: Alignment.bottomRight,
-                child: ElevatedButton(
-                    onPressed: () {
-                      othersIncomeProvider.addOthersInputListItem();
-                    },
-                    child: const Text('Add More'))),
-            const SizedBox(height: 12),
-            SolidButton(
-                onTap: () async {
-                  await othersIncomeProvider
-                      .submitOthersIncomeButtonOnTap();
-                },
-                child: othersIncomeProvider.functionLoading
-                    ? const LoadingWidget()
-                    : const Text(
-                  'Submit Data',
-                  style: TextStyle(fontSize: TextSize.titleText),
-                ))
-          ]),
+                                  .exemptedAmount!),
+                        ],
+                      ),
+                    ],
+                  )),
+              const SizedBox(height: 12),
+              Align(
+                  alignment: Alignment.bottomRight,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        othersIncomeProvider.addOthersInputListItem();
+                      },
+                      child: const Text('Add More'))),
+              const SizedBox(height: 12),
+              SolidButton(
+                  onTap: () async {
+                    await othersIncomeProvider
+                        .submitOthersIncomeButtonOnTap();
+                  },
+                  child: othersIncomeProvider.functionLoading
+                      ? const LoadingWidget()
+                      : const Text(
+                    'Submit Data',
+                    style: TextStyle(fontSize: TextSize.titleText),
+                  ))
+            ]),
+          ),
         ),
       ),
     );

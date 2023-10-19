@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
 import '../model/agriculture_income_input_model.dart';
 
 class AgriculturalIncomeProvider extends ChangeNotifier {
@@ -13,6 +17,8 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
 
   void clearAllData(){
     agricultureIncomeInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -94,13 +100,18 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
       'data': agricultureIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.agricultureIncome, data: agricultureIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+   await firebaseDbHelper.insertData(
+        childPath: DbChildPath.agricultureIncome, data: agricultureIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

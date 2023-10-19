@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tax_bd/src/feature/income/model/private_salary_income_input_model.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
+import '../../tax/provider/tax_calculation_provider.dart';
 import '../model/govt_salary_income_input_model.dart';
 
 class SalaryIncomeProvider extends ChangeNotifier {
@@ -16,6 +20,8 @@ class SalaryIncomeProvider extends ChangeNotifier {
   void clearAllData(){
     privateSalaryIncomeInputList=[];
     govtSalaryIncomeInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -157,16 +163,17 @@ class SalaryIncomeProvider extends ChangeNotifier {
               : element.providentFund!.text.trim()) +
           double.parse(element.others!.text.isEmpty ? '0.0' : element.others!.text.trim());
 
-      final double totalIncomeFromSalaryValue = totalSalaryReceivedValue -
-          double.parse(element.exemptedAmount!.text.isEmpty
-              ? '0.0'
-              : element.exemptedAmount!.text.trim());
 
       if ((totalSalaryReceivedValue / 3) < 450000) {
         element.exemptedAmount!.text = '${totalSalaryReceivedValue / 3}';
       } else {
         element.exemptedAmount!.text = 450000.toString();
       }
+
+      final double totalIncomeFromSalaryValue = totalSalaryReceivedValue -
+          double.parse(element.exemptedAmount!.text.isEmpty
+              ? '0.0'
+              : element.exemptedAmount!.text.trim());
 
       element.totalSalaryReceived!.text = '$totalSalaryReceivedValue';
       element.totalIncomeFromSalary!.text = '$totalIncomeFromSalaryValue';
@@ -195,14 +202,19 @@ class SalaryIncomeProvider extends ChangeNotifier {
       'data': privateSalaryIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
+    await firebaseDbHelper.insertData(
         childPath: DbChildPath.privateSalaryIncome,
-        data: privateSalaryIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+        data: privateSalaryIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }
@@ -844,13 +856,18 @@ class SalaryIncomeProvider extends ChangeNotifier {
       'data': govtSalaryIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.govtSalaryIncome, data: govtSalaryIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.govtSalaryIncome, data: govtSalaryIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

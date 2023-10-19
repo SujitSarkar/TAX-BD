@@ -59,6 +59,9 @@ class PersonalInfoProvider extends ChangeNotifier {
     orgNameController.clear();
     orgBinController.clear();
     partnerNameAndTinController.clear();
+
+    loading = false;
+    functionLoading = false;
   }
 
   ///UI interaction functions::::::::::::::::::::::::::::::::::::::::::::::::::

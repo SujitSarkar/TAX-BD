@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
 import '../model/expense_info_input_model.dart';
 
 class ExpenseInformationProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
-  bool deleteButtonOnTap = false;
 
   List<ExpenseInformationInputModel> expanseInformationInputItemList = [];
 
   void clearAllData(){
     expanseInformationInputItemList=[];
+    loading = false;
+    functionLoading = false;
   }
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addCostInformationInputListItem() {
@@ -212,13 +216,17 @@ class ExpenseInformationProvider extends ChangeNotifier {
       costInfoDataList.add(dataMap);
     }
     final Map<String, dynamic> costInfoDataMap = {'data': costInfoDataList};
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.expanseInformation, data: costInfoDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.expanseInformation, data: costInfoDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

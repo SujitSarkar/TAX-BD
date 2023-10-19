@@ -119,7 +119,7 @@ class TaxCalculationScreen extends StatelessWidget {
                             buildRow(
                                 "11. Total Income (Aggregate of Serial 1 to 10)",
                                 taxCalculationProvider
-                                    .taxCalculationInputList[index].totalIncome!,readOnly: true),
+                                    .taxCalculationInputList[index].totalIncome!,readOnly: true,isBold: true),
 
                             buildRow(
                                 "12. Gross Tax on Taxable Income",
@@ -165,7 +165,7 @@ class TaxCalculationScreen extends StatelessWidget {
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .totalAmountPayable!,
-                                readOnly: true),
+                                readOnly: true,isBold: true),
                             buildRow(
                                 "20. Tax Deducted or Collected at Source (attach proof)",
                                 taxCalculationProvider
@@ -191,7 +191,7 @@ class TaxCalculationScreen extends StatelessWidget {
                                 taxCalculationProvider
                                     .taxCalculationInputList[index]
                                     .totalTaxPaid!,
-                                readOnly: true),
+                                readOnly: true,isBold: true),
                             buildRow(
                                 "25. Excess Payment (24–19)",
                                 taxCalculationProvider
@@ -233,10 +233,10 @@ class TaxCalculationScreen extends StatelessWidget {
   }
 
   TableRow buildRow(String label, TextEditingController controller,
-      {bool readOnly = false, bool requiredData = false}) {
+      {bool readOnly = false, bool requiredData = false,bool isBold = false}) {
     return TableRow(
       children: [
-        Padding(padding: const EdgeInsets.all(8.0), child: Text(label)),
+        Padding(padding: const EdgeInsets.all(8.0), child: Text(label,style: TextStyle(fontWeight: isBold?FontWeight.bold:null),)),
         TableTextFormFieldWidget(
           controller: controller,
           textInputType: TextInputType.number,

@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
+import '../../tax/provider/tax_calculation_provider.dart';
 import '../model/business_income_input_model.dart';
 
 class BusinessIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
+  final GlobalKey<FormState> businessIncomeKey = GlobalKey();
   List<BusinessIncomeInputModel> businessIncomeInputList = [];
 
   void clearAllData(){
     businessIncomeInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -108,12 +115,16 @@ class BusinessIncomeProvider extends ChangeNotifier {
   }
 
   Future<void> submitBusinessIncomeButtonOnTap() async {
+    if(!businessIncomeKey.currentState!.validate()){
+      return;
+    }
     functionLoading = true;
     notifyListeners();
     final List<Map<String, dynamic>> businessIncomeDataList = [];
 
     for (BusinessIncomeInputModel element in businessIncomeInputList) {
 
+      ///Net Profit (2–3)
       final double netProfitValue =
           double.parse(element.grossProfit!.text.isEmpty
               ? '0.0'
@@ -121,7 +132,9 @@ class BusinessIncomeProvider extends ChangeNotifier {
               double.parse(element.generalExpanses!.text.isEmpty
                   ? '0.0'
                   : element.generalExpanses!.text.trim());
+      element.netProfit!.text = '$netProfitValue';
 
+      ///Total Assets (7+8+9+10)
       final double totalAssetValue =
           double.parse(element.cashAndBankBalance!.text.isEmpty
               ? '0.0'
@@ -135,26 +148,26 @@ class BusinessIncomeProvider extends ChangeNotifier {
               double.parse(element.otherAssets!.text.isEmpty
                   ? '0.0'
                   : element.otherAssets!.text.trim());
+      element.totalAssets!.text = '$totalAssetValue';
 
+      ///Closing Capital
       final double closingCapitalValue =
           double.parse(element.openingCapital!.text.isEmpty
               ? '0.0'
               : element.openingCapital!.text.trim()) +
               double.parse(element.balanceSheetNetProfit!.text.isEmpty
                   ? '0.0'
-                  : element.balanceSheetNetProfit!.text.trim())+
+                  : element.balanceSheetNetProfit!.text.trim())-
               double.parse(element.drawingDuringIncomeYear!.text.isEmpty
                   ? '0.0'
                   : element.drawingDuringIncomeYear!.text.trim());
+      element.closingCapital!.text = '$closingCapitalValue';
 
+      ///Total Capital & Liabilities
       final double totalCapitalAndLiabilitiesValue = closingCapitalValue +
               double.parse(element.liabilities!.text.isEmpty
                   ? '0.0'
                   : element.liabilities!.text.trim());
-
-      element.netProfit!.text = '$netProfitValue';
-      element.totalAssets!.text = '$totalAssetValue';
-      element.closingCapital!.text = '$closingCapitalValue';
       element.totalCapitalAndLiabilities!.text = '$totalCapitalAndLiabilitiesValue';
       notifyListeners();
 
@@ -186,13 +199,18 @@ class BusinessIncomeProvider extends ChangeNotifier {
       'data': businessIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.businessIncome, data: businessIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+   await firebaseDbHelper.insertData(
+        childPath: DbChildPath.businessIncome, data: businessIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

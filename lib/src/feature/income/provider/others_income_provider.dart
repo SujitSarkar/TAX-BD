@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tax_bd/src/feature/income/model/others_income_input_model.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
+import '../../tax/provider/tax_calculation_provider.dart';
 
 class OthersIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
+  final GlobalKey<FormState> othersIncomeKey = GlobalKey();
 
   List<OthersIncomeInputModel> othersIncomeInputList = [];
 
   void clearAllData(){
     othersIncomeInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -66,6 +73,9 @@ class OthersIncomeProvider extends ChangeNotifier {
   }
 
   Future<void> submitOthersIncomeButtonOnTap() async {
+    if(!othersIncomeKey.currentState!.validate()){
+      return;
+    }
     functionLoading = true;
     notifyListeners();
     final List<Map<String, dynamic>> othersIncomeDataList = [];
@@ -86,13 +96,18 @@ class OthersIncomeProvider extends ChangeNotifier {
       'data': othersIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.othersSectorIncome, data: othersIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.othersSectorIncome, data: othersIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

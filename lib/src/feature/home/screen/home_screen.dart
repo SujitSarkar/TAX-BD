@@ -65,7 +65,6 @@ class HomeScreen extends StatelessWidget {
         personalInfoProvider.getUserData(),
         expenseInformationProvider.getCostInfoData(),
       ]);
-
       await assetInfoProvider.getAssetInfoData();
     });
   }

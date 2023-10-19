@@ -74,10 +74,55 @@ class AssetInfoProvider extends ChangeNotifier{
   final TextEditingController totalAssetsInBdOutsideBd = TextEditingController();
 
   void clearAllData(){
+    ///Source of found
+    sofTotalIncome.clear();
+    sofTaxExemptedIncome.clear();
+    sofReceiptOfGift.clear();
+    totalSourceOfFund.clear();
+    netWealthOfPreviousIncomeYear.clear();
+    sumOfSourceOfFound.clear();
+    expenseOfLifestyle.clear();
+    giftExpanseLoss.clear();
+    totalExpanseAndLoss.clear();
+    netWealthLastDateOfFinancialYear.clear();
+    ///Personal liabilities Outside BD
+    plobInstLiabilities.clear();
+    plobNonInstLiabilities.clear();
+    plobOtherLiabilities.clear();
+    totalLiabilitiesOutsideBd.clear();
+    grossWealth.clear();
+    ///Particulars of Assets
+    totalAssetOfBusiness.clear();
+    // lessBusinessLiabilities.clear();
+    directorShareholdings.clear();
+    businessCapitalOfPartnershipFirm.clear();
+    nonAgriculturalProperty.clear();
+    agriculturalProperty.clear();
+    ///Financial Assets
+    shareDebentureBondSecurities.clear();
+    sanchaypatraDepositPensionScheme.clear();
+    loanGiven.clear();
+    savingsDeposit.clear();
+    providentOrOtherFund.clear();
+    otherInvestment.clear();
+    totalFinancialAssets.clear();
+    motorVehicle.clear();
+    ornaments.clear();
+    furnitureAndElectronicItems.clear();
+    otherAsset.clear();
+    ///Cash in Hand and Fund Outside Business
+    bankBalance.clear();
+    cashInHand.clear();
+    othersOfCashInHand.clear();
+    totalCashInHand.clear();
+    assetOutsideBd.clear();
+    totalAssetsInBdOutsideBd.clear();
 
+    loading=false;
+    functionLoading=false;
   }
 
-  Future<void> getAllExemptedIncomeExpenseData()async{
+  void getAllExemptedIncomeExpenseData(){
 
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
     final SalaryIncomeProvider salaryIncomeProvider = Provider.of(context,listen: false);
@@ -172,7 +217,7 @@ class AssetInfoProvider extends ChangeNotifier{
   }
 
   Future<void> getAssetInfoData() async {
-    await getAllExemptedIncomeExpenseData();
+    getAllExemptedIncomeExpenseData();
 
     final Map<String, dynamic>? data =
     await firebaseDbHelper.fetchData(childPath: DbChildPath.assetInfo);

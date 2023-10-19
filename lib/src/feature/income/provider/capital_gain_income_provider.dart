@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
 import '../../../shared/validator.dart';
+import '../../asset/provider/asset_info_provider.dart';
+import '../../tax/provider/tax_calculation_provider.dart';
 import '../model/capital_gain_income_input_model.dart';
 import '../model/others_income_input_model.dart';
 
@@ -11,11 +15,13 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
-
+  final GlobalKey<FormState> capitalGainKey = GlobalKey();
   List<CapitalGainIncomeInputModel> capitalGainIncomeInputList = [];
 
   void clearAllData(){
     capitalGainIncomeInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///UI Functions:::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -99,6 +105,9 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
   }
 
   Future<void> submitCapitalGainIncomeButtonOnTap() async {
+    if(!capitalGainKey.currentState!.validate()){
+      return;
+    }
     functionLoading = true;
     notifyListeners();
     final List<Map<String, dynamic>> capitalGainIncomeDataList = [];
@@ -136,13 +145,18 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
       'data': capitalGainIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.capitalGainIncome, data: capitalGainIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    firebaseDbHelper.insertData(
+        childPath: DbChildPath.capitalGainIncome, data: capitalGainIncomeDataMap).then((result)async{
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

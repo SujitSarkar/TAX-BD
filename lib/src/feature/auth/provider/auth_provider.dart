@@ -28,7 +28,7 @@ class AuthProvider extends ChangeNotifier {
     _timer?.cancel();
   }
 
-  ///Funstions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   Future<void> storeDataToLocal(User user) async {
     await setData(LocalStorageKey.phoneKey, phoneController.text);
     await setData(LocalStorageKey.userIdKey, user.uid);

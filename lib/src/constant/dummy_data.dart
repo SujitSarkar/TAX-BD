@@ -11,7 +11,7 @@ class DummyData {
         icon: LineAwesomeIcons.file_invoice_with_us_dollar, title: 'Tax Calculation'),
     HomeDataModel(icon: LineAwesomeIcons.percentage, title: 'Tax Credit'),
     HomeDataModel(icon: LineAwesomeIcons.city, title: 'Asset Information'),
-    HomeDataModel(icon: LineAwesomeIcons.coins, title: 'Expense Information'),
+    HomeDataModel(icon: LineAwesomeIcons.coins, title: 'Expense of Lifestyle'),
   ];
 
   static final List<HomeDataModel> incomeInfoDataList = [

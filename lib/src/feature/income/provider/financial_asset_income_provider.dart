@@ -1,7 +1,11 @@
 import 'package:flutter/Material.dart';
+import 'package:provider/provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
+import '../../tax/provider/tax_calculation_provider.dart';
 import '../model/financial_asset_income_input_model.dart';
 
 class FinancialAssetIncomeProvider extends ChangeNotifier {
@@ -21,6 +25,8 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
     incomeFromBankItemList=[];
     insuranceProfitItemList=[];
     othersProfitItemList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///UI interaction functions::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -358,13 +364,18 @@ class FinancialAssetIncomeProvider extends ChangeNotifier {
       'othersProfit': othersDataList,
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.financialAssetIncome, data: financialAssetIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.financialAssetIncome, data: financialAssetIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

@@ -1,8 +1,12 @@
 import 'package:flutter/Material.dart';
+import 'package:provider/provider.dart';
 import 'package:tax_bd/src/feature/income/model/rental_income_input_model.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
+import '../../tax/provider/tax_calculation_provider.dart';
 
 class RentalIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
@@ -13,6 +17,8 @@ class RentalIncomeProvider extends ChangeNotifier {
 
   void clearAllData(){
     rentalIncomeInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -112,6 +118,7 @@ class RentalIncomeProvider extends ChangeNotifier {
 
     for (RentalIncomeInputModel element in rentalIncomeInputList) {
 
+      ///Value of any Benefit in addition to 1 & 2
       final double totalValueOfAnyBenefits = double.parse(
               element.rentReceived!.text.isEmpty
                   ? '0.0'
@@ -119,7 +126,9 @@ class RentalIncomeProvider extends ChangeNotifier {
           double.parse(element.advanceRentReceived!.text.isEmpty
               ? '0.0'
               : element.advanceRentReceived!.text.trim());
+      element.valueOfAnyBenefits!.text = '$totalValueOfAnyBenefits';
 
+      ///Total Rental Value (1+2+3–4-5)
       final double sumOfRentalValue = double.parse(
                   element.rentReceived!.text.isEmpty
                       ? '0.0'
@@ -128,12 +137,13 @@ class RentalIncomeProvider extends ChangeNotifier {
                   ? '0.0'
                   : element.advanceRentReceived!.text.trim()) +
               totalValueOfAnyBenefits -
-          (double.parse(element.adjustedAdvanceRent!.text.isEmpty
+          double.parse(element.adjustedAdvanceRent!.text.isEmpty
                   ? '0.0'
                   : element.adjustedAdvanceRent!.text.trim()) -
               double.parse(element.vacancyAllowance!.text.isEmpty
                   ? '0.0'
-                  : element.vacancyAllowance!.text.trim()));
+                  : element.vacancyAllowance!.text.trim());
+      element.totalRentIncome!.text = '$sumOfRentalValue';
 
       final double totalAdmissibleDeductionValue = double.parse(
                   element.repairAD!.text.isEmpty
@@ -157,8 +167,6 @@ class RentalIncomeProvider extends ChangeNotifier {
 
       final double totalValueOfNetIncome = sumOfRentalValue - totalAdmissibleDeductionValue;
 
-      element.valueOfAnyBenefits!.text = '$totalValueOfAnyBenefits';
-      element.totalRentIncome!.text = '$sumOfRentalValue';
       element.totalAdmissibleDeduction!.text = '$totalAdmissibleDeductionValue';
       element.netIncome!.text = '$totalValueOfNetIncome';
       notifyListeners();
@@ -188,13 +196,18 @@ class RentalIncomeProvider extends ChangeNotifier {
       'data': rentalIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.rentalIncome, data: privateSalaryIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.rentalIncome, data: privateSalaryIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }

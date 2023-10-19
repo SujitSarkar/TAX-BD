@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tax_bd/src/feature/income/model/spouse_children_income_input_model.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
+import '../../asset/provider/asset_info_provider.dart';
+import '../../tax/provider/tax_calculation_provider.dart';
 import '../model/others_income_input_model.dart';
 
 class SpouseChildrenIncomeProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
-
+  final GlobalKey<FormState> spouseChildrenIncomeKey = GlobalKey();
   List<SpouseChildrenIncomeInputModel> spouseChildrenIncomeInputList = [];
 
   void clearAllData(){
     spouseChildrenIncomeInputList=[];
+    loading = false;
+    functionLoading = false;
   }
 
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -61,6 +67,9 @@ class SpouseChildrenIncomeProvider extends ChangeNotifier {
   }
 
   Future<void> submitSpouseChildrenIncomeButtonOnTap() async {
+    if(!spouseChildrenIncomeKey.currentState!.validate()){
+      return;
+    }
     functionLoading = true;
     notifyListeners();
     final List<Map<String, dynamic>> spouseChildrenIncomeDataList = [];
@@ -79,13 +88,18 @@ class SpouseChildrenIncomeProvider extends ChangeNotifier {
       'data': spouseChildrenIncomeDataList
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.spouseChildrenIncome, data: spouseChildrenIncomeDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.spouseChildrenIncome, data: spouseChildrenIncomeDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        taxCalculationProvider.getAllIncomeData();
+        assetInfoProvider.getAllExemptedIncomeExpenseData();
+      } else {
+        showToast('Failed');
+      }
+    });
     functionLoading = false;
     notifyListeners();
   }
