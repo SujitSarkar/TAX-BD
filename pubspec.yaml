@@ -21,6 +21,7 @@ dependencies:
 #  cloud_firestore: ^4.9.3
   firebase_database: ^10.2.7
   line_awesome_flutter: ^2.0.0
+  url_launcher: ^6.1.14
 
 
 dev_dependencies:

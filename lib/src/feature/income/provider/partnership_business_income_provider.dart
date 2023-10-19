@@ -6,7 +6,6 @@ import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
 import '../../asset/provider/asset_info_provider.dart';
 import '../../tax/provider/tax_calculation_provider.dart';
-import '../model/others_income_input_model.dart';
 import '../model/partnership_business_income_input_model.dart';
 
 class PartnershipBusinessIncomeProvider extends ChangeNotifier {
@@ -25,10 +24,7 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
   ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void addPartnershipBusinessInputListItem() {
     partnershipBusinessIncomeInputList.add(PartnershipBusinessIncomeInputModel(
-      particular: ParticularInputModel(
-        description: TextEditingController(),
-        amount: TextEditingController(),
-      ),
+      nameOfBusiness: TextEditingController(),
         taxPaid: TextEditingController(),
         profit: TextEditingController(),
         salaryDiscountCommission: TextEditingController(),
@@ -53,10 +49,7 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
           partnershipBusinessIncomeInputList.add(PartnershipBusinessIncomeInputModel(
-            particular: ParticularInputModel(
-              description: TextEditingController(text: element['particular']['description']),
-              amount: TextEditingController(text: element['particular']['amount']),
-            ),
+            nameOfBusiness: TextEditingController(text: element['nameOfBusiness']),
             taxPaid: TextEditingController(text: element['taxPaid']),
             profit: TextEditingController(text: element['profit']),
             salaryDiscountCommission: TextEditingController(text: element['salaryDiscountCommission']),
@@ -67,12 +60,9 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
       }
     } else {
       partnershipBusinessIncomeInputList.add(PartnershipBusinessIncomeInputModel(
-        particular: ParticularInputModel(
-          description: TextEditingController(),
-          amount: TextEditingController(),
-        ),
-        taxPaid: TextEditingController(),
+        nameOfBusiness: TextEditingController(),
         profit: TextEditingController(),
+        taxPaid: TextEditingController(),
         salaryDiscountCommission: TextEditingController(),
         totalProfit: TextEditingController(),
         exemptedAmount: TextEditingController(),
@@ -102,12 +92,9 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
       notifyListeners();
 
       final Map<String, dynamic> dataMap = {
-        'particular': {
-          'description': element.particular!.description!.text.trim(),
-          'amount': element.particular!.amount!.text.trim()
-        },
-        'taxPaid': element.taxPaid!.text.trim(),
+        'nameOfBusiness': element.nameOfBusiness!.text.trim(),
         'profit': element.profit!.text.trim(),
+        'taxPaid': element.taxPaid!.text.trim(),
         'salaryDiscountCommission': element.salaryDiscountCommission!.text.trim(),
         'totalProfit': element.totalProfit!.text.trim(),
         'exemptedAmount': element.exemptedAmount!.text.trim(),
@@ -119,13 +106,13 @@ class PartnershipBusinessIncomeProvider extends ChangeNotifier {
     };
 
     await firebaseDbHelper.insertData(
-        childPath: DbChildPath.partnershipBusinessIncome, data: partnershipBusinessIncomeDataMap).then((result){
+        childPath: DbChildPath.partnershipBusinessIncome, data: partnershipBusinessIncomeDataMap).then((result)async{
       if (result) {
-        showToast('Success');
         TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
         AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-        taxCalculationProvider.getAllIncomeData();
-        assetInfoProvider.getAllExemptedIncomeExpenseData();
+        await taxCalculationProvider.getTaxCalculationData();
+        await assetInfoProvider.getAssetInfoData();
+        showToast('Success');
       } else {
         showToast('Failed');
       }

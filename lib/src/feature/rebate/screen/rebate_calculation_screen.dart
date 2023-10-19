@@ -17,7 +17,7 @@ class RebateCalculationScreen extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: 0.0,
         title: const Text(
-          'Tax Credit',
+          'Investment',
           style: TextStyle(
               fontSize: TextSize.titleText, fontWeight: FontWeight.w500),
         ),
@@ -139,7 +139,7 @@ class RebateCalculationScreen extends StatelessWidget {
                                 "12. Amount of Tax Rebate",
                                 rebateCalculationProvider
                                     .rebateCalculationInputList[index]
-                                    .amountOfTax!),
+                                    .amountOfTax!,readOnly: true),
                           ],
                         ),
                       ],

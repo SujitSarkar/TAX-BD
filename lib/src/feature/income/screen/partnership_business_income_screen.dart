@@ -5,6 +5,7 @@ import 'package:tax_bd/src/shared/widget/solid_button.dart';
 import '../../../constant/text_size.dart';
 import '../../../shared/widget/loading_widget.dart';
 import '../../../shared/widget/table_text_field_widget.dart';
+import '../../../shared/widget/text_field_widget.dart';
 
 class PartnershipBusinessIncomeScreen extends StatelessWidget {
   const PartnershipBusinessIncomeScreen({super.key});
@@ -50,6 +51,15 @@ class PartnershipBusinessIncomeScreen extends StatelessWidget {
                             splashRadius: 25,
                             padding: EdgeInsets.zero),
 
+                      TextFormFieldWidget(
+                          controller: partnershipBusinessIncomeProvider.partnershipBusinessIncomeInputList[index]
+                              .nameOfBusiness!,
+                          labelText: 'Name of Business',
+                          maxLine: 4,
+                          hintText: 'Enter Name of Business',
+                          textCapitalization: TextCapitalization.words),
+                      const SizedBox(height: 12),
+
                       Table(
                         defaultVerticalAlignment:
                         TableCellVerticalAlignment.middle,
@@ -75,43 +85,23 @@ class PartnershipBusinessIncomeScreen extends StatelessWidget {
                             ],
                           ),
                           ///Table Row
-                          TableRow(
-                            children: [
-                              TableTextFormFieldWidget(
-                                controller: partnershipBusinessIncomeProvider
-                                    .partnershipBusinessIncomeInputList[index]
-                                    .particular!.description!,
-                                textCapitalization: TextCapitalization.sentences,
-                                maxLine: 5,
-                                hintText: 'Particular',
-                                required: true,
-                              ),
-                              TableTextFormFieldWidget(
-                                controller: partnershipBusinessIncomeProvider
-                                    .partnershipBusinessIncomeInputList[index]
-                                    .particular!.amount!,
-                                textInputType: TextInputType.number,
-                                hintText: '0.00',
-                              ),
-                            ],
-                          ),
+                          buildRow(
+                              "1. Profit",
+                              partnershipBusinessIncomeProvider
+                                  .partnershipBusinessIncomeInputList[index]
+                                  .profit!),
                           buildRow(
                               "2. Tax Paid",
                               partnershipBusinessIncomeProvider
                                   .partnershipBusinessIncomeInputList[index]
                                   .taxPaid!),
                           buildRow(
-                              "3. Profit",
-                              partnershipBusinessIncomeProvider
-                                  .partnershipBusinessIncomeInputList[index]
-                                  .profit!),
-                          buildRow(
-                              "4. Salary/Discount/Commission",
+                              "3. Salary/Discount/Commission",
                               partnershipBusinessIncomeProvider
                                   .partnershipBusinessIncomeInputList[index]
                                   .salaryDiscountCommission!),
                           buildRow(
-                              "5. Total Profit (3+4)",
+                              "4. Total Profit (1+3)",
                               partnershipBusinessIncomeProvider
                                   .partnershipBusinessIncomeInputList[index]
                                   .totalProfit!,readOnly: true),

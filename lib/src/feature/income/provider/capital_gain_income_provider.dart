@@ -48,7 +48,6 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
       salesDateTime: DateTime.now(),
       salesDateText: TextEditingController(),
       acquisitionValue: TextEditingController(),
-      sales: TextEditingController(),
       salesCost: TextEditingController(),
       gain: TextEditingController(),
     ));
@@ -79,7 +78,6 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
             salesDateTime: DateTime.fromMillisecondsSinceEpoch(element['salesDateTime']),
             salesDateText: TextEditingController(text: DateFormat('dd-MMM-yyyy').format(DateTime.fromMillisecondsSinceEpoch(element['salesDateTime']))),
             acquisitionValue: TextEditingController(text: element['acquisitionValue']),
-            sales: TextEditingController(text: element['sales']),
             salesCost: TextEditingController(text: element['salesCost']),
             gain: TextEditingController(text: element['gain']),
           ));
@@ -96,7 +94,6 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
         salesDateTime: DateTime.now(),
         salesDateText: TextEditingController(text: DateFormat('dd-MMM-yyyy').format(DateTime.now())),
         acquisitionValue: TextEditingController(),
-        sales: TextEditingController(),
         salesCost: TextEditingController(),
         gain: TextEditingController(),
       ));
@@ -114,9 +111,9 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
 
     for (CapitalGainIncomeInputModel element in capitalGainIncomeInputList) {
       final double gainValue =
-          double.parse(element.sales!.text.isEmpty
+          double.parse(element.particular!.amount!.text.isEmpty
               ? '0.0'
-              : element.sales!.text.trim()) -
+              : element.particular!.amount!.text.trim()) -
               double.parse(element.acquisitionValue!.text.isEmpty
                   ? '0.0'
                   : element.acquisitionValue!.text.trim())-
@@ -135,7 +132,6 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
         'acquisitionDateTime': element.acquisitionDateTime!.millisecondsSinceEpoch,
         'salesDateTime': element.salesDateTime!.millisecondsSinceEpoch,
         'acquisitionValue': element.acquisitionValue!.text.trim(),
-        'sales': element.sales!.text.trim(),
         'salesCost': element.salesCost!.text.trim(),
         'gain': element.gain!.text.trim(),
       };
@@ -148,11 +144,11 @@ class CapitalGainIncomeProvider extends ChangeNotifier {
     firebaseDbHelper.insertData(
         childPath: DbChildPath.capitalGainIncome, data: capitalGainIncomeDataMap).then((result)async{
       if (result) {
-        showToast('Success');
         TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
         AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-        taxCalculationProvider.getAllIncomeData();
-        assetInfoProvider.getAllExemptedIncomeExpenseData();
+        await taxCalculationProvider.getTaxCalculationData();
+        await assetInfoProvider.getAssetInfoData();
+        showToast('Success');
       } else {
         showToast('Failed');
       }

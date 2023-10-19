@@ -106,13 +106,13 @@ class ForeignIncomeProvider extends ChangeNotifier {
     };
 
     await firebaseDbHelper.insertData(
-        childPath: DbChildPath.foreignIncome, data: foreignIncomeDataMap).then((result){
+        childPath: DbChildPath.foreignIncome, data: foreignIncomeDataMap).then((result)async{
       if (result) {
-        showToast('Success');
         TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
         AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-        taxCalculationProvider.getAllIncomeData();
-        assetInfoProvider.getAllExemptedIncomeExpenseData();
+        await taxCalculationProvider.getTaxCalculationData();
+        await assetInfoProvider.getAssetInfoData();
+        showToast('Success');
       } else {
         showToast('Failed');
       }

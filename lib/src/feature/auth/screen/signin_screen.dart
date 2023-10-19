@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../constant/app_color.dart';
 import '../../../constant/text_size.dart';
+import '../../../shared/validator.dart';
 import '../../../shared/widget/loading_widget.dart';
 import '../../../shared/widget/solid_button.dart';
 import '../../../shared/widget/text_field_widget.dart';
@@ -30,20 +31,13 @@ class SignInScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset('assets/image/logo_trans.png',
-                        height: 80, width: 80),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Income TAX BD',
-                      style: TextStyle(
-                          color: Colors.green,
-                          fontWeight: FontWeight.bold,
-                          fontSize: TextSize.titleText),
-                    )
+                    Hero(
+                      tag: 'splashToLogin',
+                      child: Image.asset('assets/image/logo_trans.png',height: 200,),
+                    ),
                   ],
                 ),
               ),
-              SizedBox(height: size.height * .1),
               TextFormFieldWidget(
                 controller: authProvider.phoneController,
                 labelText: 'Phone number',
@@ -70,17 +64,22 @@ class SignInScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const SizedBox(
+      bottomNavigationBar: SizedBox(
         height: 60,
         child: Column(children: [
-          Text(
-            'More Information',
+          const Text(
+            'Powered by',
             style: TextStyle(fontSize: TextSize.bodyText),
           ),
-          SizedBox(height: 5),
-          SelectableText(
-            '01777777777',
-            style: TextStyle(fontSize: TextSize.bodyText),
+          const SizedBox(height: 5),
+          InkWell(
+            onTap: (){
+              launchInWebView('https://anchorblock.vc');
+            },
+            child: const Text(
+              'Anchorblock Technology LLC.',
+              style: TextStyle(fontSize: TextSize.bodyText,color: Colors.blue),
+            ),
           ),
         ]),
       ),

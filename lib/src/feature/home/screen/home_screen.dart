@@ -84,7 +84,6 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(LineAwesomeIcons.alternate_sign_out,color: Colors.red))
         ],
       ),
-      // drawer: const Drawer(),
       body: Column(
         children: [
           Center(
@@ -95,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                 Image.asset('assets/image/logo_trans.png', height: 60, width: 60),
                 const SizedBox(width: 12),
                 const Text(
-                  'Income TAX BD',
+                  'TAX BD',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: TextSize.titleText),

@@ -1,5 +1,8 @@
 import 'package:flutter/Material.dart';
 import 'package:tax_bd/src/shared/app_navigator_key.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../constant/app_toast.dart';
 
 bool validateEmail(String emailAddress) => RegExp(
         r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -27,4 +30,14 @@ Future<DateTime> showDatePickerAndGetDate() async {
     selectedDate = picked;
   }
   return selectedDate;
+}
+
+Future<void> launchInWebView(String url) async {
+  try {
+    if (!await launchUrl(Uri.parse(url), mode: LaunchMode.inAppWebView)) {
+      showToast('Could not launch $url');
+    }
+  } catch (error) {
+    showToast(error.toString());
+  }
 }

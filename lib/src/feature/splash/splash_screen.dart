@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tax_bd/src/feature/home/screen/home_screen.dart';
 import 'package:tax_bd/src/router/app_router.dart';
-import '../../constant/text_size.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -24,7 +23,6 @@ class _SplashScreenState extends State<SplashScreen> {
       await const HomeScreen().onInit().then((value) =>
           Navigator.pushNamedAndRemoveUntil(
               context, AppRouter.home, (route) => false));
-
     } else {
       await Future.delayed(const Duration(seconds: 2)).then((value) =>
           Navigator.pushNamedAndRemoveUntil(
@@ -36,20 +34,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset('assets/image/logo_trans.png', height: 80, width: 80),
-          const SizedBox(height: 10),
-          const Text(
-            'Income TAX BD',
-            style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.bold,
-                fontSize: TextSize.titleText),
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 60),
+        child: Hero(
+            tag: 'splashToLogin',
+            child: Image.asset('assets/image/logo_trans.png')),
       ),
     ));
   }

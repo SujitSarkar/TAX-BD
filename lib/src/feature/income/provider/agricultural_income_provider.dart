@@ -77,7 +77,7 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
     for (AgricultureIncomeInputModel element in agricultureIncomeInputList) {
 
       if(element.grossProfit!.text.isEmpty){
-        element.grossProfit!.text = element.grossProfit!.text;
+        element.grossProfit!.text = element.saleTurnoverReceipt!.text;
       }
 
       final double totalValueOfNetProfit =
@@ -105,13 +105,13 @@ class AgriculturalIncomeProvider extends ChangeNotifier {
     };
 
    await firebaseDbHelper.insertData(
-        childPath: DbChildPath.agricultureIncome, data: agricultureIncomeDataMap).then((result){
+        childPath: DbChildPath.agricultureIncome, data: agricultureIncomeDataMap).then((result)async{
       if (result) {
-        showToast('Success');
         TaxCalculationProvider taxCalculationProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
         AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
-        taxCalculationProvider.getAllIncomeData();
-        assetInfoProvider.getAllExemptedIncomeExpenseData();
+        await taxCalculationProvider.getTaxCalculationData();
+        await assetInfoProvider.getAssetInfoData();
+        showToast('Success');
       } else {
         showToast('Failed');
       }

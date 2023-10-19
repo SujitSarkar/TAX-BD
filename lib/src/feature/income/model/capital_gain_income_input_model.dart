@@ -8,7 +8,6 @@ class CapitalGainIncomeInputModel{
   DateTime? salesDateTime;
   final TextEditingController? salesDateText;
   final TextEditingController? acquisitionValue;
-  final TextEditingController? sales;
   final TextEditingController? salesCost;
   final TextEditingController? gain;
 
@@ -19,7 +18,6 @@ class CapitalGainIncomeInputModel{
       this.salesDateTime,
       this.salesDateText,
       this.acquisitionValue,
-      this.sales,
       this.salesCost,
       this.gain});
 }

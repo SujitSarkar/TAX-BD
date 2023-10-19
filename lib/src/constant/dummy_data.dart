@@ -9,7 +9,7 @@ class DummyData {
         icon: LineAwesomeIcons.hand_holding_us_dollar, title: 'Income Information'),
     HomeDataModel(
         icon: LineAwesomeIcons.file_invoice_with_us_dollar, title: 'Tax Calculation'),
-    HomeDataModel(icon: LineAwesomeIcons.percentage, title: 'Tax Credit'),
+    HomeDataModel(icon: LineAwesomeIcons.percentage, title: 'Investment'),
     HomeDataModel(icon: LineAwesomeIcons.city, title: 'Asset Information'),
     HomeDataModel(icon: LineAwesomeIcons.coins, title: 'Expense of Lifestyle'),
   ];
