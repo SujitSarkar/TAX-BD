@@ -6,7 +6,6 @@ import 'package:tax_bd/src/feature/income/model/business_income_input_model.dart
 import 'package:tax_bd/src/feature/income/model/foreign_income_input_model.dart';
 import 'package:tax_bd/src/feature/income/model/partnership_business_income_input_model.dart';
 import 'package:tax_bd/src/feature/income/provider/foreign_income_provider.dart';
-import 'package:tax_bd/src/feature/tax/model/tax_calculation__input_model.dart';
 import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
@@ -198,11 +197,10 @@ class AssetInfoProvider extends ChangeNotifier{
 
     ///Tax Calculation Income
     double taxCalculationIncome = 0.0;
-    for(TaxCalculationInputModel element in taxCalculationProvider.taxCalculationInputList){
-      taxCalculationIncome = taxCalculationIncome + double.parse(element.totalIncome!.text.isNotEmpty
-          ? element.totalIncome!.text
+      taxCalculationIncome = taxCalculationIncome + double.parse(taxCalculationProvider.totalIncome.text.isNotEmpty
+          ? taxCalculationProvider.totalIncome.text
           : '0.0');
-    }
+
     sofTotalIncome.text = '$taxCalculationIncome';
 
     ///Expense Info
@@ -429,13 +427,18 @@ class AssetInfoProvider extends ChangeNotifier{
     'totalAssetsInBdOutsideBd': totalAssetsInBdOutsideBd.text.trim()
     };
 
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.assetInfo, data: assetInfoDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.assetInfo, data: assetInfoDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(
+            AppNavigatorKey.key.currentState!.context, listen: false);
+        taxCalculationProvider.getTaxCalculationData();
+      } else {
+        showToast('Failed');
+      }
+    });
+
     functionLoading = false;
     notifyListeners();
   }
