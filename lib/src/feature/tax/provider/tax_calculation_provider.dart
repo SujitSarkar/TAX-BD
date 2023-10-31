@@ -28,129 +28,68 @@ import '../../income/provider/others_income_provider.dart';
 import '../../income/provider/partnership_business_income_provider.dart';
 import '../../income/provider/salary_income_provider.dart';
 import '../../rebate/provider/rebate_calculation_provider.dart';
-import '../model/tax_calculation__input_model.dart';
 
 class TaxCalculationProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
-  List<TaxCalculationInputModel> taxCalculationInputList = [];
 
-  double incomeFromEmploymentValue = 0.0;
-  double incomeFromRentValue = 0.0;
-  double incomeFromAgricultureValue = 0.0;
-  double incomeFromBusinessValue = 0.0;
-  double incomeFromCapitalGainValue = 0.0;
-  double incomeFromFinancialAssetValue = 0.0;
-  double incomeFromOtherSourceValue = 0.0;
-  double incomeFromFirmValue = 0.0;
-  double incomeFromMinorOrSpouseValue = 0.0;
-  double incomeFromAbroadValue = 0.0;
-  double totalIncomeValue = 0.0;
-  double taxRebateValue = 0.0;
+  final TextEditingController incomeFromEmployment = TextEditingController();
+  final TextEditingController incomeFromRent = TextEditingController();
+  final TextEditingController incomeFromAgriculture = TextEditingController();
+  final TextEditingController incomeFromBusiness = TextEditingController();
+  final TextEditingController incomeFromCapitalGain = TextEditingController();
+  final TextEditingController incomeFromFinancialAsset = TextEditingController();
+  final TextEditingController incomeFromOtherSource = TextEditingController();
+  final TextEditingController incomeFromFirm = TextEditingController();
+  final TextEditingController incomeFromMinorOrSpouse = TextEditingController();
+  final TextEditingController incomeFromAbroad = TextEditingController();
+  final TextEditingController totalIncome = TextEditingController();
+
+  final TextEditingController grossTax = TextEditingController();
+  final TextEditingController taxRebate = TextEditingController();
+  final TextEditingController netTaxAfterRebate = TextEditingController();
+  final TextEditingController minimumTax = TextEditingController();
+  final TextEditingController taxPayable = TextEditingController();
+  final TextEditingController netWealthSurcharge = TextEditingController();
+  final TextEditingController environmentalSurcharge = TextEditingController();
+  final TextEditingController delayInterest = TextEditingController();
+  final TextEditingController totalAmountPayable = TextEditingController();
+  final TextEditingController taxDeductedSource = TextEditingController();
+  final TextEditingController advanceTaxPaid = TextEditingController();
+  final TextEditingController adjustmentOfTax = TextEditingController();
+  final TextEditingController taxPaidWithReturn = TextEditingController();
+  final TextEditingController totalTaxPaid = TextEditingController();
+  final TextEditingController excessPayment = TextEditingController();
+  final TextEditingController taxExempted = TextEditingController();
+
 
   void clearAllData() {
-    taxCalculationInputList = [];
-    incomeFromEmploymentValue = 0.0;
-    incomeFromRentValue = 0.0;
-    incomeFromAgricultureValue = 0.0;
-    incomeFromBusinessValue = 0.0;
-    incomeFromCapitalGainValue = 0.0;
-    incomeFromFinancialAssetValue = 0.0;
-    incomeFromOtherSourceValue = 0.0;
-    incomeFromFirmValue = 0.0;
-    incomeFromMinorOrSpouseValue = 0.0;
-    incomeFromAbroadValue = 0.0;
-    totalIncomeValue = 0.0;
-    taxRebateValue = 0.0;
     loading = false;
     functionLoading = false;
   }
 
-  ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-  void addTaxCalculationInputListItem() {
-    taxCalculationInputList.add(
-      TaxCalculationInputModel(
-        incomeFromEmployment: TextEditingController(text: '$incomeFromEmploymentValue'),
-        incomeFromRent: TextEditingController(text: '$incomeFromRentValue'),
-        incomeFromAgriculture: TextEditingController(text: '$incomeFromAgricultureValue'),
-        incomeFromBusiness: TextEditingController(text: '$incomeFromBusinessValue'),
-        incomeFromCapitalGain: TextEditingController(text: '$incomeFromCapitalGainValue'),
-        incomeFromFinancialAsset: TextEditingController(text: '$incomeFromFinancialAssetValue'),
-        incomeFromOtherSource: TextEditingController(text: '$incomeFromOtherSourceValue'),
-        incomeFromFirm: TextEditingController(text: '$incomeFromFirmValue'),
-        incomeFromMinorOrSpouse: TextEditingController(text: '$incomeFromMinorOrSpouseValue'),
-        incomeFromAbroad: TextEditingController(text: '$incomeFromAbroadValue'),
-        totalIncome: TextEditingController(text: '$totalIncomeValue'),
-        taxRebate: TextEditingController(text: '$taxRebateValue'),
-        grossTax: TextEditingController(),
-        netTaxAfterRebate: TextEditingController(),
-        minimumTax: TextEditingController(),
-        taxPayable: TextEditingController(),
-        netWealthSurcharge: TextEditingController(),
-        environmentalSurcharge: TextEditingController(),
-        delayInterest: TextEditingController(),
-        totalAmountPayable: TextEditingController(),
-        taxDeductedSource: TextEditingController(),
-        advanceTaxPaid: TextEditingController(),
-        adjustmentOfTax: TextEditingController(),
-        taxPaidWithReturn: TextEditingController(),
-        totalTaxPaid: TextEditingController(),
-        excessPayment: TextEditingController(),
-        taxExempted: TextEditingController(),
-      ),
-    );
-    notifyListeners();
-  }
-
-  void removeItemOfTaxCalculationInputList(int index) async {
-    taxCalculationInputList.removeAt(index);
-    await submitDataButtonOnTap();
-    showToast('Item deleted');
-    notifyListeners();
-  }
 
   ///Functions:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void getAllIncomeData() {
-    incomeFromEmploymentValue = 0.0;
-    incomeFromRentValue = 0.0;
-    incomeFromAgricultureValue = 0.0;
-    incomeFromBusinessValue = 0.0;
-    incomeFromCapitalGainValue = 0.0;
-    incomeFromFinancialAssetValue = 0.0;
-    incomeFromOtherSourceValue = 0.0;
-    incomeFromFirmValue = 0.0;
-    incomeFromMinorOrSpouseValue = 0.0;
-    incomeFromAbroadValue = 0.0;
-    totalIncomeValue = 0.0;
 
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
-    final SalaryIncomeProvider salaryIncomeProvider =
-        Provider.of(context, listen: false);
-    final RentalIncomeProvider rentalIncomeProvider =
-        Provider.of(context, listen: false);
-    final AgriculturalIncomeProvider agriculturalIncomeProvider =
-        Provider.of(context, listen: false);
-    final BusinessIncomeProvider businessIncomeProvider =
-        Provider.of(context, listen: false);
-    final FinancialAssetIncomeProvider financialAssetIncomeProvider =
-        Provider.of(context, listen: false);
-    final OthersIncomeProvider othersIncomeProvider =
-        Provider.of(context, listen: false);
-    final CapitalGainIncomeProvider capitalGainIncomeProvider =
-        Provider.of(context, listen: false);
-    final PartnershipBusinessIncomeProvider partnershipBusinessIncomeProvider =
-        Provider.of(context, listen: false);
-    final ForeignIncomeProvider foreignIncomeProvider =
-        Provider.of(context, listen: false);
-    final SpouseChildrenIncomeProvider spouseChildrenIncomeProvider =
-        Provider.of(context, listen: false);
-    final RebateCalculationProvider rebateCalculationProvider = Provider.of(context,listen: false);
+    final SalaryIncomeProvider salaryIncomeProvider = Provider.of(context, listen: false);
+    final RentalIncomeProvider rentalIncomeProvider = Provider.of(context, listen: false);
+    final AgriculturalIncomeProvider agriculturalIncomeProvider = Provider.of(context, listen: false);
+    final BusinessIncomeProvider businessIncomeProvider = Provider.of(context, listen: false);
+    final FinancialAssetIncomeProvider financialAssetIncomeProvider = Provider.of(context, listen: false);
+    final OthersIncomeProvider othersIncomeProvider = Provider.of(context, listen: false);
+    final CapitalGainIncomeProvider capitalGainIncomeProvider = Provider.of(context, listen: false);
+    final PartnershipBusinessIncomeProvider partnershipBusinessIncomeProvider = Provider.of(context, listen: false);
+    final ForeignIncomeProvider foreignIncomeProvider = Provider.of(context, listen: false);
+    final SpouseChildrenIncomeProvider spouseChildrenIncomeProvider = Provider.of(context, listen: false);
+    final RebateCalculationProvider rebateCalculationProvider = Provider.of(context, listen: false);
 
     ///Govt Salary Income
     double govtSalaryIncome = 0.0;
     for (GovtSalaryIncomeInputModel element
-        in salaryIncomeProvider.govtSalaryIncomeInputList) {
+    in salaryIncomeProvider.govtSalaryIncomeInputList) {
       govtSalaryIncome = govtSalaryIncome +
           double.parse(element.total!.taxable!.text.isNotEmpty
               ? element.total!.taxable!.text.trim()
@@ -159,50 +98,57 @@ class TaxCalculationProvider extends ChangeNotifier {
     ///Private Salary Income
     double privateSalaryIncome = 0.0;
     for (PrivateSalaryIncomeInputModel element
-        in salaryIncomeProvider.privateSalaryIncomeInputList) {
+    in salaryIncomeProvider.privateSalaryIncomeInputList) {
       privateSalaryIncome = privateSalaryIncome +
           double.parse(element.totalIncomeFromSalary!.text.isNotEmpty
               ? element.totalIncomeFromSalary!.text.trim()
               : '0.0');
     }
+    incomeFromEmployment.text = '${govtSalaryIncome + privateSalaryIncome}';
+
     ///Rent Salary Income
     double rentIncome = 0.0;
     for (RentalIncomeInputModel element
-        in rentalIncomeProvider.rentalIncomeInputList) {
+    in rentalIncomeProvider.rentalIncomeInputList) {
       rentIncome = rentIncome +
           double.parse(element.netIncome!.text.isNotEmpty
               ? element.netIncome!.text.trim()
               : '0.0');
     }
+    incomeFromRent.text = '$rentIncome';
+
     ///Agriculture Income
     double agricultureIncome = 0.0;
     for (AgricultureIncomeInputModel element
-        in agriculturalIncomeProvider.agricultureIncomeInputList) {
+    in agriculturalIncomeProvider.agricultureIncomeInputList) {
       agricultureIncome = agricultureIncome +
           (double.parse(element.netProfit!.text.isNotEmpty
-                  ? element.netProfit!.text.trim()
-                  : '0.0') -
+              ? element.netProfit!.text.trim()
+              : '0.0') -
               double.parse(element.exemptedAmount!.text.isNotEmpty
                   ? element.exemptedAmount!.text.trim()
                   : '0.0'));
     }
+    incomeFromAgriculture.text = '$agricultureIncome';
+
     ///Business Income
     double businessIncome = 0.0;
     for (BusinessIncomeInputModel element
-        in businessIncomeProvider.businessIncomeInputList) {
+    in businessIncomeProvider.businessIncomeInputList) {
       businessIncome = businessIncome +
           (double.parse(element.netProfit!.text.isNotEmpty
-                  ? element.netProfit!.text.trim()
-                  : '0.0') -
+              ? element.netProfit!.text.trim()
+              : '0.0') -
               double.parse(element.exemptedAmount!.text.isNotEmpty
                   ? element.exemptedAmount!.text.trim()
                   : '0.0'));
     }
+    incomeFromBusiness.text = '$businessIncome';
+
     ///Financial Asset Income
     double financialAssetIncome = 0.0;
     //FDR
-    for (FDRIncomeItemModel element
-        in financialAssetIncomeProvider.fdrIncomeItemList) {
+    for (FDRIncomeItemModel element in financialAssetIncomeProvider.fdrIncomeItemList) {
       financialAssetIncome = financialAssetIncome +
           double.parse(element.total!.text.isNotEmpty
               ? element.total!.text.trim()
@@ -210,7 +156,7 @@ class TaxCalculationProvider extends ChangeNotifier {
     }
     //DPS
     for (DPSIncomeItemModel element
-        in financialAssetIncomeProvider.dpsIncomeItemList) {
+    in financialAssetIncomeProvider.dpsIncomeItemList) {
       financialAssetIncome = financialAssetIncome +
           double.parse(element.total!.text.isNotEmpty
               ? element.total!.text.trim()
@@ -218,7 +164,7 @@ class TaxCalculationProvider extends ChangeNotifier {
     }
     //Bank
     for (IncomeFromBankItemModel element
-        in financialAssetIncomeProvider.incomeFromBankItemList) {
+    in financialAssetIncomeProvider.incomeFromBankItemList) {
       financialAssetIncome = financialAssetIncome +
           double.parse(element.total!.text.isNotEmpty
               ? element.total!.text.trim()
@@ -226,7 +172,7 @@ class TaxCalculationProvider extends ChangeNotifier {
     }
     //Insurance
     for (InsuranceProfitItemModel element
-        in financialAssetIncomeProvider.insuranceProfitItemList) {
+    in financialAssetIncomeProvider.insuranceProfitItemList) {
       financialAssetIncome = financialAssetIncome +
           double.parse(element.total!.text.isNotEmpty
               ? element.total!.text.trim()
@@ -234,188 +180,191 @@ class TaxCalculationProvider extends ChangeNotifier {
     }
     //Others
     for (OthersProfitItemModel element
-        in financialAssetIncomeProvider.othersProfitItemList) {
+    in financialAssetIncomeProvider.othersProfitItemList) {
       financialAssetIncome = financialAssetIncome +
           (double.parse(element.total!.text.isNotEmpty
-                  ? element.total!.text
-                  : '0.0'));
+              ? element.total!.text
+              : '0.0'));
     }
+    incomeFromFinancialAsset.text = '$financialAssetIncome';
+
     ///Others Sector Income
     double otherSectorIncome = 0.0;
     for (OthersIncomeInputModel element
-        in othersIncomeProvider.othersIncomeInputList) {
+    in othersIncomeProvider.othersIncomeInputList) {
       otherSectorIncome = otherSectorIncome +
           (double.parse(element.particular!.amount!.text.isNotEmpty
-                  ? element.particular!.amount!.text.trim()
-                  : '0.0') -
+              ? element.particular!.amount!.text.trim()
+              : '0.0') -
               double.parse(element.exemptedAmount!.text.isNotEmpty
                   ? element.exemptedAmount!.text.trim()
                   : '0.0'));
     }
+    incomeFromOtherSource.text = '$otherSectorIncome';
+
     ///Capital Gain Income
     double capitalGainIncome = 0.0;
     for (CapitalGainIncomeInputModel element
-        in capitalGainIncomeProvider.capitalGainIncomeInputList) {
+    in capitalGainIncomeProvider.capitalGainIncomeInputList) {
       capitalGainIncome = capitalGainIncome +
           double.parse(element.gain!.text.isNotEmpty
               ? element.gain!.text.trim()
               : '0.0');
     }
+    incomeFromCapitalGain.text = '$capitalGainIncome';
+
     ///Partnership Income
     double partnershipIncome = 0.0;
     for (PartnershipBusinessIncomeInputModel element
-        in partnershipBusinessIncomeProvider
-            .partnershipBusinessIncomeInputList) {
+    in partnershipBusinessIncomeProvider
+        .partnershipBusinessIncomeInputList) {
       partnershipIncome = partnershipIncome +
           (double.parse(element.totalProfit!.text.isNotEmpty
-                  ? element.totalProfit!.text.trim()
-                  : '0.0') -
+              ? element.totalProfit!.text.trim()
+              : '0.0') -
               double.parse(element.exemptedAmount!.text.isNotEmpty
                   ? element.exemptedAmount!.text.trim()
                   : '0.0'));
     }
+    incomeFromFirm.text = '$partnershipIncome';
+
     ///Foreign Income
     double foreignIncome = 0.0;
-    for (ForeignIncomeInputModel element in foreignIncomeProvider.foreignIncomeInputList) {
-      if(element.throughBankingChannel==true){
-        foreignIncome = foreignIncome + (double.parse(element.particular!.amount!.text.isNotEmpty
-            ? element.particular!.amount!.text.trim()
-            : '0.0') -
-            double.parse(element.exemptedAmount!.text.isNotEmpty
-                ? element.exemptedAmount!.text.trim()
+    for (ForeignIncomeInputModel element in foreignIncomeProvider
+        .foreignIncomeInputList) {
+      if (element.throughBankingChannel == true) {
+        foreignIncome = foreignIncome +
+            (double.parse(element.particular!.amount!.text.isNotEmpty
+                ? element.particular!.amount!.text.trim()
+                : '0.0') -
+                double.parse(element.exemptedAmount!.text.isNotEmpty
+                    ? element.exemptedAmount!.text.trim()
+                    : '0.0'));
+      } else {
+        foreignIncome = foreignIncome +
+            (double.parse(element.particular!.amount!.text.isNotEmpty
+                ? element.particular!.amount!.text.trim()
                 : '0.0'));
-      }else{
-        foreignIncome = foreignIncome + (double.parse(element.particular!.amount!.text.isNotEmpty
-            ? element.particular!.amount!.text.trim()
-            : '0.0'));
       }
-
     }
+    incomeFromAbroad.text = '$foreignIncome';
+
     ///Spouse Children Income
     double spouseChildrenIncome = 0.0;
     for (SpouseChildrenIncomeInputModel element
-        in spouseChildrenIncomeProvider.spouseChildrenIncomeInputList) {
+    in spouseChildrenIncomeProvider.spouseChildrenIncomeInputList) {
       spouseChildrenIncome = spouseChildrenIncome +
           double.parse(element.particular!.amount!.text.isNotEmpty
               ? element.particular!.amount!.text.trim()
               : '0.0');
     }
+    incomeFromMinorOrSpouse.text = '$spouseChildrenIncome';
+
     ///Rebate
     double rebate = 0.0;
-    for (RebateCalculationInputModel element in rebateCalculationProvider.rebateCalculationInputList) {
+    for (RebateCalculationInputModel element in rebateCalculationProvider
+        .rebateCalculationInputList) {
       rebate = rebate + double.parse(element.totalInvestment!.text.isNotEmpty
-              ? element.totalInvestment!.text.trim()
-              : '0.0');
+          ? element.totalInvestment!.text.trim()
+          : '0.0');
+      taxRebate.text = '$rebate';
 
-    incomeFromEmploymentValue = govtSalaryIncome + privateSalaryIncome;
-    incomeFromRentValue = rentIncome;
-    incomeFromAgricultureValue = agricultureIncome;
-    incomeFromBusinessValue = businessIncome;
-    incomeFromCapitalGainValue = capitalGainIncome;
-    incomeFromFinancialAssetValue = financialAssetIncome;
-    incomeFromOtherSourceValue = otherSectorIncome;
-    incomeFromFirmValue = partnershipIncome;
-    incomeFromMinorOrSpouseValue = spouseChildrenIncome;
-    incomeFromAbroadValue = foreignIncome;
-    taxRebateValue = rebate;
-
-    totalIncomeValue = incomeFromEmploymentValue +
-        incomeFromRentValue +
-        incomeFromAgricultureValue +
-        incomeFromBusinessValue +
-        incomeFromCapitalGainValue +
-        incomeFromFinancialAssetValue +
-        incomeFromOtherSourceValue +
-        incomeFromFirmValue +
-        incomeFromMinorOrSpouseValue +
-        incomeFromAbroadValue;
+      ///Total Income (Aggregate of 1 to 10)
+      totalIncome.text = '${govtSalaryIncome + privateSalaryIncome +
+          rentIncome +
+          agricultureIncome +
+          businessIncome +
+          capitalGainIncome +
+          financialAssetIncome +
+          otherSectorIncome +
+          partnershipIncome +
+          spouseChildrenIncome +
+          foreignIncome}';
+    }
   }
+
+  void getGrossTaxData(){
+    final double grossTaxValue = calculateGrossTax(double.parse(totalIncome.text.isEmpty?'0.0':totalIncome.text));
+    grossTax.text = '$grossTaxValue';
+  }
+
+  void getMinimumTaxData(){
+    //Todo get minimum tax based on tax zone
+  }
+
+  void getNetWealthSurchargeData() {
+    final BuildContext context = AppNavigatorKey.key.currentState!.context;
+    final AssetInfoProvider assetInfoProvider = Provider.of(
+        context, listen: false);
+
+    ///Net Tax after Rebate (12–13)
+    final double netTaxAfterRebateValue = double.parse(
+        grossTax.text.isEmpty
+            ? '0.0'
+            : grossTax.text.trim()) -
+        double.parse(taxRebate.text.isEmpty
+            ? '0.0'
+            : taxRebate.text.trim());
+    netTaxAfterRebate.text = '$netTaxAfterRebateValue';
+
+    ///Tax Payable (Higher of 14 and 15)
+    if (netTaxAfterRebateValue > double.parse(
+        minimumTax.text.isNotEmpty
+            ? minimumTax.text.trim()
+            : '0.0')) {
+      taxPayable.text = '$netTaxAfterRebateValue';
+    } else {
+      taxPayable.text = minimumTax.text;
+    }
+
+    ///Total Asset
+    final double totalAssetsInBdOutsideBdValue = double.parse(
+        assetInfoProvider.totalAssetsInBdOutsideBd.text.isNotEmpty
+            ? assetInfoProvider.totalAssetsInBdOutsideBd.text.trim()
+            : '0.0');
+
+    final double netWealthSurchargeValue = double.parse(taxPayable.text.isEmpty?'0.0':taxPayable.text)
+        * calculatePercentOfAsset(totalAssetsInBdOutsideBdValue);
+    netWealthSurcharge.text = '$netWealthSurchargeValue';
+
   }
 
   Future<void> getTaxCalculationData() async {
     getAllIncomeData();
-    taxCalculationInputList = [];
+    getGrossTaxData();
+    getMinimumTaxData();
+    getNetWealthSurchargeData();
 
-    final Map<String, dynamic>? data =
-        await firebaseDbHelper.fetchData(childPath: DbChildPath.taxCalculation);
+    final Map<String, dynamic>? data = await firebaseDbHelper.fetchData(childPath: DbChildPath.taxCalculation);
 
     if (data != null) {
-      if (data['data'] != null && data['data'].isNotEmpty) {
-        for (var element in data['data']) {
-          taxCalculationInputList.add(
-            TaxCalculationInputModel(
-              incomeFromEmployment: TextEditingController(text: '$incomeFromEmploymentValue'),
-              incomeFromRent: TextEditingController(text: '$incomeFromRentValue'),
-              incomeFromAgriculture: TextEditingController(text: '$incomeFromAgricultureValue'),
-              incomeFromBusiness: TextEditingController(text: '$incomeFromBusinessValue'),
-              incomeFromCapitalGain: TextEditingController(text: '$incomeFromCapitalGainValue'),
-              incomeFromFinancialAsset: TextEditingController(text: '$incomeFromFinancialAssetValue'),
-              incomeFromOtherSource: TextEditingController(text: '$incomeFromOtherSourceValue'),
-              incomeFromFirm: TextEditingController(text: '$incomeFromFirmValue'),
-              incomeFromMinorOrSpouse: TextEditingController(text: '$incomeFromMinorOrSpouseValue'),
-              incomeFromAbroad: TextEditingController(text: '$incomeFromAbroadValue'),
-              totalIncome: TextEditingController(text: '$totalIncomeValue'),
-              taxRebate: TextEditingController(text: '$taxRebateValue'),
-              grossTax: TextEditingController(text: element['grossTax']),
-              netTaxAfterRebate: TextEditingController(text: element['netTaxAfterRebate']),
-              minimumTax: TextEditingController(text: element['minimumTax']),
-              taxPayable: TextEditingController(text: element['taxPayable']),
-              netWealthSurcharge: TextEditingController(text: element['netWealthSurcharge']),
-              environmentalSurcharge: TextEditingController(
-                  text: element['environmentalSurcharge']),
-              delayInterest:
-                  TextEditingController(text: element['delayInterest']),
-              totalAmountPayable:
-                  TextEditingController(text: element['totalAmountPayable']),
-              taxDeductedSource:
-                  TextEditingController(text: element['taxDeductedSource']),
-              advanceTaxPaid:
-                  TextEditingController(text: element['advanceTaxPaid']),
-              adjustmentOfTax:
-                  TextEditingController(text: element['adjustmentOfTax']),
-              taxPaidWithReturn:
-                  TextEditingController(text: element['taxPaidWithReturn']),
-              totalTaxPaid:
-                  TextEditingController(text: element['totalTaxPaid']),
-              excessPayment:
-                  TextEditingController(text: element['excessPayment']),
-              taxExempted: TextEditingController(text: element['taxExempted']),
-            ),
-          );
-        }
-      }
-    } else {
-      taxCalculationInputList.add(
-        TaxCalculationInputModel(
-          incomeFromEmployment: TextEditingController(text: '$incomeFromEmploymentValue'),
-          incomeFromRent: TextEditingController(text: '$incomeFromRentValue'),
-          incomeFromAgriculture: TextEditingController(text: '$incomeFromAgricultureValue'),
-          incomeFromBusiness: TextEditingController(text: '$incomeFromBusinessValue'),
-          incomeFromCapitalGain: TextEditingController(text: '$incomeFromCapitalGainValue'),
-          incomeFromFinancialAsset: TextEditingController(text: '$incomeFromFinancialAssetValue'),
-          incomeFromOtherSource: TextEditingController(text: '$incomeFromOtherSourceValue'),
-          incomeFromFirm: TextEditingController(text: '$incomeFromFirmValue'),
-          incomeFromMinorOrSpouse: TextEditingController(text: '$incomeFromMinorOrSpouseValue'),
-          incomeFromAbroad: TextEditingController(text: '$incomeFromAbroadValue'),
-          totalIncome: TextEditingController(text: '$totalIncomeValue'),
-          taxRebate: TextEditingController(text: '$taxRebateValue'),
-          grossTax: TextEditingController(),
-          netTaxAfterRebate: TextEditingController(),
-          minimumTax: TextEditingController(),
-          taxPayable: TextEditingController(),
-          netWealthSurcharge: TextEditingController(),
-          environmentalSurcharge: TextEditingController(),
-          delayInterest: TextEditingController(),
-          totalAmountPayable: TextEditingController(),
-          taxDeductedSource: TextEditingController(),
-          advanceTaxPaid: TextEditingController(),
-          adjustmentOfTax: TextEditingController(),
-          taxPaidWithReturn: TextEditingController(),
-          totalTaxPaid: TextEditingController(),
-          excessPayment: TextEditingController(),
-          taxExempted: TextEditingController(),
-        ),
-      );
+    // incomeFromEmployment.text = TextEditingController(text: '$incomeFromEmploymentValue'),
+    // incomeFromRent: TextEditingController(text: '$incomeFromRentValue'),
+    // incomeFromAgriculture: TextEditingController(text: '$incomeFromAgricultureValue'),
+    // incomeFromBusiness: TextEditingController(text: '$incomeFromBusinessValue'),
+    // incomeFromCapitalGain: TextEditingController(text: '$incomeFromCapitalGainValue'),
+    // incomeFromFinancialAsset: TextEditingController(text: '$incomeFromFinancialAssetValue'),
+    // incomeFromOtherSource: TextEditingController(text: '$incomeFromOtherSourceValue'),
+    // incomeFromFirm: TextEditingController(text: '$incomeFromFirmValue'),
+    // incomeFromMinorOrSpouse: TextEditingController(text: '$incomeFromMinorOrSpouseValue'),
+    // incomeFromAbroad: TextEditingController(text: '$incomeFromAbroadValue'),
+    // totalIncome: TextEditingController(text: '$totalIncomeValue'),
+    // taxRebate: TextEditingController(text: '$taxRebateValue'),
+    // grossTax.text = data['grossTax'];
+    netTaxAfterRebate.text = data['netTaxAfterRebate'];
+    // minimumTax.text = data['minimumTax'];
+    taxPayable.text = data['taxPayable'];
+    // netWealthSurcharge.text = '$totalAssetValue';
+    environmentalSurcharge.text = data['environmentalSurcharge'];
+    delayInterest.text =data['delayInterest'];
+    totalAmountPayable.text =data['totalAmountPayable'];
+    taxDeductedSource.text =data['taxDeductedSource'];
+    advanceTaxPaid.text =data['advanceTaxPaid'];
+    adjustmentOfTax.text =data['adjustmentOfTax'];
+    taxPaidWithReturn.text =data['taxPaidWithReturn'];
+    totalTaxPaid.text =data['totalTaxPaid'];
+    excessPayment.text =data['excessPayment'];
+    taxExempted.text = data['taxExempted'];
     }
     notifyListeners();
   }
@@ -424,105 +373,86 @@ class TaxCalculationProvider extends ChangeNotifier {
     functionLoading = true;
     notifyListeners();
 
-    final List<Map<String, dynamic>> taxCalculationDataList = [];
-    for (TaxCalculationInputModel element in taxCalculationInputList) {
-
-      ///Net Tax after Rebate (12–13)
-      final double netTaxAfterRebateValue = double.parse(
-              element.grossTax!.text.isEmpty
-                  ? '0.0'
-                  : element.grossTax!.text.trim()) -
-          double.parse(element.taxRebate!.text.isEmpty
-              ? '0.0'
-              : element.taxRebate!.text.trim());
-
-      ///Tax Payable (Higher of 14 and 15)
-      if(netTaxAfterRebateValue > double.parse(element.minimumTax!.text.isNotEmpty? element.minimumTax!.text.trim():'0.0')){
-        element.taxPayable!.text = '$netTaxAfterRebateValue';
-      }else{
-        element.taxPayable!.text = element.minimumTax!.text;
-      }
+    getAllIncomeData();
+    getGrossTaxData();
+    getMinimumTaxData();
+    getNetWealthSurchargeData();
 
       ///Total Amount Payable (16 + 17 + 18)
       final double totalAmountPayableValue = double.parse(
-              element.taxPayable!.text.isEmpty
-                  ? '0.0'
-                  : element.taxPayable!.text.trim()) +
-          double.parse(element.netWealthSurcharge!.text.isEmpty
+          taxPayable.text.isEmpty
               ? '0.0'
-              : element.netWealthSurcharge!.text.trim()) +
-          double.parse(element.environmentalSurcharge!.text.isEmpty
+              : taxPayable.text.trim()) +
+          double.parse(netWealthSurcharge.text.isEmpty
               ? '0.0'
-              : element.environmentalSurcharge!.text.trim()) +
-          double.parse(element.delayInterest!.text.isEmpty
-          ? '0.0'
-          : element.delayInterest!.text.trim());
+              : netWealthSurcharge.text.trim()) +
+          double.parse(environmentalSurcharge.text.isEmpty
+              ? '0.0'
+              : environmentalSurcharge.text.trim()) +
+          double.parse(delayInterest.text.isEmpty
+              ? '0.0'
+              : delayInterest.text.trim());
+      totalAmountPayable.text = '$totalAmountPayableValue';
 
       ///Total Tax Paid and Adjusted (20 + 21 + 22 + 23)
       final double totalTaxPaidValue =
-          double.parse(element.taxDeductedSource!.text.isEmpty
+          double.parse(taxDeductedSource.text.isEmpty
               ? '0.0'
-              : element.taxDeductedSource!.text.trim()) +
-          double.parse(element.advanceTaxPaid!.text.isEmpty
-              ? '0.0'
-              : element.advanceTaxPaid!.text.trim()) +
-          double.parse(element.adjustmentOfTax!.text.isEmpty
-              ? '0.0'
-              : element.adjustmentOfTax!.text.trim())+
-          double.parse(element.taxPaidWithReturn!.text.isEmpty
-              ? '0.0'
-              : element.taxPaidWithReturn!.text.trim());
+              : taxDeductedSource.text.trim()) +
+              double.parse(advanceTaxPaid.text.isEmpty
+                  ? '0.0'
+                  : advanceTaxPaid.text.trim()) +
+              double.parse(adjustmentOfTax.text.isEmpty
+                  ? '0.0'
+                  : adjustmentOfTax.text.trim()) +
+              double.parse(taxPaidWithReturn.text.isEmpty
+                  ? '0.0'
+                  : taxPaidWithReturn.text.trim());
+      totalTaxPaid.text = '$totalTaxPaidValue';
 
       ///Excess Payment (24 – 19)
-      final double excessPaymentValue = totalTaxPaidValue - totalAmountPayableValue;
+      final double excessPaymentValue = totalTaxPaidValue -
+          totalAmountPayableValue;
 
-      element.totalIncome!.text = '$totalIncomeValue';
-      element.netTaxAfterRebate!.text = '$netTaxAfterRebateValue';
-      element.totalAmountPayable!.text = '$totalAmountPayableValue';
-      element.totalTaxPaid!.text = '$totalTaxPaidValue';
-      element.excessPayment!.text = '$excessPaymentValue';
+      excessPayment.text = '$excessPaymentValue';
       notifyListeners();
 
-      final Map<String, dynamic> dataMap = {
-        'incomeFromEmployment': element.incomeFromEmployment!.text,
-        'incomeFromRent': element.incomeFromRent!.text,
-        'incomeFromAgriculture': element.incomeFromAgriculture!.text,
-        'incomeFromBusiness': element.incomeFromBusiness!.text,
-        'incomeFromCapitalGain': element.incomeFromCapitalGain!.text,
-        'incomeFromFinancialAsset': element.incomeFromFinancialAsset!.text,
-        'incomeFromOtherSource': element.incomeFromOtherSource!.text,
-        'incomeFromFirm': element.incomeFromFirm!.text,
-        'incomeFromMinorOrSpouse': element.incomeFromMinorOrSpouse!.text,
-        'incomeFromAbroad': element.incomeFromAbroad!.text,
-        'totalIncome': element.totalIncome!.text,
-        'grossTax': element.grossTax!.text,
-        'taxRebate': element.taxRebate!.text,
-        'netTaxAfterRebate': element.netTaxAfterRebate!.text,
-        'minimumTax': element.minimumTax!.text,
-        'taxPayable': element.taxPayable!.text,
-        'netWealthSurcharge': element.netWealthSurcharge!.text,
-        'environmentalSurcharge': element.environmentalSurcharge!.text,
-        'delayInterest': element.delayInterest!.text,
-        'totalAmountPayable': element.totalAmountPayable!.text,
-        'taxDeductedSource': element.taxDeductedSource!.text,
-        'advanceTaxPaid': element.advanceTaxPaid!.text,
-        'adjustmentOfTax': element.adjustmentOfTax!.text,
-        'taxPaidWithReturn': element.taxPaidWithReturn!.text,
-        'totalTaxPaid': element.totalTaxPaid!.text,
-        'excessPayment': element.excessPayment!.text,
-        'taxExempted': element.taxExempted!.text,
+      final Map<String, dynamic> taxCalculationDataMap = {
+        'incomeFromEmployment': incomeFromEmployment.text,
+        'incomeFromRent': incomeFromRent.text,
+        'incomeFromAgriculture': incomeFromAgriculture.text,
+        'incomeFromBusiness': incomeFromBusiness.text,
+        'incomeFromCapitalGain': incomeFromCapitalGain.text,
+        'incomeFromFinancialAsset': incomeFromFinancialAsset.text,
+        'incomeFromOtherSource': incomeFromOtherSource.text,
+        'incomeFromFirm': incomeFromFirm.text,
+        'incomeFromMinorOrSpouse': incomeFromMinorOrSpouse.text,
+        'incomeFromAbroad': incomeFromAbroad.text,
+        'totalIncome': totalIncome.text,
+        'grossTax': grossTax.text,
+        'taxRebate': taxRebate.text,
+        'netTaxAfterRebate': netTaxAfterRebate.text,
+        'minimumTax': minimumTax.text,
+        'taxPayable': taxPayable.text,
+        'netWealthSurcharge': netWealthSurcharge.text,
+        'environmentalSurcharge': environmentalSurcharge.text,
+        'delayInterest': delayInterest.text,
+        'totalAmountPayable': totalAmountPayable.text,
+        'taxDeductedSource': taxDeductedSource.text,
+        'advanceTaxPaid': advanceTaxPaid.text,
+        'adjustmentOfTax': adjustmentOfTax.text,
+        'taxPaidWithReturn': taxPaidWithReturn.text,
+        'totalTaxPaid': totalTaxPaid.text,
+        'excessPayment': excessPayment.text,
+        'taxExempted': taxExempted.text,
       };
-      taxCalculationDataList.add(dataMap);
-    }
-    final Map<String, dynamic> taxCalculationDataMap = {
-      'data': taxCalculationDataList
-    };
 
-    await firebaseDbHelper.insertData(
-        childPath: DbChildPath.taxCalculation, data: taxCalculationDataMap).then((result){
+    await firebaseDbHelper.insertData(childPath: DbChildPath.taxCalculation, data: taxCalculationDataMap)
+        .then((result) {
       if (result) {
         showToast('Success');
-        AssetInfoProvider assetInfoProvider = Provider.of(AppNavigatorKey.key.currentState!.context,listen: false);
+        AssetInfoProvider assetInfoProvider = Provider.of(
+            AppNavigatorKey.key.currentState!.context, listen: false);
         assetInfoProvider.getAllExemptedIncomeExpenseData();
       } else {
         showToast('Failed');
@@ -531,5 +461,43 @@ class TaxCalculationProvider extends ChangeNotifier {
 
     functionLoading = false;
     notifyListeners();
+  }
+
+  double calculateGrossTax(double income) {
+    double tax = 0.0;
+    if (income <= 350000) {
+      tax = 0;
+    } else if (income <= 450000) {
+      tax = (income - 350000) * 0.05;
+    } else if (income <= 750000) {
+      tax = 100000 * 0.05 + (income - 450000) * 0.10;
+    } else if (income <= 1150000) {
+      tax = 100000 * 0.05 + 300000 * 0.10 + (income - 750000) * 0.15;
+    } else if (income <= 1650000) {
+      tax = 100000 * 0.05 + 300000 * 0.10 + 400000 * 0.15 + (income - 1150000) * 0.20;
+    } else {
+      tax = 100000 * 0.05 + 300000 * 0.10 + 400000 * 0.15 + 500000 * 0.20 + (income - 1650000) * 0.25;
+    }
+    return tax;
+  }
+
+  double calculatePercentOfAsset(double totalAsset){
+    double percentAmount = 1;
+    if(totalAsset<=40000000){
+      percentAmount = 1;
+    }else if(totalAsset>40000000 && totalAsset<=100000000){
+      percentAmount = totalAsset * 0.1;
+    }
+    else if(totalAsset>100000000 && totalAsset<=200000000){
+      percentAmount = totalAsset * 0.2;
+    }
+    else if(totalAsset>200000000 && totalAsset<=500000000){
+      percentAmount = totalAsset * 0.3;
+    }
+    else if(totalAsset>500000000){
+      percentAmount = totalAsset * 0.35;
+    }
+
+    return percentAmount;
   }
 }
