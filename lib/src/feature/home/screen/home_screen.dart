@@ -66,6 +66,7 @@ class HomeScreen extends StatelessWidget {
         expenseInformationProvider.getCostInfoData(),
       ]);
       await assetInfoProvider.getAssetInfoData();
+      await taxCalculationProvider.getTaxCalculationData();
     });
   }
 

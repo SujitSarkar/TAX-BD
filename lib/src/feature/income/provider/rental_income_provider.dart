@@ -118,25 +118,18 @@ class RentalIncomeProvider extends ChangeNotifier {
 
     for (RentalIncomeInputModel element in rentalIncomeInputList) {
 
-      ///Value of any Benefit in addition to 1 & 2
-      final double totalValueOfAnyBenefits = double.parse(
-              element.rentReceived!.text.isEmpty
-                  ? '0.0'
-                  : element.rentReceived!.text.trim()) +
-          double.parse(element.advanceRentReceived!.text.isEmpty
-              ? '0.0'
-              : element.advanceRentReceived!.text.trim());
-      element.valueOfAnyBenefits!.text = '$totalValueOfAnyBenefits';
-
       ///Total Rental Value (1+2+3–4-5)
-      final double sumOfRentalValue = double.parse(
+      final double sumOfRentalValue = (double.parse(
                   element.rentReceived!.text.isEmpty
                       ? '0.0'
                       : element.rentReceived!.text.trim()) +
               double.parse(element.advanceRentReceived!.text.isEmpty
                   ? '0.0'
                   : element.advanceRentReceived!.text.trim()) +
-              totalValueOfAnyBenefits -
+          double.parse(
+              element.valueOfAnyBenefits!.text.isEmpty
+                  ? '0.0'
+                  : element.valueOfAnyBenefits!.text.trim()) ) -
           double.parse(element.adjustedAdvanceRent!.text.isEmpty
                   ? '0.0'
                   : element.adjustedAdvanceRent!.text.trim()) -

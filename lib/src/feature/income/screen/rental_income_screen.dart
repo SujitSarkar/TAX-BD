@@ -94,7 +94,7 @@ class RentalIncomeScreen extends StatelessWidget {
                             "3. Value of any benefits (in addition to 1 & 2)",
                             rentalIncomeProvider
                                 .rentalIncomeInputList[index]
-                                .valueOfAnyBenefits!,readOnly: true),
+                                .valueOfAnyBenefits!),
                         buildRow(
                             "4. Adjusted advance rent",
                             rentalIncomeProvider

@@ -133,6 +133,7 @@ class BusinessIncomeProvider extends ChangeNotifier {
                   ? '0.0'
                   : element.generalExpanses!.text.trim());
       element.netProfit!.text = '$netProfitValue';
+      element.balanceSheetNetProfit!.text = element.netProfit!.text;
 
       ///Total Assets (7+8+9+10)
       final double totalAssetValue =

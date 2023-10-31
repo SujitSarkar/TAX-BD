@@ -178,7 +178,7 @@ class BusinessIncomeScreen extends StatelessWidget {
                                   "13. Net Profit",
                                   businessIncomeProvider
                                       .businessIncomeInputList[index]
-                                      .balanceSheetNetProfit!),
+                                      .balanceSheetNetProfit!,readOnly: true),
                               buildRow(
                                   "14. Drawing during the income year",
                                   businessIncomeProvider

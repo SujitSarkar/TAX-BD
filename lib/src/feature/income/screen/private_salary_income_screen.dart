@@ -133,7 +133,7 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
                                     .privateSalaryIncomeInputList[index]
                                     .anyOtherFacility!),
                             buildRow(
-                                "11. Employee's contribution to recognized provident fund",
+                                "11. Employer's contribution to recognized provident fund",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
                                     .providentFund!),
