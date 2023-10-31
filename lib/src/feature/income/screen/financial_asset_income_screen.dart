@@ -76,7 +76,7 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                                 financialAssetIncomeProvider
                                     .fdrIncomeItemList[index].sourceTax!),
                             buildRow(
-                                "5. Total",
+                                "5. Total (3+4)",
                                 financialAssetIncomeProvider
                                     .fdrIncomeItemList[index].total!,readOnly: true),
                           ],
@@ -138,7 +138,7 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                             financialAssetIncomeProvider
                                 .dpsIncomeItemList[index].sourceTax!),
                         buildRow(
-                            "5. Total",
+                            "5. Total (3+4)",
                             financialAssetIncomeProvider
                                 .dpsIncomeItemList[index].total!,readOnly: true),
                       ],
@@ -197,7 +197,7 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                             financialAssetIncomeProvider
                                 .incomeFromBankItemList[index].sourceTax!),
                         buildRow(
-                            "4. Total",
+                            "4. Total (2+3)",
                             financialAssetIncomeProvider
                                 .incomeFromBankItemList[index].total!,readOnly: true),
                       ],
@@ -259,7 +259,7 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                             financialAssetIncomeProvider
                                 .insuranceProfitItemList[index].sourceTax!),
                         buildRow(
-                            "5. Total",
+                            "5. Total (3+4)",
                             financialAssetIncomeProvider
                                 .insuranceProfitItemList[index].total!,readOnly: true),
                       ],
@@ -330,7 +330,7 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
                             financialAssetIncomeProvider
                                 .othersProfitItemList[index].exemptedAmount!),
                         buildRow(
-                            "5. Total",
+                            "5. Total (2+3-4)",
                             financialAssetIncomeProvider
                                 .othersProfitItemList[index].total!,readOnly: true),
                       ],
