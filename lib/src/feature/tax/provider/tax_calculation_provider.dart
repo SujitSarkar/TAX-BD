@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tax_bd/src/constant/dummy_data.dart';
 import 'package:tax_bd/src/feature/asset/provider/asset_info_provider.dart';
 import 'package:tax_bd/src/feature/income/model/capital_gain_income_input_model.dart';
 import 'package:tax_bd/src/feature/income/model/rental_income_input_model.dart';
@@ -7,6 +8,7 @@ import 'package:tax_bd/src/feature/income/model/spouse_children_income_input_mod
 import 'package:tax_bd/src/feature/income/provider/capital_gain_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/rental_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/spouse_children_income_provider.dart';
+import 'package:tax_bd/src/feature/personal_info/provider/personal_info_provider.dart';
 import 'package:tax_bd/src/feature/rebate/model/rebate_calculation_input_model.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
@@ -67,6 +69,34 @@ class TaxCalculationProvider extends ChangeNotifier {
   void clearAllData() {
     loading = false;
     functionLoading = false;
+
+    incomeFromEmployment.clear();
+    incomeFromRent.clear();
+    incomeFromAgriculture.clear();
+    incomeFromBusiness.clear();
+    incomeFromCapitalGain.clear();
+    incomeFromFinancialAsset.clear();
+    incomeFromOtherSource.clear();
+    incomeFromFirm.clear();
+    incomeFromMinorOrSpouse.clear();
+    incomeFromAbroad.clear();
+    totalIncome.clear();
+    grossTax.clear();
+    taxRebate.clear();
+    netTaxAfterRebate.clear();
+    minimumTax.clear();
+    taxPayable.clear();
+    netWealthSurcharge.clear();
+    environmentalSurcharge.clear();
+    delayInterest.clear();
+    totalAmountPayable.clear();
+    taxDeductedSource.clear();
+    advanceTaxPaid.clear();
+    adjustmentOfTax.clear();
+    taxPaidWithReturn.clear();
+    totalTaxPaid.clear();
+    excessPayment.clear();
+    taxExempted.clear();
   }
 
 
@@ -289,13 +319,20 @@ class TaxCalculationProvider extends ChangeNotifier {
   }
 
   void getMinimumTaxData(){
-    //Todo get minimum tax based on tax zone
+    final BuildContext context = AppNavigatorKey.key.currentState!.context;
+    final PersonalInfoProvider personalInfoProvider = Provider.of(context, listen: false);
+    if(personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList.first){
+      minimumTax.text = '5000';
+    } else if(personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList[1]){
+      minimumTax.text = '4000';
+    } else{
+      minimumTax.text = '3000';
+    }
   }
 
   void getNetWealthSurchargeData() {
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
-    final AssetInfoProvider assetInfoProvider = Provider.of(
-        context, listen: false);
+    final AssetInfoProvider assetInfoProvider = Provider.of(context, listen: false);
 
     ///Net Tax after Rebate (12–13)
     final double netTaxAfterRebateValue = double.parse(

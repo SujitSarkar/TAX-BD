@@ -26,7 +26,7 @@ class TaxCalculationScreen extends StatelessWidget {
             await taxCalculationProvider.getTaxCalculationData(),
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Column(children: [
             Table(
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
