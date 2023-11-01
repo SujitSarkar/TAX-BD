@@ -26,7 +26,7 @@ class ForeignIncomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Form(
             key: foreignIncomeProvider.foreignIncomeKey,
             child: Column(children: [
@@ -51,7 +51,7 @@ class ForeignIncomeScreen extends StatelessWidget {
                             padding: EdgeInsets.zero),
 
                       CheckboxListTile(
-                        title: const Text('Brought through proper banking channel or not',style: TextStyle(fontSize: TextSize.bodyText)),
+                        title: const Text('Brought through proper banking channel',style: TextStyle(fontSize: TextSize.bodyText)),
                           contentPadding: EdgeInsets.zero,
                           dense: true,
                           controlAffinity: ListTileControlAffinity.leading,

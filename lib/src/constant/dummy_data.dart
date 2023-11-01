@@ -37,6 +37,12 @@ class DummyData {
     "Others"
   ];
 
+  static const List<String> areaList = [
+    "Dhaka north or south City Corporation or Chattogram City Corporation",
+    "Other City Corporation",
+    "Areas other than City Corporation"
+  ];
+
   static const List<String> residentialStatusList = [
     "Resident",
     "Non-resident"
@@ -55,5 +61,5 @@ class DummyData {
     "Age 65 years or more",
     "A parent of a person with disability",
     "None"
-  ]; //প্রতিবন্ধী ব্যক্তি
+  ];
 }

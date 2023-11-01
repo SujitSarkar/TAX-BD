@@ -1,9 +1,12 @@
 import 'package:flutter/Material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/app_toast.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
+import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import '../../../constant/db_child_path.dart';
 import '../../../constant/local_storage_key.dart';
+import '../../../shared/app_navigator_key.dart';
 import '../../../shared/db_helper/firebase_db_helper.dart';
 import '../../../shared/local_storage.dart';
 import '../../../shared/validator.dart';
@@ -15,8 +18,9 @@ class PersonalInfoProvider extends ChangeNotifier {
   final GlobalKey<FormState> personalInfoFormKey = GlobalKey();
   String? genderRadioValue = DummyData.genderList.first;
   String? residentialStatusRadioValue = DummyData.residentialStatusList.first;
-  String? statusOfTaxpayersRadioValue = DummyData.statusOfTaxpayersList.first;
-  String? taxpayerPrivilegesRadioValue = DummyData.taxpayerPrivilegesList.last;
+  String? statusOfTaxpayersDropdownValue = DummyData.statusOfTaxpayersList.first;
+  String? taxpayerPrivilegesDropdownValue = DummyData.taxpayerPrivilegesList.last;
+  String? taxpayerAreaDropdownValue = DummyData.areaList.first;
   DateTime dateOfBirth = DateTime.now();
 
   final TextEditingController nameController = TextEditingController();
@@ -24,22 +28,18 @@ class PersonalInfoProvider extends ChangeNotifier {
   final TextEditingController tinController = TextEditingController();
   final TextEditingController circleController = TextEditingController();
   final TextEditingController taxZoneController = TextEditingController();
-  final TextEditingController assessmentYearController =
-      TextEditingController();
+  final TextEditingController assessmentYearController = TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
   final TextEditingController spouseController = TextEditingController();
   final TextEditingController spouseTinController = TextEditingController();
-  final TextEditingController contactAddressController =
-      TextEditingController();
+  final TextEditingController contactAddressController = TextEditingController();
   final TextEditingController telephoneController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController currentlyWorkingOrgController =
-      TextEditingController();
+  final TextEditingController currentlyWorkingOrgController = TextEditingController();
   final TextEditingController orgNameController = TextEditingController();
   final TextEditingController orgBinController = TextEditingController();
-  final TextEditingController partnerNameAndTinController =
-      TextEditingController();
+  final TextEditingController partnerNameAndTinController = TextEditingController();
 
   void clearAllData(){
     nameController.clear();
@@ -75,22 +75,28 @@ class PersonalInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeClassOfTaxpayers(String? newValue) {
-    statusOfTaxpayersRadioValue = newValue;
+  void changeStatusOfTaxpayers(String? newValue) {
+    statusOfTaxpayersDropdownValue = newValue;
     notifyListeners();
   }
 
   void changeTaxpayerPrivileges(String? newValue) {
-    taxpayerPrivilegesRadioValue = newValue;
+    taxpayerPrivilegesDropdownValue = newValue;
+    notifyListeners();
+  }
+
+  void changeTaxpayerArea(String? newValue) {
+    taxpayerAreaDropdownValue = newValue;
     notifyListeners();
   }
 
   Future<void> selectDateOfBirth() async {
     dateOfBirth = await showDatePickerAndGetDate();
-    dateOfBirthController.text = DateFormat('dd-MMM-yyyy').format(dateOfBirth);
+    dateOfBirthController.text = DateFormat('dd MMM, yyyy').format(dateOfBirth);
     notifyListeners();
   }
 
+  ///Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   Future<void> getUserData() async {
     final String? userPhone = await getData(LocalStorageKey.phoneKey);
     final Map<String, dynamic>? data =
@@ -100,16 +106,16 @@ class PersonalInfoProvider extends ChangeNotifier {
       nameController.text = data['taxPayerName'];
       nidOrPassportController.text = data['taxPayerNid'];
       tinController.text = data['taxPayerTin'];
+      taxpayerAreaDropdownValue = data['taxPayerArea'];
       circleController.text = data['circle'];
       taxZoneController.text = data['taxZone'];
       assessmentYearController.text = data['assessmentYear'];
       genderRadioValue = data['gender'];
       residentialStatusRadioValue = data['residentialStatus'] ?? 'None';
-      statusOfTaxpayersRadioValue = data['statusOfTaxPayer'] ?? 'None';
-      taxpayerPrivilegesRadioValue = data['privilegesOfTaxPayer'] ?? 'None';
+      statusOfTaxpayersDropdownValue = data['statusOfTaxPayer'] ?? 'None';
+      taxpayerPrivilegesDropdownValue = data['privilegesOfTaxPayer'] ?? 'None';
       dateOfBirth = DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth']);
-      dateOfBirthController.text =
-          DateFormat('dd-MMM-yyyy').format(dateOfBirth);
+      dateOfBirthController.text = DateFormat('dd-MMM-yyyy').format(dateOfBirth);
       spouseController.text = data['nameOfSpouse'];
       spouseTinController.text = data['tinOfSpouse'];
       contactAddressController.text = data['addressOfContact'];
@@ -123,7 +129,7 @@ class PersonalInfoProvider extends ChangeNotifier {
     }else{
       mobileController.text= userPhone!;
     }
-    // notifyListeners();
+    notifyListeners();
   }
 
   Future<void> submitDataButtonOnTap() async {
@@ -134,17 +140,18 @@ class PersonalInfoProvider extends ChangeNotifier {
       'taxPayerName': nameController.text.trim(),
       'taxPayerNid': nidOrPassportController.text.trim(),
       'taxPayerTin': tinController.text.trim(),
+      'taxPayerArea': taxpayerAreaDropdownValue,
       'circle': circleController.text.trim(),
       'taxZone': taxZoneController.text.trim(),
       'assessmentYear': assessmentYearController.text.trim(),
       'gender': genderRadioValue,
       'residentialStatus': residentialStatusRadioValue,
-      'statusOfTaxPayer': statusOfTaxpayersRadioValue == 'None'
+      'statusOfTaxPayer': statusOfTaxpayersDropdownValue == 'None'
           ? null
-          : statusOfTaxpayersRadioValue,
-      'privilegesOfTaxPayer': taxpayerPrivilegesRadioValue == 'None'
+          : statusOfTaxpayersDropdownValue,
+      'privilegesOfTaxPayer': taxpayerPrivilegesDropdownValue == 'None'
           ? null
-          : taxpayerPrivilegesRadioValue,
+          : taxpayerPrivilegesDropdownValue,
       'dateOfBirth': dateOfBirth.millisecondsSinceEpoch,
       'nameOfSpouse': spouseController.text.trim(),
       'tinOfSpouse': spouseTinController.text.trim(),
@@ -159,13 +166,18 @@ class PersonalInfoProvider extends ChangeNotifier {
     };
     functionLoading = true;
     notifyListeners();
-    final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.personalInfo, data: userDataMap);
-    if (result) {
-      showToast('Success');
-    } else {
-      showToast('Failed');
-    }
+    await firebaseDbHelper.insertData(
+        childPath: DbChildPath.personalInfo, data: userDataMap).then((result){
+      if (result) {
+        showToast('Success');
+        TaxCalculationProvider taxCalculationProvider = Provider.of(
+            AppNavigatorKey.key.currentState!.context, listen: false);
+        taxCalculationProvider.getTaxCalculationData();
+      } else {
+        showToast('Failed');
+      }
+    });
+
     functionLoading = false;
     notifyListeners();
   }

@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:tax_bd/src/constant/text_size.dart';
 import '../../constant/app_color.dart';
 
 class CustomDropdown extends StatelessWidget {
@@ -22,24 +23,22 @@ class CustomDropdown extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(labelText, style: TextStyle(color: AppColor.textColor)),
-        const SizedBox(height: 5),
+        Text(labelText, style: TextStyle(color: AppColor.textColor,fontSize: TextSize.bodyText,fontWeight: FontWeight.bold)),
+        const SizedBox(height: 8),
         DropdownButtonHideUnderline(
           child: DropdownButton2(
             isExpanded: true,
             hint: const Text('Select',
                 style: TextStyle(color: AppColor.textFieldHintColor),
                 overflow: TextOverflow.ellipsis),
+            style: TextStyle(
+                color: AppColor.textColor, fontSize: TextSize.bodyText),
             items: items
                 .map((item) => DropdownMenuItem<String>(
                       value: item,
                       child: Text(
                         item,
-                        style: TextStyle(
-                            color:
-                                selectedValue != null && selectedValue == item
-                                    ? AppColor.primaryColor
-                                    : null),
+                        style: TextStyle(color: AppColor.textColor),
                       ),
                     ))
                 .toList(),
@@ -51,18 +50,17 @@ class CustomDropdown extends StatelessWidget {
             iconStyleData: const IconStyleData(
               icon: Icon(Icons.keyboard_arrow_down, size: 20),
               iconSize: 14,
-              iconEnabledColor: AppColor.secondaryColor,
+              iconEnabledColor: AppColor.textFieldHintColor,
               iconDisabledColor: Colors.grey,
             ),
             buttonStyleData: ButtonStyleData(
-              height: 50,
+              height: 45,
               width: double.infinity,
               padding: const EdgeInsets.only(left: 14, right: 14),
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: Colors.grey, width: 0.5),
-                // color: ThemeViewModel.instance.cardBgColor()
-              ),
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  border: Border.all(color: Colors.grey, width: 0.5),
+                  color: Colors.white),
               elevation: 0,
             ),
             menuItemStyleData: const MenuItemStyleData(
@@ -74,16 +72,14 @@ class CustomDropdown extends StatelessWidget {
               width: MediaQuery.of(context).size.width * .9,
               padding: null,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                // color: ThemeViewModel.instance.cardBgColor()
-              ),
+                  borderRadius: BorderRadius.circular(5), color: Colors.white),
               elevation: 8,
               scrollbarTheme: ScrollbarThemeData(
                 radius: const Radius.circular(10),
                 thickness: MaterialStateProperty.all(6),
                 thumbVisibility: MaterialStateProperty.all(true),
               ),
-              offset: const Offset(-10, 0),
+              // offset: const Offset(-10, 0),
             ),
           ),
         ),

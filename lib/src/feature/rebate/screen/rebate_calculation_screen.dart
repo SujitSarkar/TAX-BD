@@ -27,7 +27,7 @@ class RebateCalculationScreen extends StatelessWidget {
             await rebateCalculationProvider.getRebateCalculationData(),
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.only(left: 12, right: 12, bottom: 16),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Column(children: [
             ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
@@ -152,7 +152,7 @@ class RebateCalculationScreen extends StatelessWidget {
                       rebateCalculationProvider
                           .addRebateCalculationInputListItem();
                     },
-                    child: const Text('আরেকটি বিবরনি যোগ'))),
+                    child: const Text('Add More'))),
             const SizedBox(height: 12),
             SolidButton(
                 onTap: () async {
@@ -161,7 +161,7 @@ class RebateCalculationScreen extends StatelessWidget {
                 child: rebateCalculationProvider.functionLoading
                     ? const LoadingWidget()
                     : const Text(
-                        'তথ্য জমা দিন',
+                        'Submit Data',
                         style: TextStyle(fontSize: TextSize.titleText),
                       ))
           ]),

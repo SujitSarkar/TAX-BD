@@ -26,7 +26,7 @@ class ExpenseInformationScreen extends StatelessWidget {
         onRefresh: () async => await expenseInformationProvider.getCostInfoData(),
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Column(children: [
             ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),

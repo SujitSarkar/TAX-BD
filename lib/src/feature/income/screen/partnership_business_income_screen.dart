@@ -27,7 +27,7 @@ class PartnershipBusinessIncomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Form(
             key: partnershipBusinessIncomeProvider.partnershipBusinessIncomeKey,
             child: Column(children: [

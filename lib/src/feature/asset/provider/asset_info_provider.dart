@@ -122,7 +122,6 @@ class AssetInfoProvider extends ChangeNotifier{
   }
 
   void getAllExemptedIncomeExpenseData(){
-
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
     final SalaryIncomeProvider salaryIncomeProvider = Provider.of(context,listen: false);
     final AgriculturalIncomeProvider agriculturalIncomeProvider = Provider.of(context,listen: false);

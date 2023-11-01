@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
 import 'package:tax_bd/src/feature/personal_info/provider/personal_info_provider.dart';
+import 'package:tax_bd/src/shared/widget/dropdown_button.dart';
 import 'package:tax_bd/src/shared/widget/loading_widget.dart';
 import 'package:tax_bd/src/shared/widget/solid_button.dart';
 import 'package:tax_bd/src/shared/widget/text_field_widget.dart';
@@ -29,7 +30,7 @@ class PersonalInfoScreen extends StatelessWidget {
         onRefresh: ()async=> await personalInfoProvider.getUserData(),
             backgroundColor: Colors.white,
             child: SingleChildScrollView(
-                padding: const EdgeInsets.only(left: 12, right: 12, bottom: 16),
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: Form(
                   key: personalInfoProvider.personalInfoFormKey,
                   child: Column(
@@ -58,31 +59,37 @@ class PersonalInfoScreen extends StatelessWidget {
                             required: true,
                             textInputType: TextInputType.number),
                         const SizedBox(height: 16),
+
+                        CustomDropdown(items: DummyData.areaList,
+                            selectedValue: personalInfoProvider.taxpayerAreaDropdownValue,
+                            labelText: '4. Area', onChanged: personalInfoProvider.changeTaxpayerArea),
+                        const SizedBox(height: 16),
+
                         TextFormFieldWidget(
                           controller: personalInfoProvider.circleController,
-                          labelText: '4. Circle',
+                          labelText: '5. Circle',
                           hintText: 'Enter circle',
                           required: true,
                         ),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                           controller: personalInfoProvider.taxZoneController,
-                          labelText: '5. Tax zone',
+                          labelText: '6. Tax zone',
                           hintText: 'Enter TAX zone',
                           required: true,
                         ),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                           controller: personalInfoProvider.assessmentYearController,
-                          labelText: '6. Assessment year',
+                          labelText: '7. Assessment year',
                           hintText: 'Enter assessment year',
                           required: true,
                         ),
                         const SizedBox(height: 16),
-                        Text('7. Gender',
+                        Text('8. Gender',
                             style: TextStyle(
                                 color: AppColor.textColor,
-                                fontSize: TextSize.bodyText)),
+                                fontSize: TextSize.bodyText,fontWeight: FontWeight.bold)),
                         Column(
                           children: DummyData.genderList
                               .map((String option) {
@@ -99,10 +106,10 @@ class PersonalInfoScreen extends StatelessWidget {
                           }).toList(),
                         ),
                         const SizedBox(height: 16),
-                        Text('8. Residential Status',
+                        Text('9. Residential Status',
                             style: TextStyle(
                                 color: AppColor.textColor,
-                                fontSize: TextSize.bodyText)),
+                                fontSize: TextSize.bodyText,fontWeight: FontWeight.bold)),
                         Column(
                           children: DummyData.residentialStatusList
                               .map((String option) {
@@ -119,49 +126,17 @@ class PersonalInfoScreen extends StatelessWidget {
                           }).toList(),
                         ),
                         const SizedBox(height: 16),
-                        Text('9. Status of TAX payer',
-                            style: TextStyle(
-                                color: AppColor.textColor,
-                                fontSize: TextSize.bodyText)),
-                        Column(
-                          children:
-                              DummyData.statusOfTaxpayersList.map((String option) {
-                            return RadioListTile(
-                              contentPadding: EdgeInsets.zero,
-                              dense: true,
-                              title: Text(option),
-                              value: option,
-                              groupValue:
-                                  personalInfoProvider.statusOfTaxpayersRadioValue,
-                              onChanged:
-                                  personalInfoProvider.changeClassOfTaxpayers,
-                            );
-                          }).toList(),
-                        ),
+                        CustomDropdown(items: DummyData.statusOfTaxpayersList,
+                            selectedValue: personalInfoProvider.statusOfTaxpayersDropdownValue,
+                            labelText: '10. Status of TAX payer', onChanged: personalInfoProvider.changeStatusOfTaxpayers),
                         const SizedBox(height: 16),
-                        Text('10. Privileges of TAX payer',
-                            style: TextStyle(
-                                color: AppColor.textColor,
-                                fontSize: TextSize.bodyText)),
-                        Column(
-                          children: DummyData.taxpayerPrivilegesList
-                              .map((String option) {
-                            return RadioListTile(
-                              contentPadding: EdgeInsets.zero,
-                              dense: true,
-                              title: Text(option),
-                              value: option,
-                              groupValue: personalInfoProvider
-                                  .taxpayerPrivilegesRadioValue,
-                              onChanged: (value) => personalInfoProvider
-                                  .changeTaxpayerPrivileges(value),
-                            );
-                          }).toList(),
-                        ),
+                        CustomDropdown(items: DummyData.taxpayerPrivilegesList,
+                            selectedValue: personalInfoProvider.taxpayerPrivilegesDropdownValue,
+                            labelText: '11. Privileges of TAX payer', onChanged: personalInfoProvider.changeTaxpayerPrivileges),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                           controller: personalInfoProvider.dateOfBirthController,
-                          labelText: '11. Date of birth',
+                          labelText: '12. Date of birth',
                           hintText: 'Enter date of birth',
                           required: true,
                           readOnly: true,
@@ -172,33 +147,33 @@ class PersonalInfoScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.spouseController,
-                            labelText: '12. Name of spouse',
+                            labelText: '13. Name of spouse',
                             hintText: 'Enter name of spouse',
                             textCapitalization: TextCapitalization.words),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.spouseTinController,
-                            labelText: '13. TIN of spouse',
+                            labelText: '14. TIN of spouse',
                             hintText: 'Enter TIN of spouse',
                             textInputType: TextInputType.number),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                           controller:
                               personalInfoProvider.contactAddressController,
-                          labelText: '14. Address of contact',
+                          labelText: '15. Address of contact',
                           hintText: 'Enter Address of contact',
                           required: true,
                         ),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.telephoneController,
-                            labelText: '15. Telephone',
+                            labelText: '16. Telephone',
                             hintText: 'Enter Telephone',
                             textInputType: TextInputType.phone),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.mobileController,
-                            labelText: '16. Mobile number',
+                            labelText: '17. Mobile number',
                             hintText: 'Enter Mobile number',
                             required: true,
                             readOnly: true,
@@ -206,7 +181,7 @@ class PersonalInfoScreen extends StatelessWidget {
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.emailController,
-                            labelText: '17. Email address',
+                            labelText: '18. Email address',
                             hintText: 'Enter email address',
                             required: true,
                             textInputType: TextInputType.emailAddress),
@@ -215,19 +190,19 @@ class PersonalInfoScreen extends StatelessWidget {
                             controller: personalInfoProvider
                                 .currentlyWorkingOrgController,
                             labelText:
-                                '18. If employed, employer’s name (latest employer’s name in case of multiple employment)',
+                                '19. If employed, employer’s name (latest employer’s name in case of multiple employment)',
                             hintText: 'Enter if employed, employer’s name (latest employer’s name in case of multiple employment)',
                             textCapitalization: TextCapitalization.words),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.orgNameController,
-                            labelText: '19. Organization name',
+                            labelText: '20. Organization name',
                             hintText: 'Enter Organization name',
                             textCapitalization: TextCapitalization.words),
                         const SizedBox(height: 16),
                         TextFormFieldWidget(
                             controller: personalInfoProvider.orgBinController,
-                            labelText: '20. BIN of organization',
+                            labelText: '21. BIN of organization',
                             hintText: 'Enter BIN of organization',
                             textInputType: TextInputType.number),
                         const SizedBox(height: 16),
@@ -235,12 +210,10 @@ class PersonalInfoScreen extends StatelessWidget {
                           controller:
                               personalInfoProvider.partnerNameAndTinController,
                           labelText:
-                              '21. Name and TIN of Partners/Members in case of Firm/Association of Persons',
+                              '22. Name and TIN of Partners/Members in case of Firm/Association of Persons',
                           minLine: 2,
                           maxLine: 3,
-                          hintText:
-                              'Enter Name and TIN of Partners/Members in case of Firm/Association of Persons',
-                          required: true,
+                          hintText: 'Enter Name and TIN of Partners/Members in case of Firm/Association of Persons',
                         ),
                         const SizedBox(height: 20),
                         SolidButton(

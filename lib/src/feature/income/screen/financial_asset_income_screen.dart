@@ -29,7 +29,7 @@ class FinancialAssetIncomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.only(left: 12,right: 12, bottom: 16),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             ///FDR Form
             const Text('Income from FDR',

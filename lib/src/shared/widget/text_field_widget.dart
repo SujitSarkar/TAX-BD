@@ -70,10 +70,9 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
       children: [
         Text.rich(
           TextSpan(
-            style: const TextStyle(fontSize: TextSize.bodyText),
             children: <InlineSpan>[
               WidgetSpan(
-                child: Text(widget.labelText),
+                child: Text(widget.labelText, style: const TextStyle(fontSize: TextSize.bodyText,fontWeight: FontWeight.bold)),
               ),
               WidgetSpan(
                 child: Text(widget.required ? '*' : '',
