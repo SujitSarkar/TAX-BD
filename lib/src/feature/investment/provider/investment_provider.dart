@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../constant/app_toast.dart';
@@ -27,14 +26,14 @@ import '../../income/provider/partnership_business_income_provider.dart';
 import '../../income/provider/rental_income_provider.dart';
 import '../../income/provider/salary_income_provider.dart';
 import '../../income/provider/spouse_children_income_provider.dart';
-import '../model/rebate_calculation_input_model.dart';
+import '../model/investment_input_model.dart';
 
-class RebateCalculationProvider extends ChangeNotifier {
+class InvestmentProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
   bool loading = false;
   bool functionLoading = false;
 
-  List<RebateCalculationInputModel> rebateCalculationInputList = [];
+  List<InvestmentInputModel> investmentInputList = [];
 
   double incomeFromEmploymentValue = 0.0;
   double incomeFromRentValue = 0.0;
@@ -49,7 +48,7 @@ class RebateCalculationProvider extends ChangeNotifier {
   double totalIncomeValue = 0.0;
 
   void clearAllData(){
-    rebateCalculationInputList=[];
+    investmentInputList=[];
     incomeFromEmploymentValue = 0.0;
     incomeFromRentValue = 0.0;
     incomeFromAgricultureValue = 0.0;
@@ -67,8 +66,8 @@ class RebateCalculationProvider extends ChangeNotifier {
   }
 
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-  void addRebateCalculationInputListItem() {
-    rebateCalculationInputList.add(RebateCalculationInputModel(
+  void addInvestmentInputListItem() {
+    investmentInputList.add(InvestmentInputModel(
         lifeInsurance: TextEditingController(),
         contributionToDepositPerson: TextEditingController(),
         investmentInGovt: TextEditingController(),
@@ -84,8 +83,8 @@ class RebateCalculationProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItemOfRebateCalculationInputList(int index) async {
-    rebateCalculationInputList.removeAt(index);
+  void removeItemOfInvestmentInputList(int index) async {
+    investmentInputList.removeAt(index);
     await submitDataButtonOnTap();
     notifyListeners();
     showToast('Item deleted');
@@ -307,15 +306,15 @@ class RebateCalculationProvider extends ChangeNotifier {
 
 
   Future<void> getRebateCalculationData() async {
-    rebateCalculationInputList = [];
+    investmentInputList = [];
 
     final Map<String, dynamic>? data = await firebaseDbHelper.fetchData(
-        childPath: DbChildPath.rebateCalculation);
+        childPath: DbChildPath.investment);
 
     if (data != null) {
       if (data['data'] != null && data['data'].isNotEmpty) {
         for (var element in data['data']) {
-          rebateCalculationInputList.add(RebateCalculationInputModel(
+          investmentInputList.add(InvestmentInputModel(
               lifeInsurance:
                   TextEditingController(text: element['lifeInsurance']),
               contributionToDepositPerson: TextEditingController(
@@ -342,7 +341,7 @@ class RebateCalculationProvider extends ChangeNotifier {
         }
       }
     } else {
-      rebateCalculationInputList.add(RebateCalculationInputModel(
+      investmentInputList.add(InvestmentInputModel(
           lifeInsurance: TextEditingController(),
           contributionToDepositPerson: TextEditingController(),
           investmentInGovt: TextEditingController(),
@@ -366,7 +365,7 @@ class RebateCalculationProvider extends ChangeNotifier {
     notifyListeners();
 
     final List<Map<String, dynamic>> rebateDataList = [];
-    for (RebateCalculationInputModel element in rebateCalculationInputList) {
+    for (InvestmentInputModel element in investmentInputList) {
 
       final double totalInvestment = double.parse(
               element.lifeInsurance!.text.isNotEmpty
@@ -431,7 +430,7 @@ class RebateCalculationProvider extends ChangeNotifier {
     final Map<String, dynamic> rebateDataMap = {'data': rebateDataList};
 
     final bool result = await firebaseDbHelper.insertData(
-        childPath: DbChildPath.rebateCalculation, data: rebateDataMap);
+        childPath: DbChildPath.investment, data: rebateDataMap);
     if (result) {
       showToast('Success');
     } else {

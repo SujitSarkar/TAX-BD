@@ -1,6 +1,6 @@
 class DbChildPath {
   static const String personalInfo = 'personalInfo';
-  static const String rebateCalculation = 'rebateCalculation';
+  static const String investment = 'investment';
   static const String expanseInformation = 'expanseInformation';
   static const String taxCalculation = 'taxCalculation';
   static const String assetInfo = 'assetInfo';

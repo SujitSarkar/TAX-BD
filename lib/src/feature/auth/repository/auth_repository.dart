@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/feature/asset/provider/asset_info_provider.dart';
+import 'package:tax_bd/src/feature/investment/provider/investment_provider.dart';
 import '../../../constant/app_toast.dart';
 import '../../../shared/app_navigator_key.dart';
 import '../../../router/app_router.dart';
@@ -16,7 +17,6 @@ import 'package:tax_bd/src/feature/income/provider/partnership_business_income_p
 import 'package:tax_bd/src/feature/income/provider/rental_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/salary_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/spouse_children_income_provider.dart';
-import 'package:tax_bd/src/feature/rebate/provider/rebate_calculation_provider.dart';
 import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import '../../expanse/provider/expense_information_provider.dart';
 import '../../personal_info/provider/personal_info_provider.dart';
@@ -27,7 +27,7 @@ class AuthRepository {
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
     final PersonalInfoProvider personalInfoProvider =
         Provider.of(context, listen: false);
-    final RebateCalculationProvider rebateCalculationProvider =
+    final InvestmentProvider investmentProvider =
         Provider.of(context, listen: false);
     final ExpenseInformationProvider expenseInformationProvider =
         Provider.of(context, listen: false);
@@ -58,7 +58,7 @@ class AuthRepository {
     try {
       ///Clear All Data
       personalInfoProvider.clearAllData();
-      rebateCalculationProvider.clearAllData();
+      investmentProvider.clearAllData();
       expenseInformationProvider.clearAllData();
       taxCalculationProvider.clearAllData();
       salaryIncomeProvider.clearAllData();

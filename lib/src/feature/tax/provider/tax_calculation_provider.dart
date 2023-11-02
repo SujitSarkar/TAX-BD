@@ -8,8 +8,9 @@ import 'package:tax_bd/src/feature/income/model/spouse_children_income_input_mod
 import 'package:tax_bd/src/feature/income/provider/capital_gain_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/rental_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/spouse_children_income_provider.dart';
+import 'package:tax_bd/src/feature/investment/model/investment_input_model.dart';
+import 'package:tax_bd/src/feature/investment/provider/investment_provider.dart';
 import 'package:tax_bd/src/feature/personal_info/provider/personal_info_provider.dart';
-import 'package:tax_bd/src/feature/rebate/model/rebate_calculation_input_model.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
 import '../../../shared/app_navigator_key.dart';
@@ -29,7 +30,6 @@ import '../../income/provider/foreign_income_provider.dart';
 import '../../income/provider/others_income_provider.dart';
 import '../../income/provider/partnership_business_income_provider.dart';
 import '../../income/provider/salary_income_provider.dart';
-import '../../rebate/provider/rebate_calculation_provider.dart';
 
 class TaxCalculationProvider extends ChangeNotifier {
   final FirebaseDbHelper firebaseDbHelper = FirebaseDbHelper();
@@ -114,7 +114,7 @@ class TaxCalculationProvider extends ChangeNotifier {
     final PartnershipBusinessIncomeProvider partnershipBusinessIncomeProvider = Provider.of(context, listen: false);
     final ForeignIncomeProvider foreignIncomeProvider = Provider.of(context, listen: false);
     final SpouseChildrenIncomeProvider spouseChildrenIncomeProvider = Provider.of(context, listen: false);
-    final RebateCalculationProvider rebateCalculationProvider = Provider.of(context, listen: false);
+    final InvestmentProvider investmentProvider = Provider.of(context, listen: false);
 
     ///Govt Salary Income
     double govtSalaryIncome = 0.0;
@@ -292,8 +292,8 @@ class TaxCalculationProvider extends ChangeNotifier {
 
     ///Rebate
     double rebate = 0.0;
-    for (RebateCalculationInputModel element in rebateCalculationProvider
-        .rebateCalculationInputList) {
+    for (InvestmentInputModel element in investmentProvider
+        .investmentInputList) {
       rebate = rebate + double.parse(element.totalInvestment!.text.isNotEmpty
           ? element.totalInvestment!.text.trim()
           : '0.0');
@@ -321,9 +321,11 @@ class TaxCalculationProvider extends ChangeNotifier {
   void getMinimumTaxData(){
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
     final PersonalInfoProvider personalInfoProvider = Provider.of(context, listen: false);
-    if(personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList.first){
+    if(personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList.first
+     || personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList[1]
+     || personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList[2]){
       minimumTax.text = '5000';
-    } else if(personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList[1]){
+    } else if(personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList[3]){
       minimumTax.text = '4000';
     } else{
       minimumTax.text = '3000';
@@ -519,9 +521,9 @@ class TaxCalculationProvider extends ChangeNotifier {
   }
 
   double calculatePercentOfAsset(double totalAsset){
-    double percentAmount = 1;
+    double percentAmount = 0;
     if(totalAsset<=40000000){
-      percentAmount = 1;
+      percentAmount = 0;
     }else if(totalAsset>40000000 && totalAsset<=100000000){
       percentAmount = totalAsset * 0.1;
     }

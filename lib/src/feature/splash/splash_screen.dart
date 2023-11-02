@@ -36,6 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
         body: Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 60),
+        // child: SvgPicture.asset('assets/icon/personal_info.svg',colorFilter:const ColorFilter.mode(Colors.red, BlendMode.srcIn),),
         child: Hero(
             tag: 'splashToLogin',
             child: Image.asset('assets/image/logo_trans.png')),

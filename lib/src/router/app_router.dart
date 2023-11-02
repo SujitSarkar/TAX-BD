@@ -7,7 +7,7 @@ class AppRouter {
   static const String otpScreen = '/otp-screen';
 
   ///Home Screen
-  static const String rebateCalculationScreen = '/rebate-calculation-screen';
+  static const String investmentScreen = '/investment-screen';
   static const String taxCalculationScreen = '/tax-calculation-screen';
   static const String expenseInformationScreen = '/expense-information-screen';
   static const String personalInfoScreen = '/personal-info-screen';

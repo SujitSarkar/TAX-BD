@@ -12,12 +12,12 @@ import 'package:tax_bd/src/feature/income/screen/partnership_business_income_scr
 import 'package:tax_bd/src/feature/income/screen/private_salary_income_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/rental_income_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/spouse_children_income_screen.dart';
+import 'package:tax_bd/src/feature/investment/screen/investment_screen.dart';
 import 'package:tax_bd/src/feature/personal_info/screen/personal_info_screen.dart';
 import '../feature/auth/screen/otp_screen.dart';
 import '../feature/auth/screen/signin_screen.dart';
 import '../feature/expanse/screen/expense_information_screen.dart';
 import '../feature/income/screen/agriculture_income_screen.dart';
-import '../feature/rebate/screen/rebate_calculation_screen.dart';
 import '../feature/splash/splash_screen.dart';
 import '../feature/tax/screen/tax_calculation_screen.dart';
 import 'app_router.dart';
@@ -37,12 +37,12 @@ class GeneratedRoute {
             transitionsBuilder: slideTransition,
             pageBuilder: (_, animation, secondaryAnimation) =>
                 const HomeScreen());
-      case AppRouter.rebateCalculationScreen:
+      case AppRouter.investmentScreen:
         return PageRouteBuilder(
             settings: settings,
             transitionsBuilder: slideTransition,
             pageBuilder: (_, animation, secondaryAnimation) =>
-            const RebateCalculationScreen());
+            const InvestmentScreen());
       case AppRouter.taxCalculationScreen:
         return PageRouteBuilder(
             settings: settings,

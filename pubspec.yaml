@@ -23,6 +23,7 @@ dependencies:
   line_awesome_flutter: ^2.0.0
   url_launcher: ^6.1.14
   dropdown_button2: ^2.3.9
+  flutter_svg: ^2.0.9
 
 
 dev_dependencies:
@@ -61,6 +62,8 @@ flutter:
   assets:
     - assets/font/
     - assets/image/
+    - assets/home_icon/
+    - assets/income_icon/
 
   fonts:
     - family: plusJakartaSans

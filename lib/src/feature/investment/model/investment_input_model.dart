@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class RebateCalculationInputModel {
+class InvestmentInputModel {
   final TextEditingController? lifeInsurance;
   final TextEditingController? contributionToDepositPerson;
   final TextEditingController? investmentInGovt;
@@ -14,7 +14,7 @@ class RebateCalculationInputModel {
   final TextEditingController? totalInvestment;
   final TextEditingController? amountOfTax;
 
-  RebateCalculationInputModel({
+  InvestmentInputModel({
       this.lifeInsurance,
       this.contributionToDepositPerson,
       this.investmentInGovt,

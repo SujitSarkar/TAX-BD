@@ -1,8 +1,6 @@
-import 'package:flutter/Material.dart';
-
 class HomeDataModel {
-  final IconData? icon;
-  final String? title;
+  final String iconAsset;
+  final String title;
 
-  HomeDataModel({this.icon, this.title});
+  HomeDataModel({required this.iconAsset, required this.title});
 }

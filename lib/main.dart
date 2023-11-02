@@ -16,8 +16,8 @@ import 'package:tax_bd/src/feature/income/provider/others_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/partnership_business_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/rental_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/spouse_children_income_provider.dart';
+import 'package:tax_bd/src/feature/investment/provider/investment_provider.dart';
 import 'package:tax_bd/src/feature/personal_info/provider/personal_info_provider.dart';
-import 'package:tax_bd/src/feature/rebate/provider/rebate_calculation_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/salary_income_provider.dart';
 import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import 'package:tax_bd/src/router/app_router.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => SalaryIncomeProvider()),
         ChangeNotifierProvider(create: (context) => AgriculturalIncomeProvider()),
         ChangeNotifierProvider(create: (context) => BusinessIncomeProvider()),
-        ChangeNotifierProvider(create: (context) => RebateCalculationProvider()),
+        ChangeNotifierProvider(create: (context) => InvestmentProvider()),
         ChangeNotifierProvider(create: (context) => TaxCalculationProvider()),
         ChangeNotifierProvider(create: (context) => ExpenseInformationProvider()),
         ChangeNotifierProvider(create: (context) => FinancialAssetIncomeProvider()),

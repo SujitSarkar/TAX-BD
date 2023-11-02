@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tax_bd/src/feature/investment/provider/investment_provider.dart';
 import 'package:tax_bd/src/shared/widget/loading_widget.dart';
 import 'package:tax_bd/src/shared/widget/solid_button.dart';
 import '../../../constant/text_size.dart';
 import '../../../shared/widget/table_text_field_widget.dart';
-import '../provider/rebate_calculation_provider.dart';
 
-class RebateCalculationScreen extends StatelessWidget {
-  const RebateCalculationScreen({super.key});
+class InvestmentScreen extends StatelessWidget {
+  const InvestmentScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final RebateCalculationProvider rebateCalculationProvider =
-        Provider.of(context);
+    final InvestmentProvider investmentProvider = Provider.of(context);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0.0,
@@ -24,7 +23,7 @@ class RebateCalculationScreen extends StatelessWidget {
       ),
       body: RefreshIndicator(
         onRefresh: () async =>
-            await rebateCalculationProvider.getRebateCalculationData(),
+            await investmentProvider.getRebateCalculationData(),
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -32,8 +31,8 @@ class RebateCalculationScreen extends StatelessWidget {
             ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: rebateCalculationProvider
-                    .rebateCalculationInputList.length,
+                itemCount: investmentProvider
+                    .investmentInputList.length,
                 separatorBuilder: (context, index) =>
                     const SizedBox(height: 24),
                 itemBuilder: (context, index) => Column(
@@ -42,8 +41,8 @@ class RebateCalculationScreen extends StatelessWidget {
                         if (index != 0)
                           IconButton(
                               onPressed: () {
-                                rebateCalculationProvider
-                                    .removeItemOfRebateCalculationInputList(
+                                investmentProvider
+                                    .removeItemOfInvestmentInputList(
                                         index);
                               },
                               icon: const Icon(Icons.cancel_rounded,
@@ -79,66 +78,66 @@ class RebateCalculationScreen extends StatelessWidget {
                             //Table Row
                             buildRow(
                                 "1. Life Insurance Premium or Contractual Deferred Annuity Paid in Bangladesh",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .lifeInsurance!),
                             buildRow(
                                 "2. Contribution to deposit pension scheme",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .contributionToDepositPerson!),
                             buildRow(
                                 "3. Investment in Government Securities, Unit Certificate, Mutual Fund, ETF or Joint Investment Scheme Unit Certificate",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .investmentInGovt!),
                             buildRow(
                                 "4. Investment in Securities listed with Approved Stock Exchange",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .investmentInSecurity!),
                             buildRow(
                                 "5.	Contribution to Provident Fund to which Provident Fund Act, 1925 applies",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .contributionToProvident!),
                             buildRow(
                                 "6.	Self & Employer’s Contribution to Recognized Provident Fund",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .selfContribution!),
                             buildRow(
                                 "7.	Contribution to Super Annuation Fund",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .contributionToApproved!),
                             buildRow(
                                 "8.	Contribution to Benevolent Fund / Group Insurance Premium",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .contributionToBenevolent!),
                             buildRow(
                                 "9. Contribution to Zakat Fund",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .contributionToZakat!,requiredData: false),
                             buildRow(
                                 "10. Others, if any (provide details)",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .others!,
                                 requiredData: false),
                             buildRow(
                                 "11. Total investment (aggregate of 1 to 10)",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .totalInvestment!,
                                 readOnly: true,
                                 requiredData: false),
                             buildRow(
                                 "12. Amount of Tax Rebate",
-                                rebateCalculationProvider
-                                    .rebateCalculationInputList[index]
+                                investmentProvider
+                                    .investmentInputList[index]
                                     .amountOfTax!,readOnly: true),
                           ],
                         ),
@@ -149,16 +148,16 @@ class RebateCalculationScreen extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: ElevatedButton(
                     onPressed: () {
-                      rebateCalculationProvider
-                          .addRebateCalculationInputListItem();
+                      investmentProvider
+                          .addInvestmentInputListItem();
                     },
                     child: const Text('Add More'))),
             const SizedBox(height: 12),
             SolidButton(
                 onTap: () async {
-                  await rebateCalculationProvider.submitDataButtonOnTap();
+                  await investmentProvider.submitDataButtonOnTap();
                 },
-                child: rebateCalculationProvider.functionLoading
+                child: investmentProvider.functionLoading
                     ? const LoadingWidget()
                     : const Text(
                         'Submit Data',

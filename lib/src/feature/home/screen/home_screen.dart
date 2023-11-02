@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
@@ -15,7 +16,7 @@ import 'package:tax_bd/src/feature/income/provider/partnership_business_income_p
 import 'package:tax_bd/src/feature/income/provider/rental_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/salary_income_provider.dart';
 import 'package:tax_bd/src/feature/income/provider/spouse_children_income_provider.dart';
-import 'package:tax_bd/src/feature/rebate/provider/rebate_calculation_provider.dart';
+import 'package:tax_bd/src/feature/investment/provider/investment_provider.dart';
 import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import 'package:tax_bd/src/router/app_router.dart';
 import 'package:tax_bd/src/shared/app_navigator_key.dart';
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
   Future<void> onInit()async{
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
     final PersonalInfoProvider personalInfoProvider = Provider.of(context,listen: false);
-    final RebateCalculationProvider rebateCalculationProvider = Provider.of(context,listen: false);
+    final InvestmentProvider investmentProvider = Provider.of(context,listen: false);
     final ExpenseInformationProvider expenseInformationProvider = Provider.of(context,listen: false);
     final TaxCalculationProvider taxCalculationProvider = Provider.of(context,listen: false);
     final SalaryIncomeProvider salaryIncomeProvider = Provider.of(context,listen: false);
@@ -46,7 +47,7 @@ class HomeScreen extends StatelessWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_)async{
       await Future.wait([
-        rebateCalculationProvider.getRebateCalculationData(),
+        investmentProvider.getRebateCalculationData(),
         salaryIncomeProvider.getPrivateSalaryIncomeData(),
         salaryIncomeProvider.getGovtSalaryIncomeData(),
         rentalIncomeProvider.getRentalIncomeData(),
@@ -87,20 +88,12 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset('assets/image/logo_trans.png', height: 60, width: 60),
-                const SizedBox(width: 12),
-                const Text(
-                  'TAX BD',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: TextSize.titleText),
-                )
-              ],
+          const Center(
+            child: Text(
+              'Menu',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: TextSize.titleText),
             ),
           ),
           const SizedBox(height: 16),
@@ -134,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                                       context, AppRouter.taxCalculationScreen);
                                 case 3:
                                   Navigator.pushNamed(
-                                      context, AppRouter.rebateCalculationScreen);
+                                      context, AppRouter.investmentScreen);
                                   break;
                                 case 4:
                                   Navigator.pushNamed(
@@ -147,16 +140,19 @@ class HomeScreen extends StatelessWidget {
                               }
                             },
                             padding: const EdgeInsets.all(20),
-                            child: Icon(
-                              DummyData.homeDataList[index].icon,
-                              size: size.width * .15,
-                              color: Colors.white,
-                            )),
+                            child: SvgPicture.asset(
+                              DummyData.homeDataList[index].iconAsset,
+                              height: size.width * .12,
+                              width: size.width * .12,
+                              colorFilter:const ColorFilter.mode(Colors.white,
+                              BlendMode.srcIn),
+                            ),
+                        ),
                         const SizedBox(height: 8),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16),
                           child: Text(
-                            DummyData.homeDataList[index].title!,
+                            DummyData.homeDataList[index].title,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: TextSize.homeCardTextSize,
