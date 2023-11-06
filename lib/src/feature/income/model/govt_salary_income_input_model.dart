@@ -40,9 +40,9 @@ class GovtSalaryIncomeInputModel {
 }
 
 class GovtSalaryIncomeInputModelItem{
-  TextEditingController? amount;
-  TextEditingController? exempted;
-  TextEditingController? taxable;
+  final TextEditingController? amount;
+  final TextEditingController? exempted;
+  final TextEditingController? taxable;
 
   GovtSalaryIncomeInputModelItem({this.amount, this.exempted, this.taxable});
 }
