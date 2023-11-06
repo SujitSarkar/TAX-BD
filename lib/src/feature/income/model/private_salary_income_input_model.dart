@@ -1,36 +1,55 @@
 import 'package:flutter/material.dart';
 
 class PrivateSalaryIncomeInputModel {
-  TextEditingController? basicPay;
-  TextEditingController? allowance;
-  TextEditingController? advanceSalary;
-  TextEditingController? gratuityAnnuity;
-  TextEditingController? perquisites;
-  TextEditingController? additionalSalaryOrWages;
-  TextEditingController? shareScheme;
-  TextEditingController? accommodationFacility;
-  TextEditingController? transportFacility;
-  TextEditingController? anyOtherFacility;
-  TextEditingController? providentFund;
-  TextEditingController? others;
-  TextEditingController? totalSalaryReceived;
-  TextEditingController? exemptedAmount;
-  TextEditingController? totalIncomeFromSalary;
+  final TextEditingController? nameOfEmployer;
+  final TextEditingController? employerDesignation;
+  final TextEditingController? basicSalary;
+  final TextEditingController? houseRentAllowance;
+  final TextEditingController? medicalAllowance;
+  final TextEditingController? conveyanceAllowance;
+  final TextEditingController? festivalBonus;
+  final TextEditingController? others;
+  final TextEditingController? totalIncomeFromSalary;
+  bool? rentFreeAccommodation;
+  final TextEditingController? rentFreeAccommodationValue;
+  final TextEditingController? rentFreeAccommodationMonth;
+  bool? accommodationAtConcessionalRate;
+  final TextEditingController? concessionalRateValue;
+  final TextEditingController? concessionalRateMonth;
+  final TextEditingController? rentPaidByTaxpayer;
+  bool? vehicleFacilityProvided;
+  String? vehicleCC;
+  final TextEditingController? vehicleFacilityMonth;
+  bool? hasOtherNonCashBenefit;
+  final OtherInputModel? otherNonCashBenefit;
 
-  PrivateSalaryIncomeInputModel(
-      {this.basicPay,
-      this.allowance,
-      this.advanceSalary,
-      this.gratuityAnnuity,
-      this.perquisites,
-      this.additionalSalaryOrWages,
-      this.shareScheme,
-      this.accommodationFacility,
-      this.transportFacility,
-      this.anyOtherFacility,
-      this.providentFund,
+  PrivateSalaryIncomeInputModel({
+      this.nameOfEmployer,
+      this.employerDesignation,
+      this.basicSalary,
+      this.houseRentAllowance,
+      this.medicalAllowance,
+      this.conveyanceAllowance,
+      this.festivalBonus,
       this.others,
-      this.totalSalaryReceived,
-      this.exemptedAmount,
-      this.totalIncomeFromSalary});
+      this.totalIncomeFromSalary,
+      this.rentFreeAccommodation=false,
+      this.rentFreeAccommodationValue,
+      this.rentFreeAccommodationMonth,
+      this.accommodationAtConcessionalRate=false,
+      this.concessionalRateValue,
+      this.concessionalRateMonth,
+      this.rentPaidByTaxpayer,
+      this.vehicleFacilityProvided=false,
+      this.vehicleCC,
+      this.vehicleFacilityMonth,
+      this.hasOtherNonCashBenefit=false,
+      this.otherNonCashBenefit});
+}
+
+class OtherInputModel{
+  final TextEditingController? particular;
+  final TextEditingController? value;
+
+  OtherInputModel({this.particular, this.value});
 }

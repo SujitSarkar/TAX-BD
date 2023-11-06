@@ -1,4 +1,3 @@
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../feature/home/model/home_data_model.dart';
 
 class DummyData {
@@ -56,5 +55,10 @@ class DummyData {
     "Age 65 years or more",
     "A parent of a person with disability",
     "None"
+  ];
+
+  static const List<String> vehicleCCList = [
+    "Up to 2500 CC",
+    "Exceeding 2500 CC"
   ];
 }

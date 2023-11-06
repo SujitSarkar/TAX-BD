@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tax_bd/src/constant/dummy_data.dart';
 import 'package:tax_bd/src/feature/income/model/private_salary_income_input_model.dart';
 import '../../../constant/app_toast.dart';
 import '../../../constant/db_child_path.dart';
@@ -25,25 +26,56 @@ class SalaryIncomeProvider extends ChangeNotifier {
   }
 
   ///UI Functions::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
   ///Private Salary
+  void changeRentFreeAccommodation(int index, bool newValue) {
+    privateSalaryIncomeInputList[index].rentFreeAccommodation = newValue;
+    notifyListeners();
+  }
+  void changeAccommodationConcessionalRate(int index, bool newValue) {
+    privateSalaryIncomeInputList[index].accommodationAtConcessionalRate = newValue;
+    notifyListeners();
+  }
+  void changeVehicleFacilityProvided(int index, bool newValue) {
+    privateSalaryIncomeInputList[index].vehicleFacilityProvided = newValue;
+    notifyListeners();
+  }
+  void changeOtherNonCashBenefit(int index, bool newValue) {
+    privateSalaryIncomeInputList[index].hasOtherNonCashBenefit = newValue;
+    notifyListeners();
+  }
+  void changeVehicleCCLimit(int index, String? newValue) {
+    privateSalaryIncomeInputList[index].vehicleCC = newValue;
+    notifyListeners();
+  }
+
   void addPrivateSalaryIncomeInputListItem() {
     privateSalaryIncomeInputList.add(
       PrivateSalaryIncomeInputModel(
-        basicPay: TextEditingController(),
-        allowance: TextEditingController(),
-        advanceSalary: TextEditingController(),
-        gratuityAnnuity: TextEditingController(),
-        perquisites: TextEditingController(),
-        additionalSalaryOrWages: TextEditingController(),
-        shareScheme: TextEditingController(),
-        accommodationFacility: TextEditingController(),
-        transportFacility: TextEditingController(),
-        anyOtherFacility: TextEditingController(),
-        providentFund: TextEditingController(),
-        others: TextEditingController(),
-        totalSalaryReceived: TextEditingController(),
-        exemptedAmount: TextEditingController(),
-        totalIncomeFromSalary: TextEditingController(),
+       nameOfEmployer : TextEditingController(),
+       employerDesignation : TextEditingController(),
+       basicSalary : TextEditingController(),
+       houseRentAllowance : TextEditingController(),
+       medicalAllowance : TextEditingController(),
+       conveyanceAllowance : TextEditingController(),
+       festivalBonus : TextEditingController(),
+       others : TextEditingController(),
+       totalIncomeFromSalary : TextEditingController(),
+       rentFreeAccommodation : false,
+       rentFreeAccommodationValue : TextEditingController(),
+       rentFreeAccommodationMonth : TextEditingController(),
+       accommodationAtConcessionalRate:false,
+       concessionalRateValue : TextEditingController(),
+       concessionalRateMonth : TextEditingController(),
+       rentPaidByTaxpayer : TextEditingController(),
+       vehicleFacilityProvided:false,
+       vehicleCC: DummyData.vehicleCCList.first,
+       vehicleFacilityMonth : TextEditingController(),
+       hasOtherNonCashBenefit: false,
+       otherNonCashBenefit : OtherInputModel(
+        particular: TextEditingController(),
+        value: TextEditingController(),
+      ),
       ),
     );
     notifyListeners();
@@ -66,31 +98,30 @@ class SalaryIncomeProvider extends ChangeNotifier {
         for (var element in data['data']) {
           privateSalaryIncomeInputList.add(
             PrivateSalaryIncomeInputModel(
-              basicPay: TextEditingController(text: element['basicPay']),
-              allowance: TextEditingController(text: element['allowance']),
-              advanceSalary:
-                  TextEditingController(text: element['advanceSalary']),
-              gratuityAnnuity:
-                  TextEditingController(text: element['gratuityAnnuity']),
-              perquisites: TextEditingController(text: element['perquisites']),
-              additionalSalaryOrWages: TextEditingController(
-                  text: element['additionalSalaryOrWages']),
-              shareScheme: TextEditingController(text: element['shareScheme']),
-              accommodationFacility:
-                  TextEditingController(text: element['accommodationFacility']),
-              transportFacility:
-                  TextEditingController(text: element['transportFacility']),
-              anyOtherFacility:
-                  TextEditingController(text: element['anyOtherFacility']),
-              providentFund:
-                  TextEditingController(text: element['providentFund']),
-              others: TextEditingController(text: element['others']),
-              totalSalaryReceived:
-                  TextEditingController(text: element['totalSalaryReceived']),
-              exemptedAmount:
-                  TextEditingController(text: element['exemptedAmount']),
-              totalIncomeFromSalary:
-                  TextEditingController(text: element['totalIncomeFromSalary']),
+              nameOfEmployer : TextEditingController(text: element['nameOfEmployer']),
+              employerDesignation : TextEditingController(text: element['employerDesignation']),
+              basicSalary : TextEditingController(text: element['basicSalary']),
+              houseRentAllowance : TextEditingController(text: element['houseRentAllowance']),
+              medicalAllowance : TextEditingController(text: element['medicalAllowance']),
+              conveyanceAllowance : TextEditingController(text: element['conveyanceAllowance']),
+              festivalBonus : TextEditingController(text: element['festivalBonus']),
+              others : TextEditingController(text: element['others']),
+              totalIncomeFromSalary : TextEditingController(text: element['totalIncomeFromSalary']),
+              rentFreeAccommodation : element['rentFreeAccommodation'],
+              rentFreeAccommodationValue : TextEditingController(text: element['rentFreeAccommodationValue']),
+              rentFreeAccommodationMonth : TextEditingController(text: element['rentFreeAccommodationMonth']),
+              accommodationAtConcessionalRate: element['accommodationAtConcessionalRate'],
+              concessionalRateValue : TextEditingController(text: element['concessionalRateValue']),
+              concessionalRateMonth : TextEditingController(text: element['concessionalRateMonth']),
+              rentPaidByTaxpayer : TextEditingController(text: element['rentPaidByTaxpayer']),
+              vehicleFacilityProvided: element['vehicleFacilityProvided'],
+              vehicleCC: element['vehicleCC'],
+              vehicleFacilityMonth : TextEditingController(text: element['vehicleFacilityMonth']),
+              hasOtherNonCashBenefit: element['hasOtherNonCashBenefit'],
+              otherNonCashBenefit : OtherInputModel(
+                particular: TextEditingController(text: element['otherNonCashBenefit']['particular']),
+                value: TextEditingController(text: element['otherNonCashBenefit']['value']),
+              ),
             ),
           );
         }
@@ -98,21 +129,30 @@ class SalaryIncomeProvider extends ChangeNotifier {
     } else {
       privateSalaryIncomeInputList.add(
         PrivateSalaryIncomeInputModel(
-          basicPay: TextEditingController(),
-          allowance: TextEditingController(),
-          advanceSalary: TextEditingController(),
-          gratuityAnnuity: TextEditingController(),
-          perquisites: TextEditingController(),
-          additionalSalaryOrWages: TextEditingController(),
-          shareScheme: TextEditingController(),
-          accommodationFacility: TextEditingController(),
-          transportFacility: TextEditingController(),
-          anyOtherFacility: TextEditingController(),
-          providentFund: TextEditingController(),
-          others: TextEditingController(),
-          totalSalaryReceived: TextEditingController(),
-          exemptedAmount: TextEditingController(),
-          totalIncomeFromSalary: TextEditingController(),
+          nameOfEmployer : TextEditingController(),
+          employerDesignation : TextEditingController(),
+          basicSalary : TextEditingController(),
+          houseRentAllowance : TextEditingController(),
+          medicalAllowance : TextEditingController(),
+          conveyanceAllowance : TextEditingController(),
+          festivalBonus : TextEditingController(),
+          others : TextEditingController(),
+          totalIncomeFromSalary : TextEditingController(),
+          rentFreeAccommodation : false,
+          rentFreeAccommodationValue : TextEditingController(),
+          rentFreeAccommodationMonth : TextEditingController(),
+          accommodationAtConcessionalRate:false,
+          concessionalRateValue : TextEditingController(),
+          concessionalRateMonth: TextEditingController(),
+          rentPaidByTaxpayer : TextEditingController(),
+          vehicleFacilityProvided:false,
+          vehicleCC: DummyData.vehicleCCList.first,
+          vehicleFacilityMonth : TextEditingController(),
+          hasOtherNonCashBenefit: false,
+          otherNonCashBenefit : OtherInputModel(
+            particular: TextEditingController(),
+            value: TextEditingController(),
+          ),
         ),
       );
     }
@@ -122,79 +162,123 @@ class SalaryIncomeProvider extends ChangeNotifier {
   Future<void> submitPrivateSalaryIncomeButtonOnTap() async {
     functionLoading = true;
     notifyListeners();
-
     final List<Map<String, dynamic>> privateSalaryIncomeDataList = [];
 
     for (PrivateSalaryIncomeInputModel element
         in privateSalaryIncomeInputList) {
-      final double totalSalaryReceivedValue = double.parse(
-              element.basicPay!.text.isEmpty
+      ///Total Income
+      final double totalIncomeFromSalaryValue = double.parse(
+              element.basicSalary!.text.isEmpty
                   ? '0.0'
-                  : element.basicPay!.text.trim()) +
-          double.parse(element.allowance!.text.isEmpty
+                  : element.basicSalary!.text.trim()) +
+          double.parse(element.houseRentAllowance!.text.isEmpty
               ? '0.0'
-              : element.allowance!.text.trim()) +
-          double.parse(element.advanceSalary!.text.isEmpty
+              : element.houseRentAllowance!.text.trim()) +
+          double.parse(element.medicalAllowance!.text.isEmpty
               ? '0.0'
-              : element.advanceSalary!.text.trim()) +
-          double.parse(element.gratuityAnnuity!.text.isEmpty
+              : element.medicalAllowance!.text.trim()) +
+          double.parse(element.conveyanceAllowance!.text.isEmpty
               ? '0.0'
-              : element.gratuityAnnuity!.text.trim()) +
-          double.parse(element.perquisites!.text.isEmpty
+              : element.conveyanceAllowance!.text.trim()) +
+          double.parse(element.festivalBonus!.text.isEmpty
               ? '0.0'
-              : element.perquisites!.text.trim()) +
-          double.parse(element.additionalSalaryOrWages!.text.isEmpty
-              ? '0.0'
-              : element.additionalSalaryOrWages!.text.trim()) +
-          double.parse(element.shareScheme!.text.isEmpty
-              ? '0.0'
-              : element.shareScheme!.text.trim()) +
-          double.parse(element.accommodationFacility!.text.isEmpty
-              ? '0.0'
-              : element.accommodationFacility!.text.trim()) +
-          double.parse(element.transportFacility!.text.isEmpty
-              ? '0.0'
-              : element.transportFacility!.text.trim()) +
-          double.parse(element.anyOtherFacility!.text.isEmpty
-              ? '0.0'
-              : element.anyOtherFacility!.text.trim()) +
-          double.parse(element.providentFund!.text.isEmpty
-              ? '0.0'
-              : element.providentFund!.text.trim()) +
+              : element.festivalBonus!.text.trim()) +
           double.parse(element.others!.text.isEmpty ? '0.0' : element.others!.text.trim());
 
-
-      if ((totalSalaryReceivedValue / 3) < 450000) {
-        element.exemptedAmount!.text = '${totalSalaryReceivedValue / 3}';
-      } else {
-        element.exemptedAmount!.text = 450000.toString();
-      }
-
-      final double totalIncomeFromSalaryValue = totalSalaryReceivedValue -
-          double.parse(element.exemptedAmount!.text.isEmpty
-              ? '0.0'
-              : element.exemptedAmount!.text.trim());
-
-      element.totalSalaryReceived!.text = '$totalSalaryReceivedValue';
       element.totalIncomeFromSalary!.text = '$totalIncomeFromSalaryValue';
+
+      ///Rent Free Accommodation
+      if(element.rentFreeAccommodation!){
+        final double totalRentFreeAccommodationValue = double.parse(
+            element.rentFreeAccommodationValue!.text.isEmpty
+                ? '0.0'
+                : element.rentFreeAccommodationValue!.text.trim())
+            * double.parse(
+                element.rentFreeAccommodationMonth!.text.isEmpty
+                    ? '0.0'
+                    : element.rentFreeAccommodationMonth!.text.trim());
+
+        element.totalIncomeFromSalary!.text =
+        '${double.parse(element.totalIncomeFromSalary!.text.isNotEmpty?element.totalIncomeFromSalary!.text:'0.0')
+            + totalRentFreeAccommodationValue}';
+      }
+      ///Accommodation at Concessional Rate
+      if(element.accommodationAtConcessionalRate!){
+        final double totalConcessionalRateValue = (double.parse(
+            element.concessionalRateValue!.text.isEmpty
+                ? '0.0'
+                : element.concessionalRateValue!.text.trim()) -
+            double.parse(
+                element.rentPaidByTaxpayer!.text.isEmpty
+                    ? '0.0'
+                    : element.rentPaidByTaxpayer!.text.trim())) *
+            double.parse(
+                element.concessionalRateMonth!.text.isEmpty
+                    ? '0.0'
+                    : element.concessionalRateMonth!.text.trim());
+
+        element.totalIncomeFromSalary!.text =
+        '${double.parse(element.totalIncomeFromSalary!.text.isNotEmpty?element.totalIncomeFromSalary!.text:'0.0')
+            + totalConcessionalRateValue}';
+      }
+      ///Vehicle Facility Provided
+      if(element.vehicleFacilityProvided!){
+        double totalVehicleFacilityProvidedValue = 0.0;
+        if(element.vehicleCC == DummyData.vehicleCCList.first){
+          totalVehicleFacilityProvidedValue = 10000.0* double.parse(
+              element.vehicleFacilityMonth!.text.isEmpty
+                  ? '0.0'
+                  : element.vehicleFacilityMonth!.text.trim());
+        }else{
+          totalVehicleFacilityProvidedValue = 25000.0* double.parse(
+              element.vehicleFacilityMonth!.text.isEmpty
+                  ? '0.0'
+                  : element.vehicleFacilityMonth!.text.trim());
+        }
+        element.totalIncomeFromSalary!.text =
+        '${double.parse(element.totalIncomeFromSalary!.text.isNotEmpty?element.totalIncomeFromSalary!.text:'0.0')
+            + totalVehicleFacilityProvidedValue}';
+      }
+      ///Other Non-Cash Benefit
+      if(element.hasOtherNonCashBenefit!){
+        final double totalOtherNonCashBenefitValue = double.parse(
+            element.otherNonCashBenefit!.value!.text.isEmpty
+                ? '0.0'
+                : element.otherNonCashBenefit!.value!.text.trim());
+
+        element.totalIncomeFromSalary!.text =
+        '${double.parse(element.totalIncomeFromSalary!.text.isNotEmpty
+            ? element.totalIncomeFromSalary!.text
+            : '0.0')
+            + totalOtherNonCashBenefitValue}';
+      }
       notifyListeners();
 
       final Map<String, dynamic> dataMap = {
-        'basicPay': element.basicPay!.text,
-        'allowance': element.allowance!.text,
-        'advanceSalary': element.advanceSalary!.text,
-        'gratuityAnnuity': element.gratuityAnnuity!.text,
-        'perquisites': element.perquisites!.text,
-        'additionalSalaryOrWages': element.additionalSalaryOrWages!.text,
-        'shareScheme': element.shareScheme!.text,
-        'accommodationFacility': element.accommodationFacility!.text,
-        'transportFacility': element.transportFacility!.text,
-        'anyOtherFacility': element.anyOtherFacility!.text,
-        'providentFund': element.providentFund!.text,
-        'others': element.others!.text,
-        'totalSalaryReceived': element.totalSalaryReceived!.text,
-        'exemptedAmount': element.exemptedAmount!.text,
-        'totalIncomeFromSalary': element.totalIncomeFromSalary!.text,
+        'nameOfEmployer' : element.nameOfEmployer!.text.trim(),
+        'employerDesignation' : element.employerDesignation!.text.trim(),
+        'basicSalary' : element.basicSalary!.text.trim(),
+        'houseRentAllowance' : element.houseRentAllowance!.text.trim(),
+        'medicalAllowance' : element.medicalAllowance!.text.trim(),
+        'conveyanceAllowance' : element.conveyanceAllowance!.text.trim(),
+        'festivalBonus' : element.festivalBonus!.text.trim(),
+        'others' : element.others!.text.trim(),
+        'totalIncomeFromSalary' : element.totalIncomeFromSalary!.text.trim(),
+        'rentFreeAccommodation' : element.rentFreeAccommodation,
+        'rentFreeAccommodationValue' : element.rentFreeAccommodationValue!.text.trim(),
+        'rentFreeAccommodationMonth' : element.rentFreeAccommodationMonth!.text.trim(),
+        'accommodationAtConcessionalRate': element.accommodationAtConcessionalRate,
+        'concessionalRateValue' : element.concessionalRateValue!.text.trim(),
+        'concessionalRateMonth' : element.concessionalRateMonth!.text.trim(),
+        'rentPaidByTaxpayer' : element.rentPaidByTaxpayer!.text.trim(),
+        'vehicleFacilityProvided': element.vehicleFacilityProvided,
+        'vehicleCC': element.vehicleCC,
+        'vehicleFacilityMonth' : element.vehicleFacilityMonth!.text.trim(),
+        'hasOtherNonCashBenefit': element.hasOtherNonCashBenefit,
+        'otherNonCashBenefit' : {
+          'particular': element.otherNonCashBenefit!.particular!.text.trim(),
+          'value': element.otherNonCashBenefit!.value!.text.trim(),
+        },
       };
       privateSalaryIncomeDataList.add(dataMap);
     }

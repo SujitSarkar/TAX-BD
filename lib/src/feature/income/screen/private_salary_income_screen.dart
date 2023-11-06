@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/feature/income/provider/salary_income_provider.dart';
 import 'package:tax_bd/src/shared/widget/solid_button.dart';
+import '../../../constant/dummy_data.dart';
 import '../../../constant/text_size.dart';
+import '../../../shared/widget/dropdown_button.dart';
 import '../../../shared/widget/loading_widget.dart';
 import '../../../shared/widget/table_text_field_widget.dart';
+import '../../../shared/widget/text_field_widget.dart';
 
 class PrivateSalaryIncomeScreen extends StatelessWidget {
   const PrivateSalaryIncomeScreen({super.key});
@@ -83,84 +86,183 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
                             ),
                             //Table Row
                             buildRow(
-                                "1. Basic Pay",
+                                "1. Basic Salary",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
-                                    .basicPay!),
+                                    .basicSalary!),
                             buildRow(
-                                "2. Allowances",
+                                "2. House Rent Allowances",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
-                                    .allowance!),
+                                    .houseRentAllowance!),
                             buildRow(
-                                "3. Advance salary",
+                                "3. Medical Allowances",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
-                                    .advanceSalary!),
+                                    .medicalAllowance!),
                             buildRow(
-                                "4. Gratuity, Annuity, Pension or similar benefits",
+                                "4. Conveyance Allowance",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
-                                    .gratuityAnnuity!),
+                                    .conveyanceAllowance!),
                             buildRow(
-                                "5. Perquisites",
+                                "5. Festival Bonus",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
-                                    .perquisites!),
+                                    .festivalBonus!),
                             buildRow(
-                                "6. Receipt in lieu of or in addition to Salary or Wages",
-                                salaryIncomeProvider
-                                    .privateSalaryIncomeInputList[index]
-                                    .additionalSalaryOrWages!),
-                            buildRow(
-                                "7. Income employee's from share scheme",
-                                salaryIncomeProvider
-                                    .privateSalaryIncomeInputList[index]
-                                    .shareScheme!),
-                            buildRow(
-                                "8. Accommodation facility",
-                                salaryIncomeProvider
-                                    .privateSalaryIncomeInputList[index]
-                                    .accommodationFacility!),
-                            buildRow(
-                                "9. Transport facility",
-                                salaryIncomeProvider
-                                    .privateSalaryIncomeInputList[index]
-                                    .transportFacility!),
-                            buildRow(
-                                "10. Any other facility provided by employer",
-                                salaryIncomeProvider
-                                    .privateSalaryIncomeInputList[index]
-                                    .anyOtherFacility!),
-                            buildRow(
-                                "11. Employer's contribution to recognized provident fund",
-                                salaryIncomeProvider
-                                    .privateSalaryIncomeInputList[index]
-                                    .providentFund!),
-                            buildRow(
-                                "12. Others, if any",
+                                "6. Others",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
                                     .others!),
+
                             buildRow(
-                                "13. Total Salary Received (aggregate of 1 to 12)",
-                                salaryIncomeProvider
-                                    .privateSalaryIncomeInputList[index]
-                                    .totalSalaryReceived!,
-                                readOnly: true,isBold: true),
-                            buildRow(
-                                "14. Exempted Amount (as per Part 1 of 6th Schedule)",
-                                salaryIncomeProvider
-                                    .privateSalaryIncomeInputList[index]
-                                    .exemptedAmount!,readOnly: true),
-                            buildRow(
-                                "15. Total income from salary (13-14)",
+                                "15. Total income from salary (1+2+3+4+5+6)",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
                                     .totalIncomeFromSalary!,
                                 readOnly: true,isBold: true)
                           ],
                         ),
+                        const SizedBox(height: 12),
+
+                        CheckboxListTile(
+                            title: const Text('Rent Free Accommodation',
+                                style: TextStyle(fontSize: TextSize.bodyText,fontWeight: FontWeight.bold)),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            value: salaryIncomeProvider
+                                .privateSalaryIncomeInputList[index]
+                                .rentFreeAccommodation!, onChanged: (newValue){
+                          salaryIncomeProvider.changeRentFreeAccommodation(index, newValue as bool);
+                        }),
+                        if(salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                            .rentFreeAccommodation!)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextFormFieldWidget(
+                                  controller: salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                                      .rentFreeAccommodationValue!,
+                                  labelText: 'Value of Accommodation',
+                                  hintText: 'Enter Value of Accommodation',
+                                  textInputType: TextInputType.number),
+                              const SizedBox(height: 12),
+                              TextFormFieldWidget(
+                                  controller: salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                                      .rentFreeAccommodationMonth!,
+                                  labelText: 'Month',
+                                  hintText: 'Enter Month',
+                                  textInputType: TextInputType.number),
+                            ],
+                          ),
+                        const SizedBox(height: 12),
+
+                        CheckboxListTile(
+                            title: const Text('Accommodation at Concessional Rate',
+                                style: TextStyle(fontSize: TextSize.bodyText,fontWeight: FontWeight.bold)),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            value: salaryIncomeProvider
+                                .privateSalaryIncomeInputList[index]
+                                .accommodationAtConcessionalRate, onChanged: (newValue){
+                          salaryIncomeProvider.changeAccommodationConcessionalRate(index, newValue as bool);
+                        }),
+                        if(salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                            .accommodationAtConcessionalRate!)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextFormFieldWidget(
+                                  controller: salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                                      .concessionalRateValue!,
+                                  labelText: 'Value of Accommodation',
+                                  hintText: 'Enter Value of Accommodation',
+                                  textInputType: TextInputType.number),
+                              const SizedBox(height: 12),
+                              TextFormFieldWidget(
+                                  controller: salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                                      .rentPaidByTaxpayer!,
+                                  labelText: 'Rent Paid by the Taxpayer',
+                                  hintText: 'Enter Rent Paid by the Taxpayer',
+                                  textInputType: TextInputType.number),
+                              const SizedBox(height: 12),
+                              TextFormFieldWidget(
+                                  controller: salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                                      .concessionalRateMonth!,
+                                  labelText: 'Month',
+                                  hintText: 'Enter Month',
+                                  textInputType: TextInputType.number),
+                            ],
+                          ),
+                        const SizedBox(height: 12),
+
+                        CheckboxListTile(
+                            title: const Text('Vehicle Facility Provided',
+                                style: TextStyle(fontSize: TextSize.bodyText,fontWeight: FontWeight.bold)),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            value: salaryIncomeProvider
+                                .privateSalaryIncomeInputList[index]
+                                .vehicleFacilityProvided, onChanged: (newValue){
+                          salaryIncomeProvider.changeVehicleFacilityProvided(index, newValue as bool);
+                        }),
+                        if(salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                            .vehicleFacilityProvided!)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomDropdown(items: DummyData.vehicleCCList,
+                                  selectedValue: salaryIncomeProvider.privateSalaryIncomeInputList[index].vehicleCC,
+                                  labelText: 'Select CC limit', onChanged:(newValue){
+                                    salaryIncomeProvider.changeVehicleCCLimit(index,newValue);
+                                  }),
+                              const SizedBox(height: 12),
+                              TextFormFieldWidget(
+                                  controller: salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                                      .vehicleFacilityMonth!,
+                                  labelText: 'Month',
+                                  hintText: 'Enter Month',
+                                  textInputType: TextInputType.number),
+                            ],
+                          ),
+                        const SizedBox(height: 12),
+
+                        CheckboxListTile(
+                            title: const Text('Other Non-Cash Benefit',
+                                style: TextStyle(fontSize: TextSize.bodyText,fontWeight: FontWeight.bold)),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            value: salaryIncomeProvider
+                                .privateSalaryIncomeInputList[index]
+                                .hasOtherNonCashBenefit, onChanged: (newValue){
+                          salaryIncomeProvider.changeOtherNonCashBenefit(index, newValue as bool);
+                        }),
+                        if(salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                            .hasOtherNonCashBenefit!)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              TextFormFieldWidget(
+                                  controller: salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                                      .otherNonCashBenefit!.particular!,
+                                  labelText: 'Particular',
+                                  hintText: 'Enter Particular',
+                                  textCapitalization: TextCapitalization.sentences),
+                              const SizedBox(height: 12),
+                              TextFormFieldWidget(
+                                  controller: salaryIncomeProvider.privateSalaryIncomeInputList[index]
+                                      .otherNonCashBenefit!.value!,
+                                  labelText: 'Value',
+                                  hintText: 'Enter Value',
+                                  textInputType: TextInputType.number),
+                            ],
+                          ),
+                        const SizedBox(height: 12),
                       ],
                     )),
             const SizedBox(height: 12),
