@@ -321,11 +321,11 @@ class TaxCalculationProvider extends ChangeNotifier {
   void getMinimumTaxData(){
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
     final PersonalInfoProvider personalInfoProvider = Provider.of(context, listen: false);
-    if(personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList.first
-     || personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList[1]
-     || personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList[2]){
+    if(personalInfoProvider.incomeSourceLocationDropdownValue == DummyData.incomeSourceLocationList.first
+     || personalInfoProvider.incomeSourceLocationDropdownValue == DummyData.incomeSourceLocationList[1]
+     || personalInfoProvider.incomeSourceLocationDropdownValue == DummyData.incomeSourceLocationList[2]){
       minimumTax.text = '5000';
-    } else if(personalInfoProvider.taxpayerAreaDropdownValue == DummyData.areaList[3]){
+    } else if(personalInfoProvider.incomeSourceLocationDropdownValue == DummyData.incomeSourceLocationList[3]){
       minimumTax.text = '4000';
     } else{
       minimumTax.text = '3000';

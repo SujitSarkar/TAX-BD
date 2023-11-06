@@ -18,30 +18,44 @@ class PersonalInfoProvider extends ChangeNotifier {
   final GlobalKey<FormState> personalInfoFormKey = GlobalKey();
   String? genderRadioValue = DummyData.genderList.first;
   String? residentialStatusRadioValue = DummyData.residentialStatusList.first;
-  String? statusOfTaxpayersDropdownValue = DummyData.statusOfTaxpayersList.first;
-  String? taxpayerPrivilegesDropdownValue = DummyData.taxpayerPrivilegesList.last;
-  String? taxpayerAreaDropdownValue = DummyData.areaList.first;
+  String? statusOfTaxpayersDropdownValue =
+      DummyData.statusOfTaxpayersList.first;
+  String? taxpayerPrivilegesDropdownValue =
+      DummyData.taxpayerPrivilegesList.last;
+  String? incomeSourceLocationDropdownValue =
+      DummyData.incomeSourceLocationList.first;
   DateTime dateOfBirth = DateTime.now();
+
+  String claimTaxRebate = 'Yes';
+  String shareholderDirector = 'Yes';
+  String grossWealthOver = 'Yes';
+  String ownMotorCar = 'No';
+  String ownOffshoreProperty = 'No';
+  String housePropertyInCityCorp = 'No';
 
   final TextEditingController nameController = TextEditingController();
   final TextEditingController nidOrPassportController = TextEditingController();
   final TextEditingController tinController = TextEditingController();
   final TextEditingController circleController = TextEditingController();
   final TextEditingController taxZoneController = TextEditingController();
-  final TextEditingController assessmentYearController = TextEditingController();
+  final TextEditingController assessmentYearController =
+      TextEditingController();
   final TextEditingController dateOfBirthController = TextEditingController();
   final TextEditingController spouseController = TextEditingController();
   final TextEditingController spouseTinController = TextEditingController();
-  final TextEditingController contactAddressController = TextEditingController();
+  final TextEditingController contactAddressController =
+      TextEditingController();
   final TextEditingController telephoneController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController currentlyWorkingOrgController = TextEditingController();
+  final TextEditingController currentlyWorkingOrgController =
+      TextEditingController();
   final TextEditingController orgNameController = TextEditingController();
   final TextEditingController orgBinController = TextEditingController();
-  final TextEditingController partnerNameAndTinController = TextEditingController();
+  final TextEditingController partnerNameAndTinController =
+      TextEditingController();
 
-  void clearAllData(){
+  void clearAllData() {
     nameController.clear();
     nidOrPassportController.clear();
     tinController.clear();
@@ -86,13 +100,43 @@ class PersonalInfoProvider extends ChangeNotifier {
   }
 
   void changeTaxpayerArea(String? newValue) {
-    taxpayerAreaDropdownValue = newValue;
+    incomeSourceLocationDropdownValue = newValue;
     notifyListeners();
   }
 
   Future<void> selectDateOfBirth() async {
     dateOfBirth = await showDatePickerAndGetDate();
     dateOfBirthController.text = DateFormat('dd MMM, yyyy').format(dateOfBirth);
+    notifyListeners();
+  }
+
+  void changeClaimTaxRebate(String? newValue) {
+    claimTaxRebate = newValue!;
+    notifyListeners();
+  }
+
+  void changeShareholderDirector(String? newValue) {
+    shareholderDirector = newValue!;
+    notifyListeners();
+  }
+
+  void changeGrossWealthOver(String? newValue) {
+    grossWealthOver = newValue!;
+    notifyListeners();
+  }
+
+  void changeOwnMotorcar(String? newValue) {
+    ownMotorCar = newValue!;
+    notifyListeners();
+  }
+
+  void changeOwnOffshoreProperty(String? newValue) {
+    ownOffshoreProperty = newValue!;
+    notifyListeners();
+  }
+
+  void changeHousePropertyInCityCorp(String? newValue) {
+    housePropertyInCityCorp = newValue!;
     notifyListeners();
   }
 
@@ -106,7 +150,7 @@ class PersonalInfoProvider extends ChangeNotifier {
       nameController.text = data['taxPayerName'];
       nidOrPassportController.text = data['taxPayerNid'];
       tinController.text = data['taxPayerTin'];
-      taxpayerAreaDropdownValue = data['taxPayerArea'];
+      incomeSourceLocationDropdownValue = data['incomeSourceLocation'];
       circleController.text = data['circle'];
       taxZoneController.text = data['taxZone'];
       assessmentYearController.text = data['assessmentYear'];
@@ -115,7 +159,8 @@ class PersonalInfoProvider extends ChangeNotifier {
       statusOfTaxpayersDropdownValue = data['statusOfTaxPayer'] ?? 'None';
       taxpayerPrivilegesDropdownValue = data['privilegesOfTaxPayer'] ?? 'None';
       dateOfBirth = DateTime.fromMillisecondsSinceEpoch(data['dateOfBirth']);
-      dateOfBirthController.text = DateFormat('dd-MMM-yyyy').format(dateOfBirth);
+      dateOfBirthController.text =
+          DateFormat('dd-MMM-yyyy').format(dateOfBirth);
       spouseController.text = data['nameOfSpouse'];
       spouseTinController.text = data['tinOfSpouse'];
       contactAddressController.text = data['addressOfContact'];
@@ -126,8 +171,14 @@ class PersonalInfoProvider extends ChangeNotifier {
       orgNameController.text = data['organizationName'];
       orgBinController.text = data['binOfOrganization'];
       partnerNameAndTinController.text = data['partnerNameAndTin'];
-    }else{
-      mobileController.text= userPhone!;
+      claimTaxRebate = data['claimTaxRebate'];
+      shareholderDirector = data['shareholderDirector'];
+      grossWealthOver = data['grossWealthOver'];
+      ownMotorCar = data['ownMotorCar'];
+      ownOffshoreProperty = data['ownOffshoreProperty'];
+      housePropertyInCityCorp = data['housePropertyInCityCorp'];
+    } else {
+      mobileController.text = userPhone!;
     }
     notifyListeners();
   }
@@ -140,7 +191,7 @@ class PersonalInfoProvider extends ChangeNotifier {
       'taxPayerName': nameController.text.trim(),
       'taxPayerNid': nidOrPassportController.text.trim(),
       'taxPayerTin': tinController.text.trim(),
-      'taxPayerArea': taxpayerAreaDropdownValue,
+      'incomeSourceLocation': incomeSourceLocationDropdownValue,
       'circle': circleController.text.trim(),
       'taxZone': taxZoneController.text.trim(),
       'assessmentYear': assessmentYearController.text.trim(),
@@ -163,15 +214,23 @@ class PersonalInfoProvider extends ChangeNotifier {
       'organizationName': orgNameController.text.trim(),
       'binOfOrganization': orgBinController.text.trim(),
       'partnerNameAndTin': partnerNameAndTinController.text.trim(),
+      'claimTaxRebate': claimTaxRebate,
+      'shareholderDirector': shareholderDirector,
+      'grossWealthOver': grossWealthOver,
+      'ownMotorCar': ownMotorCar,
+      'ownOffshoreProperty': ownOffshoreProperty,
+      'housePropertyInCityCorp': housePropertyInCityCorp,
     };
     functionLoading = true;
     notifyListeners();
-    await firebaseDbHelper.insertData(
-        childPath: DbChildPath.personalInfo, data: userDataMap).then((result){
+    await firebaseDbHelper
+        .insertData(childPath: DbChildPath.personalInfo, data: userDataMap)
+        .then((result) {
       if (result) {
         showToast('Success');
         TaxCalculationProvider taxCalculationProvider = Provider.of(
-            AppNavigatorKey.key.currentState!.context, listen: false);
+            AppNavigatorKey.key.currentState!.context,
+            listen: false);
         taxCalculationProvider.getTaxCalculationData();
       } else {
         showToast('Failed');

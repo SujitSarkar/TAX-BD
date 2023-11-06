@@ -30,7 +30,7 @@ class DummyData {
     "Others"
   ];
 
-  static const List<String> areaList = [
+  static const List<String> incomeSourceLocationList = [
     "Dhaka North City Corporation",
     "Dhaka South City Corporation",
     "Chattogram City Corporation",

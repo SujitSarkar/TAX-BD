@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
 import 'package:tax_bd/src/feature/personal_info/provider/personal_info_provider.dart';
+import 'package:tax_bd/src/feature/personal_info/widget/radio_widget.dart';
 import 'package:tax_bd/src/shared/widget/dropdown_button.dart';
 import 'package:tax_bd/src/shared/widget/loading_widget.dart';
 import 'package:tax_bd/src/shared/widget/solid_button.dart';
@@ -60,9 +61,10 @@ class PersonalInfoScreen extends StatelessWidget {
                             textInputType: TextInputType.number),
                         const SizedBox(height: 16),
 
-                        CustomDropdown(items: DummyData.areaList,
-                            selectedValue: personalInfoProvider.taxpayerAreaDropdownValue,
-                            labelText: '4. Area', onChanged: personalInfoProvider.changeTaxpayerArea),
+                        CustomDropdown(items: DummyData.incomeSourceLocationList,
+                            selectedValue: personalInfoProvider.incomeSourceLocationDropdownValue,
+                            labelText: '4. Location of main source of income',
+                            onChanged: personalInfoProvider.changeTaxpayerArea),
                         const SizedBox(height: 16),
 
                         TextFormFieldWidget(
@@ -215,6 +217,49 @@ class PersonalInfoScreen extends StatelessWidget {
                           maxLine: 3,
                           hintText: 'Enter Name and TIN of Partners/Members in case of Firm/Association of Persons',
                         ),
+                        const SizedBox(height: 16),
+                       PersonalInfoRadioWidget(
+                         title: '23. Claim tax rebate for investment?',
+                         groupValue: personalInfoProvider.claimTaxRebate,
+                         onChanged: personalInfoProvider.changeClaimTaxRebate,
+                       ),
+                       const SizedBox(height: 16),
+                        PersonalInfoRadioWidget(
+                          title: '24. Shareholder director of a company?',
+                          groupValue: personalInfoProvider.shareholderDirector,
+                          onChanged: personalInfoProvider.changeShareholderDirector,
+                        ),
+                        const SizedBox(height: 16),
+
+                        const Text('IT10B Requirements',style: TextStyle(fontSize: TextSize.titleText,fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 16),
+
+                        PersonalInfoRadioWidget(
+                          title: '25. Gross wealth over 4000000',
+                          groupValue: personalInfoProvider.grossWealthOver,
+                          onChanged: personalInfoProvider.changeGrossWealthOver,
+                        ),
+                        const SizedBox(height: 16),
+                        PersonalInfoRadioWidget(
+                          title: '26. Own motor car?',
+                          groupValue: personalInfoProvider.ownMotorCar,
+                          onChanged: personalInfoProvider.changeOwnMotorcar,
+                        ),
+                        const SizedBox(height: 16),
+                        PersonalInfoRadioWidget(
+                          title: '27. Own offshore property?',
+                          groupValue: personalInfoProvider.ownOffshoreProperty,
+                          onChanged: personalInfoProvider.changeOwnOffshoreProperty,
+                        ),
+                        const SizedBox(height: 16),
+                        PersonalInfoRadioWidget(
+                          title: '28. Have house property in any city corporation?',
+                          groupValue: personalInfoProvider.housePropertyInCityCorp,
+                          onChanged: personalInfoProvider.changeHousePropertyInCityCorp,
+                        ),
+                        const SizedBox(height: 16),
+
+
                         const SizedBox(height: 20),
                         SolidButton(
                             onTap: () async {
