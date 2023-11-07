@@ -10,6 +10,7 @@ class PrivateSalaryIncomeInputModel {
   final TextEditingController? festivalBonus;
   final TextEditingController? others;
   final TextEditingController? totalIncomeFromSalary;
+  final TextEditingController? exempted;
   bool? rentFreeAccommodation;
   final TextEditingController? rentFreeAccommodationValue;
   final TextEditingController? rentFreeAccommodationMonth;
@@ -33,6 +34,7 @@ class PrivateSalaryIncomeInputModel {
       this.festivalBonus,
       this.others,
       this.totalIncomeFromSalary,
+      this.exempted,
       this.rentFreeAccommodation=false,
       this.rentFreeAccommodationValue,
       this.rentFreeAccommodationMonth,

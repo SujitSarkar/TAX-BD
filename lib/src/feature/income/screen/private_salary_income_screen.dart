@@ -33,7 +33,7 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
           child: Column(children: [
             const Text(
-                'This part is applicable for employees other then Govt. pay scale',
+                'This part is applicable for employees other than Govt. pay scale',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
@@ -115,13 +115,17 @@ class PrivateSalaryIncomeScreen extends StatelessWidget {
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
                                     .others!),
-
                             buildRow(
-                                "15. Total income from salary (1+2+3+4+5+6)",
+                                "7. Total income from salary (1+2+3+4+5+6)",
                                 salaryIncomeProvider
                                     .privateSalaryIncomeInputList[index]
                                     .totalIncomeFromSalary!,
-                                readOnly: true,isBold: true)
+                                readOnly: true,isBold: true),
+                            buildRow(
+                                "8. Exempted",
+                                salaryIncomeProvider
+                                    .privateSalaryIncomeInputList[index]
+                                    .exempted!, readOnly: true)
                           ],
                         ),
                         const SizedBox(height: 12),

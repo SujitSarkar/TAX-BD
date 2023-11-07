@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/constant/dummy_data.dart';
@@ -61,6 +63,7 @@ class SalaryIncomeProvider extends ChangeNotifier {
        festivalBonus : TextEditingController(),
        others : TextEditingController(),
        totalIncomeFromSalary : TextEditingController(),
+       exempted : TextEditingController(),
        rentFreeAccommodation : false,
        rentFreeAccommodationValue : TextEditingController(),
        rentFreeAccommodationMonth : TextEditingController(),
@@ -107,6 +110,7 @@ class SalaryIncomeProvider extends ChangeNotifier {
               festivalBonus : TextEditingController(text: element['festivalBonus']),
               others : TextEditingController(text: element['others']),
               totalIncomeFromSalary : TextEditingController(text: element['totalIncomeFromSalary']),
+              exempted : TextEditingController(text: element['exempted']),
               rentFreeAccommodation : element['rentFreeAccommodation'],
               rentFreeAccommodationValue : TextEditingController(text: element['rentFreeAccommodationValue']),
               rentFreeAccommodationMonth : TextEditingController(text: element['rentFreeAccommodationMonth']),
@@ -138,6 +142,7 @@ class SalaryIncomeProvider extends ChangeNotifier {
           festivalBonus : TextEditingController(),
           others : TextEditingController(),
           totalIncomeFromSalary : TextEditingController(),
+          exempted : TextEditingController(),
           rentFreeAccommodation : false,
           rentFreeAccommodationValue : TextEditingController(),
           rentFreeAccommodationMonth : TextEditingController(),
@@ -184,8 +189,11 @@ class SalaryIncomeProvider extends ChangeNotifier {
               ? '0.0'
               : element.festivalBonus!.text.trim()) +
           double.parse(element.others!.text.isEmpty ? '0.0' : element.others!.text.trim());
-
       element.totalIncomeFromSalary!.text = '$totalIncomeFromSalaryValue';
+
+      ///Exempted
+    final double exemptedValue = min((totalIncomeFromSalaryValue/3), 450000);
+    element.exempted!.text = '$exemptedValue';
 
       ///Rent Free Accommodation
       if(element.rentFreeAccommodation!){
@@ -264,6 +272,7 @@ class SalaryIncomeProvider extends ChangeNotifier {
         'festivalBonus' : element.festivalBonus!.text.trim(),
         'others' : element.others!.text.trim(),
         'totalIncomeFromSalary' : element.totalIncomeFromSalary!.text.trim(),
+        'exempted' : element.exempted!.text.trim(),
         'rentFreeAccommodation' : element.rentFreeAccommodation,
         'rentFreeAccommodationValue' : element.rentFreeAccommodationValue!.text.trim(),
         'rentFreeAccommodationMonth' : element.rentFreeAccommodationMonth!.text.trim(),
