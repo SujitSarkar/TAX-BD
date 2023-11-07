@@ -8,13 +8,17 @@ class CustomDropdown extends StatelessWidget {
   String? selectedValue;
   final String labelText;
   final Function(String) onChanged;
+  final double? buttonHeight;
+  final double? dropdownWidth;
 
   CustomDropdown(
       {Key? key,
       required this.items,
       required this.selectedValue,
       required this.labelText,
-      required this.onChanged})
+      required this.onChanged,
+      this.buttonHeight = 45,
+      this.dropdownWidth})
       : super(key: key);
 
   @override
@@ -54,7 +58,7 @@ class CustomDropdown extends StatelessWidget {
               iconDisabledColor: Colors.grey,
             ),
             buttonStyleData: ButtonStyleData(
-              height: 45,
+              height: buttonHeight,
               width: double.infinity,
               padding: const EdgeInsets.only(left: 14, right: 14),
               decoration: BoxDecoration(
@@ -69,7 +73,7 @@ class CustomDropdown extends StatelessWidget {
             ),
             dropdownStyleData: DropdownStyleData(
               maxHeight: 500,
-              width: MediaQuery.of(context).size.width * .9,
+              width: dropdownWidth?? MediaQuery.of(context).size.width * .9,
               padding: null,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5), color: Colors.white),

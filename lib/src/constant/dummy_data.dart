@@ -61,4 +61,18 @@ class DummyData {
     "Up to 2500 CC",
     "Exceeding 2500 CC"
   ];
+
+  static const List<String> capitalGainCategoryList = [
+    "Transfer Property (Land Only)",
+    "Transfer Property (House/Apartment)",
+    "Other Capital Gain"
+  ];
+  static const List<String> areaUnitList = [
+    "Decimal",
+    "Acre"
+  ];
+  static const List<String> buildingUnitList = [
+    "Square Feet",
+    "Square Meter"
+  ];
 }

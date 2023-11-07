@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tax_bd/src/shared/widget/solid_button.dart';
+import '../../../constant/dummy_data.dart';
 import '../../../constant/text_size.dart';
+import '../../../shared/widget/dropdown_button.dart';
 import '../../../shared/widget/loading_widget.dart';
-import '../../../shared/widget/table_text_field_widget.dart';
+import '../../../shared/widget/text_field_widget.dart';
 import '../provider/capital_gain_income_provider.dart';
 
 class CapitalGainIncomeScreen extends StatelessWidget {
@@ -53,88 +55,21 @@ class CapitalGainIncomeScreen extends StatelessWidget {
                                     color: Colors.grey),
                                 splashRadius: 25,
                                 padding: EdgeInsets.zero),
-                          Table(
-                            defaultVerticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            border: TableBorder.all(color: Colors.grey),
-                            children: [
-                              ///Table Header
-                              const TableRow(
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Summary of Income',
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Text(
-                                      'Amount of taka',
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              ///Table Row
-                              TableRow(
-                                children: [
-                                  TableTextFormFieldWidget(
-                                    controller: capitalGainIncomeProvider
-                                        .capitalGainIncomeInputList[index]
-                                        .particular!.description!,
-                                    textCapitalization: TextCapitalization.sentences,
-                                    maxLine: 5,
-                                    hintText: 'Particular',
-                                    required: true,
-                                  ),
-                                  TableTextFormFieldWidget(
-                                    controller: capitalGainIncomeProvider
-                                        .capitalGainIncomeInputList[index]
-                                        .particular!.amount!,
-                                    textInputType: TextInputType.number,
-                                    hintText: '0.00',
-                                  ),
-                                ],
-                              ),
-                              buildRow(
-                                  "2. Acquisition Date",
-                                  capitalGainIncomeProvider
-                                      .capitalGainIncomeInputList[index]
-                                      .acquisitionDateText!,
-                                  readOnly: true, onTap: () {
-                                capitalGainIncomeProvider
-                                    .selectAcquisitionDate(index);
-                              }),
-                              buildRow(
-                                  "3. Sales Date",
-                                  capitalGainIncomeProvider
-                                      .capitalGainIncomeInputList[index]
-                                      .salesDateText!,
-                                  readOnly: true, onTap: () {
-                                capitalGainIncomeProvider.selectSalesDate(index);
-                              }),
+                          const SizedBox(height: 12),
 
-                              buildRow(
-                                  "4. Acquisition Cost",
-                                  capitalGainIncomeProvider
-                                      .capitalGainIncomeInputList[index]
-                                      .acquisitionValue!),
-                              buildRow(
-                                  "5. Sales Cost",
-                                  capitalGainIncomeProvider
-                                      .capitalGainIncomeInputList[index]
-                                      .salesCost!),
-                              buildRow(
-                                  "6. Gain (1-4-5)",
-                                  capitalGainIncomeProvider
-                                      .capitalGainIncomeInputList[index].gain!,
-                                  readOnly: true),
-                            ],
-                          ),
+                          CustomDropdown(items: DummyData.capitalGainCategoryList,
+                              selectedValue: capitalGainIncomeProvider.capitalGainIncomeInputList[index].typeOfGains,
+                              labelText: 'Type of Gains', onChanged: (newValue){
+                                capitalGainIncomeProvider.changeTypeOfGains(index, newValue);
+                              }),
+                          capitalGainIncomeProvider.capitalGainIncomeInputList[index].typeOfGains == DummyData.capitalGainCategoryList.first
+                              ? _landWidget(capitalGainIncomeProvider,index)
+                              : capitalGainIncomeProvider.capitalGainIncomeInputList[index].typeOfGains == DummyData.capitalGainCategoryList[1]
+                              ? _homeApartmentWidget(capitalGainIncomeProvider,index)
+                              : capitalGainIncomeProvider.capitalGainIncomeInputList[index].typeOfGains == DummyData.capitalGainCategoryList.last
+                              ? _othersWidget(capitalGainIncomeProvider,index)
+                              : const SizedBox.shrink()
+
                         ],
                       )),
               const SizedBox(height: 12),
@@ -164,20 +99,268 @@ class CapitalGainIncomeScreen extends StatelessWidget {
     );
   }
 
-  TableRow buildRow(String label, TextEditingController controller,
-      {bool readOnly = false, bool requiredData = false, Function()? onTap}) {
-    return TableRow(
+  Widget _landWidget(CapitalGainIncomeProvider capitalGainIncomeProvider, int index)=>Column(children: [
+    const SizedBox(height: 24),
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].description!,
+        labelText: '1. Description of the Property',
+        hintText: 'Enter Description of the Property',
+        textCapitalization: TextCapitalization.sentences),
+    const SizedBox(height: 16),
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Padding(padding: const EdgeInsets.all(8.0), child: Text(label)),
-        TableTextFormFieldWidget(
-          controller: controller,
-          textInputType: TextInputType.number,
-          hintText: '0.00',
-          readOnly: readOnly,
-          required: requiredData,
-          onTap: onTap,
+        Expanded(
+          child: TextFormFieldWidget(
+              controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].area!,
+              labelText: '2. Total Area',
+              hintText: 'Enter Total Area',
+              textInputType: TextInputType.number),
         ),
+        const SizedBox(width: 10),
+        Expanded(child:  CustomDropdown(items: DummyData.areaUnitList,
+            selectedValue: capitalGainIncomeProvider.capitalGainIncomeInputList[index].areaUnit,
+            buttonHeight: 40,
+            dropdownWidth: 120,
+            labelText: 'Unit', onChanged: (newValue){
+              capitalGainIncomeProvider.changeAreaUnit(index, newValue);
+            }))
       ],
-    );
-  }
+    ),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].tinOfBuyer!,
+        labelText: '3. TIN of Buyer',
+        hintText: 'Enter TIN of Buyer',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].deedNo!,
+        labelText: '4. Deed No',
+        hintText: 'Enter Deed No',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+      controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].dateOfDeedText!,
+      labelText: '5. Date of Deed',
+      hintText: 'Enter date of Deed',
+      readOnly: true,
+      onTap: ()async{
+        await capitalGainIncomeProvider.selectDateOfDeed(index);
+      },
+    ),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].subRegistrarOffice!,
+        labelText: '6. Sub Registrar Office',
+        hintText: 'Enter Sub Registrar Office',
+        textCapitalization: TextCapitalization.sentences),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].saleDeedValue!,
+        labelText: '7. Sale Deed Value',
+        hintText: 'Enter Sale Deed Value',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].costOfAcquisition!,
+        labelText: '8. Cost of Acquisition',
+        hintText: 'Enter Cost of Acquisition',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].capitalGain!,
+        labelText: '9. Capital Gain (7-8)',
+        hintText: '0.0',
+        readOnly: true,
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].taxDeductedCollectedAtSource!,
+        labelText: '10. Tax Deducted/Collected at Source',
+        hintText: 'Enter Tax Deducted/Collected at Source',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+  ]);
+
+  Widget _homeApartmentWidget(CapitalGainIncomeProvider capitalGainIncomeProvider, int index)=>Column(children: [
+    const SizedBox(height: 24),
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].description!,
+        labelText: '1. Description of the Property',
+        hintText: 'Enter Description of the Property',
+        textCapitalization: TextCapitalization.sentences),
+    const SizedBox(height: 16),
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(
+          child: TextFormFieldWidget(
+              controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].area!,
+              labelText: '2. Land Area',
+              hintText: 'Enter Land Area',
+              textInputType: TextInputType.number),
+        ),
+        const SizedBox(width: 10),
+        Expanded(child:  CustomDropdown(items: DummyData.areaUnitList,
+            selectedValue: capitalGainIncomeProvider.capitalGainIncomeInputList[index].areaUnit,
+            buttonHeight: 40,
+            dropdownWidth: 120,
+            labelText: 'Unit', onChanged: (newValue){
+              capitalGainIncomeProvider.changeAreaUnit(index, newValue);
+            }))
+      ],
+    ),
+    const SizedBox(height: 16),
+
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(
+          child: TextFormFieldWidget(
+              controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].flatBuildingArea!,
+              labelText: '3. Flat/Building Area',
+              hintText: 'Enter Flat/Building Area',
+              textInputType: TextInputType.number),
+        ),
+        const SizedBox(width: 10),
+        Expanded(child:  CustomDropdown(items: DummyData.buildingUnitList,
+            selectedValue: capitalGainIncomeProvider.capitalGainIncomeInputList[index].flatBuildingUnit,
+            buttonHeight: 40,
+            dropdownWidth: 120,
+            labelText: 'Unit', onChanged: (newValue){
+              capitalGainIncomeProvider.changeFlatBuildingUnit(index, newValue);
+            }))
+      ],
+    ),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].tinOfBuyer!,
+        labelText: '4. TIN of Buyer',
+        hintText: 'Enter TIN of Buyer',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].deedNo!,
+        labelText: '5. Deed No',
+        hintText: 'Enter Deed No',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+      controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].dateOfDeedText!,
+      labelText: '6. Date of Deed',
+      hintText: 'Enter date of Deed',
+      readOnly: true,
+      onTap: ()async{
+        await capitalGainIncomeProvider.selectDateOfDeed(index);
+      },
+    ),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].subRegistrarOffice!,
+        labelText: '7. Sub Registrar Office',
+        hintText: 'Enter Sub Registrar Office',
+        textCapitalization: TextCapitalization.sentences),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].saleDeedValue!,
+        labelText: '8. Sale Deed Value',
+        hintText: 'Enter Sale Deed Value',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].costOfAcquisition!,
+        labelText: '9. Cost of Acquisition',
+        hintText: 'Enter Cost of Acquisition',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].capitalGain!,
+        labelText: '10. Capital Gain (8-9)',
+        hintText: '0.0',
+        readOnly: true,
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].taxDeductedCollectedAtSource!,
+        labelText: '11. Tax Deducted/Collected at Source',
+        hintText: 'Enter Tax Deducted/Collected at Source',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+  ]);
+
+  Widget _othersWidget(CapitalGainIncomeProvider capitalGainIncomeProvider, int index)=>Column(children: [
+    const SizedBox(height: 24),
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].description!,
+        labelText: '1. Description of the Property',
+        hintText: 'Enter Description of the Property',
+        textCapitalization: TextCapitalization.sentences),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].acquisitionDateText!,
+        labelText: '2. Acquisition Date',
+        hintText: 'Enter Acquisition Date',
+        readOnly: true,
+        onTap: ()async{
+          await capitalGainIncomeProvider.selectAcquisitionDate(index);
+        },),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].salesDateText!,
+        labelText: '3. Sales Date',
+        hintText: 'Enter Sales Date',
+        readOnly: true,
+        onTap: ()async{
+          await capitalGainIncomeProvider.selectSalesDate(index);
+        },),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].salesValue!,
+        labelText: '4. Sales Value',
+        hintText: 'Enter Sales Value',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].costOfAcquisition!,
+        labelText: '5. Cost of Acquisition',
+        hintText: 'Enter Cost of Acquisition',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].costOfSales!,
+        labelText: '6. Cost of Sales',
+        hintText: 'Enter Cost of Sales',
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+
+    TextFormFieldWidget(
+        controller: capitalGainIncomeProvider.capitalGainIncomeInputList[index].capitalGain!,
+        labelText: '7. Capital Gain (4-5-6)',
+        hintText: '0.0',
+        readOnly: true,
+        textInputType: TextInputType.number),
+    const SizedBox(height: 16),
+  ]);
 }
