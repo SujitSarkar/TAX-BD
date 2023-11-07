@@ -15,6 +15,7 @@ import '../../expanse/provider/expense_information_provider.dart';
 import '../../income/model/financial_asset_income_input_model.dart';
 import '../../income/model/govt_salary_income_input_model.dart';
 import '../../income/model/others_income_input_model.dart';
+import '../../income/model/private_salary_income_input_model.dart';
 import '../../income/provider/agricultural_income_provider.dart';
 import '../../income/provider/business_income_provider.dart';
 import '../../income/provider/financial_asset_income_provider.dart';
@@ -139,13 +140,13 @@ class AssetInfoProvider extends ChangeNotifier{
           ? element.total!.exempted!.text
           : '0.0');
     }
-    // ///Private Salary Exempted
-    // double privateSalaryExempted = 0.0;
-    // for(PrivateSalaryIncomeInputModel element in salaryIncomeProvider.privateSalaryIncomeInputList){
-    //   privateSalaryExempted = privateSalaryExempted + double.parse(element.exemptedAmount!.text.isNotEmpty
-    //       ? element.exemptedAmount!.text
-    //       : '0.0');
-    // }
+    ///Private Salary Exempted
+    double privateSalaryExempted = 0.0;
+    for(PrivateSalaryIncomeInputModel element in salaryIncomeProvider.privateSalaryIncomeInputList){
+      privateSalaryExempted = privateSalaryExempted + double.parse(element.exempted!.text.isNotEmpty
+          ? element.exempted!.text
+          : '0.0');
+    }
     ///Agriculture Exempted
     double agricultureExempted = 0.0;
     for(AgricultureIncomeInputModel element in agriculturalIncomeProvider.agricultureIncomeInputList){
