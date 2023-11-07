@@ -236,8 +236,8 @@ class InvestmentProvider extends ChangeNotifier {
     for (CapitalGainIncomeInputModel element
     in capitalGainIncomeProvider.capitalGainIncomeInputList) {
       capitalGainIncome = capitalGainIncome +
-          double.parse(element.gain!.text.isNotEmpty
-              ? element.gain!.text.trim()
+          double.parse(element.capitalGain!.text.isNotEmpty
+              ? element.capitalGain!.text.trim()
               : '0.0');
     }
     ///Partnership Income
