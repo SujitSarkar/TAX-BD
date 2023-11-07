@@ -102,7 +102,6 @@ class TaxCalculationProvider extends ChangeNotifier {
 
   ///Functions:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   void getAllIncomeData() {
-
     final BuildContext context = AppNavigatorKey.key.currentState!.context;
     final SalaryIncomeProvider salaryIncomeProvider = Provider.of(context, listen: false);
     final RentalIncomeProvider rentalIncomeProvider = Provider.of(context, listen: false);
@@ -130,9 +129,11 @@ class TaxCalculationProvider extends ChangeNotifier {
     for (PrivateSalaryIncomeInputModel element
     in salaryIncomeProvider.privateSalaryIncomeInputList) {
       privateSalaryIncome = privateSalaryIncome +
-          double.parse(element.totalIncomeFromSalary!.text.isNotEmpty
+          (double.parse(element.totalIncomeFromSalary!.text.isNotEmpty
               ? element.totalIncomeFromSalary!.text.trim()
-              : '0.0');
+              : '0.0') - double.parse(element.exempted!.text.isNotEmpty
+              ? element.exempted!.text.trim()
+              : '0.0'));
     }
     incomeFromEmployment.text = '${govtSalaryIncome + privateSalaryIncome}';
 
@@ -237,8 +238,8 @@ class TaxCalculationProvider extends ChangeNotifier {
     for (CapitalGainIncomeInputModel element
     in capitalGainIncomeProvider.capitalGainIncomeInputList) {
       capitalGainIncome = capitalGainIncome +
-          double.parse(element.gain!.text.isNotEmpty
-              ? element.gain!.text.trim()
+          double.parse(element.capitalGain!.text.isNotEmpty
+              ? element.capitalGain!.text.trim()
               : '0.0');
     }
     incomeFromCapitalGain.text = '$capitalGainIncome';
@@ -304,7 +305,7 @@ class TaxCalculationProvider extends ChangeNotifier {
           rentIncome +
           agricultureIncome +
           businessIncome +
-          capitalGainIncome +
+          // capitalGainIncome +
           financialAssetIncome +
           otherSectorIncome +
           partnershipIncome +
@@ -314,8 +315,57 @@ class TaxCalculationProvider extends ChangeNotifier {
   }
 
   void getGrossTaxData(){
-    final double grossTaxValue = calculateGrossTax(double.parse(totalIncome.text.isEmpty?'0.0':totalIncome.text));
+    final BuildContext context = AppNavigatorKey.key.currentState!.context;
+    final CapitalGainIncomeProvider capitalGainIncomeProvider = Provider.of(context, listen: false);
+
+    double totalTaxDeductedCollectedAtSourceValue=0.0;
+    double totalTaxOnOtherGainValue=0.0;
+
+    double capitalGainForLessFiveYear = 0.0;
+    double grossTaxValue = 0.0;
+    if(capitalGainIncomeProvider.capitalGainIncomeInputList.isNotEmpty){
+      for(CapitalGainIncomeInputModel element in capitalGainIncomeProvider.capitalGainIncomeInputList){
+        if(element.typeOfGains == DummyData.capitalGainCategoryList.first ||
+            element.typeOfGains == DummyData.capitalGainCategoryList[1]){
+
+          final double taxDeductedCollectedAtSourceValue = double.parse(element.taxDeductedCollectedAtSource!.text.isEmpty
+              ? '0.0'
+              : element.taxDeductedCollectedAtSource!.text);
+
+          if(grossTaxValue==0.0){
+            grossTaxValue = grossTaxValue + calculateGrossTax(double.parse(totalIncome.text.isEmpty?'0.0':totalIncome.text))
+                + taxDeductedCollectedAtSourceValue;
+          }else{
+            grossTaxValue = grossTaxValue + taxDeductedCollectedAtSourceValue;
+          }
+          totalTaxDeductedCollectedAtSourceValue = totalTaxDeductedCollectedAtSourceValue + taxDeductedCollectedAtSourceValue;
+        }else{
+          if(element.salesDate!.difference(element.acquisitionDate!).inDays > 1825){
+            if(grossTaxValue==0.0){
+              grossTaxValue = grossTaxValue + calculateGrossTax(double.parse(totalIncome.text.isEmpty?'0.0':totalIncome.text))
+                  + (double.parse(element.capitalGain!.text.isEmpty?'0.0':element.capitalGain!.text) * 0.15);
+              totalTaxOnOtherGainValue = totalTaxOnOtherGainValue + (double.parse(element.capitalGain!.text.isEmpty?'0.0':element.capitalGain!.text) * 0.15);
+            }else{
+              grossTaxValue = grossTaxValue + (double.parse(element.capitalGain!.text.isEmpty?'0.0':element.capitalGain!.text) * 0.15);
+              totalTaxOnOtherGainValue = totalTaxOnOtherGainValue + (double.parse(element.capitalGain!.text.isEmpty?'0.0':element.capitalGain!.text) * 0.15);
+            }
+          }else{
+            capitalGainForLessFiveYear = capitalGainForLessFiveYear + double.parse(element.capitalGain!.text.isEmpty?'0.0':element.capitalGain!.text);
+            double otherCapitalGain = calculateGrossTax(double.parse(totalIncome.text.isEmpty?'0.0':totalIncome.text)+capitalGainForLessFiveYear)
+                - (grossTaxValue - totalTaxDeductedCollectedAtSourceValue - totalTaxOnOtherGainValue);
+            grossTaxValue = grossTaxValue + otherCapitalGain;
+          }
+        }
+      }
+    }else{
+      grossTaxValue = calculateGrossTax(double.parse(totalIncome.text.isEmpty?'0.0':totalIncome.text));
+    }
     grossTax.text = '$grossTaxValue';
+
+    ///Adding capital gain from total income
+    totalIncome.text = "${double.parse(totalIncome.text.isEmpty?'0.0':totalIncome.text)
+        + double.parse(incomeFromCapitalGain.text.isEmpty?'0.0':incomeFromCapitalGain.text)}";
+    notifyListeners();
   }
 
   void getMinimumTaxData(){
