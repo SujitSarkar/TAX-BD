@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:tax_bd/src/feature/home/screen/home_screen.dart';
 import 'package:tax_bd/src/router/app_router.dart';
 
+import '../../constant/text_size.dart';
+import '../../shared/validator.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -41,6 +44,25 @@ class _SplashScreenState extends State<SplashScreen> {
             tag: 'splashToLogin',
             child: Image.asset('assets/image/logo_trans.png')),
       ),
-    ));
+    ),
+      bottomNavigationBar: SizedBox(
+        height: 60,
+        child: Column(children: [
+          const Text(
+            'Developed by',
+            style: TextStyle(fontSize: TextSize.bodyText),
+          ),
+          const SizedBox(height: 5),
+          InkWell(
+            onTap: (){
+              launchInWebView('https://anchorblock.vc');
+            },
+            child: const Text(
+              'Anchorblock Technology LLC.',
+              style: TextStyle(fontSize: TextSize.bodyText,color: Colors.blue),
+            ),
+          ),
+        ]),
+      ),);
   }
 }

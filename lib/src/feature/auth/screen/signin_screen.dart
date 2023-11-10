@@ -68,7 +68,7 @@ class SignInScreen extends StatelessWidget {
         height: 60,
         child: Column(children: [
           const Text(
-            'Powered by',
+            'Developed by',
             style: TextStyle(fontSize: TextSize.bodyText),
           ),
           const SizedBox(height: 5),
