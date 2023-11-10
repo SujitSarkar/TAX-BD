@@ -14,6 +14,7 @@ import 'package:tax_bd/src/feature/income/screen/rental_income_screen.dart';
 import 'package:tax_bd/src/feature/income/screen/spouse_children_income_screen.dart';
 import 'package:tax_bd/src/feature/investment/screen/investment_screen.dart';
 import 'package:tax_bd/src/feature/personal_info/screen/personal_info_screen.dart';
+import '../feature/about/screen/about_us_screen.dart';
 import '../feature/auth/screen/otp_screen.dart';
 import '../feature/auth/screen/signin_screen.dart';
 import '../feature/expanse/screen/expense_information_screen.dart';
@@ -67,6 +68,12 @@ class GeneratedRoute {
             transitionsBuilder: slideTransition,
             pageBuilder: (_, animation, secondaryAnimation) =>
             const AssetInfoScreen());
+      case AppRouter.aboutUsScreen:
+        return PageRouteBuilder(
+            settings: settings,
+            transitionsBuilder: slideTransition,
+            pageBuilder: (_, animation, secondaryAnimation) =>
+            const AboutUsScreen());
 
       ///Auth Screens
       case AppRouter.signIn:

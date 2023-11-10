@@ -21,6 +21,7 @@ import 'package:tax_bd/src/feature/tax/provider/tax_calculation_provider.dart';
 import 'package:tax_bd/src/router/app_router.dart';
 import 'package:tax_bd/src/shared/app_navigator_key.dart';
 import 'package:tax_bd/src/shared/widget/normal_card.dart';
+import '../../../constant/app_color.dart';
 import '../../expanse/provider/expense_information_provider.dart';
 import '../../personal_info/provider/personal_info_provider.dart';
 
@@ -163,6 +164,20 @@ class HomeScreen extends StatelessWidget {
                     )),
           ),
         ],
+      ),
+      bottomNavigationBar: InkWell(
+        onTap: (){
+          Navigator.pushNamed(
+              context, AppRouter.aboutUsScreen);
+        },
+        child: Container(
+          alignment: Alignment.center,
+          height: 50,
+          child: const Text(
+            'About us',
+            style: TextStyle(fontSize: TextSize.titleText,color: Colors.blue),
+          ),
+        ),
       ),
     );
   }
