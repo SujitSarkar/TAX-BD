@@ -165,19 +165,27 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: InkWell(
-        onTap: (){
-          Navigator.pushNamed(
-              context, AppRouter.aboutUsScreen);
-        },
-        child: Container(
-          alignment: Alignment.center,
-          height: 50,
-          child: const Text(
-            'About us',
-            style: TextStyle(fontSize: TextSize.titleText,color: Colors.blue),
+      bottomNavigationBar: Container(
+        alignment: Alignment.center,
+        height: 50,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColor.primaryColor,
+            elevation: 0.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50.0), // Adjust the radius as needed
+            ),
           ),
-        ),
+          onPressed: (){
+            Navigator.pushNamed(
+                context, AppRouter.aboutUsScreen);
+          },
+          child: const Text(
+            'About Us',
+            style: TextStyle(fontSize: TextSize.titleText),
+          ),
+        )
+
       ),
     );
   }
