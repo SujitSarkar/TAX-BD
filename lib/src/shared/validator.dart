@@ -32,6 +32,24 @@ Future<DateTime> showDatePickerAndGetDate() async {
   return selectedDate;
 }
 
+String? encodeQueryParameters(Map<String, String> params) {
+  return params.entries
+      .map((MapEntry<String, String> e) =>
+          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+      .join('&');
+}
+
+Future<void> launchPhone(String number) async {
+  final String phoneNumber = "tel:$number";
+  try {
+    if (!await launchUrl(Uri.parse(phoneNumber))) {
+      showToast('Could not make a call with $number');
+    }
+  } catch (error) {
+    showToast(error.toString());
+  }
+}
+
 Future<void> launchInWebView(String url) async {
   try {
     if (!await launchUrl(Uri.parse(url), mode: LaunchMode.inAppWebView)) {
